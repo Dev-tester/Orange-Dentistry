@@ -35,21 +35,29 @@ NavBar::begin([
         'class' => 'navbar navbar-top navbar-72',
     ],
 ]);
-echo Nav::widget([
-    'options' => ['class' => 'navbar-nav'],
-    'items' => [
-        ['label' => 'Картотека', 'url' => ['/site/index']],
-        ['label' => 'Запись на приём', 'url' => ['/site/about']],
-        ['label' => 'Прейскурант', 'url' => ['/site/contact']],
-        ['label' => 'Касса', 'url' => ['/site/index']],
-        ['label' => 'Отчёты', 'url' => ['/site/about']],
-        ['label' => 'CRM', 'url' => ['/site/contact']],
-        ['label' => 'Лаборатория', 'url' => ['/site/index']],
-        ['label' => 'Материалы', 'url' => ['/site/about']],
-        ['label' => 'Страхование', 'url' => ['/site/contact']],
-        ['label' => 'Заработная плата', 'url' => ['/site/contact']],
-    ],
-]);
+if (Yii::$app->user->isGuest) {
+	echo Nav::widget([
+		'options' => ['class' => 'navbar-nav'],
+		'items' => [],
+	]);
+}
+else {
+	echo Nav::widget([
+		'options' => ['class' => 'navbar-nav'],
+		'items' => [
+			['label' => 'Картотека', 'url' => ['/site/index']],
+			['label' => 'Запись на приём', 'url' => ['/site/about']],
+			['label' => 'Прейскурант', 'url' => ['/site/contact']],
+			['label' => 'Касса', 'url' => ['/site/index']],
+			['label' => 'Отчёты', 'url' => ['/site/about']],
+			['label' => 'CRM', 'url' => ['/site/contact']],
+			['label' => 'Лаборатория', 'url' => ['/site/index']],
+			['label' => 'Материалы', 'url' => ['/site/about']],
+			['label' => 'Страхование', 'url' => ['/site/contact']],
+			['label' => 'Заработная плата', 'url' => ['/site/contact']],
+		],
+	]);
+}
 NavBar::end();
 ?>
 <div class="wrap" style="margin:28px 40px 0">

@@ -26,6 +26,7 @@ class MainController extends \yii\web\Controller {
 		    $model->password = '';
 		    return $this->render('login', [
 			    'model' => $model,
+			    'guest' => true
 		    ]);
 	    }
 	    // показываем форму

@@ -2,7 +2,15 @@ html,
 body {
     height: 100%;
 }
-
+#root{
+    width: 600px;
+    height: 500px;
+    margin: 30px auto 0;
+}
+#root .App-header{
+    min-height: auto;
+    background: #eee;
+}
 .wrap {
     min-height: 100%;
     height: auto;
@@ -262,7 +270,7 @@ html,body{
     font-size: 13px;
 }
 .notifies-wrap {
-    background: url(../images/ring.png);
+    background: url(../media/ring.png);
     position: absolute;
     width: 20px;
     height: 21px;
@@ -399,23 +407,23 @@ ul.patient-actions li {
     color: #313541;
 }
 ul.patient-actions li.called {
-    background: url(../images/shedule/called.png);
+    background: url(../media/shedule/called.png);
 }
 ul.patient-actions li.absent {
     width: 16px;
-    background: url(../images/shedule/absent.png);
+    background: url(../media/shedule/absent.png);
 }
 ul.patient-actions li.present {
     width: 16px;
-    background: url(../images/shedule/present.png);
+    background: url(../media/shedule/present.png);
 }
 ul.patient-actions li.user {
     width: 16px;
-    background: url(../images/shedule/user.png);
+    background: url(../media/shedule/user.png);
 }
 ul.patient-actions li.available {
     width: 16px;
-    background: url(../images/shedule/available.png);
+    background: url(../media/shedule/available.png);
 }
 /*-------------------------------------------------------  datepicker ------------------------------------------------*/
 .ui-datepicker .ui-datepicker-next {
