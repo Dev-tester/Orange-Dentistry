@@ -12,9 +12,15 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run build-rename",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-rename": "npm run build-rename-js && npm run build-rename-css && npm run build-copy-files && npm run build-del-excess-files",
+    "build-del-old-files": "del /Q web\\css\\* & del /Q web\\js\\* & del /Q web\\media\\*",
+    "build-rename-js": "rr build\\static\\js\\*.js \"main.*?chunk.js\" \"main.chunk.js\" && rr build\\static\\js\\*.js \".*?chunk.js\" \"chunk.js\" && rr build\\static\\js\\*.js \"main.*?.js\" \"main.js\" && rr build\\static\\js\\*.js \"runtime-main.*?.js\" \"runtime-main.js\"",
+    "build-rename-css": "rr build\\static\\css\\*.css \"main.*?.css\" \"main.css\"",
+    "build-copy-files": "xcopy /E /I \"build/static/css\" \"web/css\" & xcopy /E /I \"build/static/js\" \"web/js\" & Xcopy /E /I \"build/static/media\" \"web/media\"",
+    "build-del-excess-files": "del web\\css\\*.map  & del web\\js\\*.map  & del web\\js\\*.txt"
   },
   "eslintConfig": {
     "extends": "react-app"
