@@ -33,7 +33,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface{
 	 * @return static|null
 	 */
 	public static function findByUsername($username){
-		return User::findOne(['username' => $username]);
+		return User::findOne(['login' => $username]);
 	}
 
 	/**

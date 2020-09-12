@@ -114,7 +114,8 @@ a.desc:after {
     outline: none;
 }
 .wrap > .container{
-    padding: 60px 0 0;
+    padding: 28px 0 0;
+    min-width: 1500px;
 }
 .container-all{
     display: flex;
@@ -197,4 +198,249 @@ a.desc:after {
     top: -10px;
     color: #bbb;
     font-size: 14px;
+}
+/* ---------------------------------------------------------------------------- */
+html,body{
+    background: #f6f7f8;
+}
+.navbar-72 {
+    box-shadow: 0px 1px 4px #B0BAC5;
+    background: #fff;
+    margin: 0;
+    min-width: 1600px;
+}
+.navbar-72 .navbar-brand {
+    height: 72px;
+    padding-top:12px;
+    padding-bottom: 16px;
+}
+.navbar-72 .navbar-nav > li > a {
+    border-bottom: 4px solid #fff;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #313541;
+    line-height: 39px;
+}
+.navbar-72 .navbar-nav > li:hover > a {
+    border-bottom: 4px solid #F08786;
+    color: #F08786;
+}
+.navbar-72 .container {
+    width: 1570px;
+    margin-left: 0;
+    padding-left: 40px;
+}
+.navbar-72 .navbar-collapse{
+    width: 100%;
+    max-height: 72px;
+}
+.navbar-72 .navbar-collapse .navbar-nav{
+    float: none;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.user-block {
+    display: flex;
+    flex-direction: row;
+}
+.img-block {
+    border-radius: 24px;
+    overflow: hidden;
+}
+.user-data {
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.user-data .name {
+    font-size: 16px;
+    font-weight: 600;
+}
+.user-data .position {
+    font-size: 13px;
+}
+.notifies-wrap {
+    background: url(../images/ring.png);
+    position: absolute;
+    width: 20px;
+    height: 21px;
+    top: 10px;
+    left: -76px;
+}
+button.btn.logout {
+    position: absolute;
+    top: 50px;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+.incimings {
+    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 280px;
+    height: 80px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FF9346;
+}
+.page-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #3F4A56;
+}
+.ui-block{
+    background: #FFFFFF;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+.page-search {
+    color: #868789;
+    padding: 12px 0 12px 20px;
+}
+.doctor-menu{
+    margin-top: 56px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+}
+.doctor-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.doctor-menu ul li {
+    display: flex;
+    padding: 0 36px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+.main-schedule.ui-block {
+    margin-top: 40px;
+    padding-right: 40px;
+}
+.row.second {
+    padding-top: 32px;
+}
+.doctors-shedule{
+    text-align: center;
+}
+.top-row {
+    padding-left: 60px;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+.top-row span {
+    margin: 0 6px;
+}
+.doctors-shedule.row {
+    height: 40px;
+    font-weight: 600;
+    text-align: center;
+}
+ul.patient-actions {
+    list-style: none;
+    padding-left: 12px;
+    margin-top: 10px;
+}
+ul.patient-actions li {
+    width: 20px;
+    height: 16px;
+    display: inline-block;
+}
+.patient-shedule-wrap {
+    width: 224px;
+    display: flex;
+    padding: 0 0 16px 40px;
+}
+.patient-shedule-block {
+    border-left: 10px solid #e34c4c;
+    background: #F6F7F8;
+    border-radius: 10px;
+    width: 180px;
+    height: 72px;
+    padding-top: 12px;
+    margin-left: 16px;
+}
+.patient-name {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 10px;
+}
+.patient-time {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    align-items: center;
+    text-align: right;
+    color: #313541;
+}
+ul.patient-actions li.called {
+    background: url(../images/shedule/called.png);
+}
+ul.patient-actions li.absent {
+    width: 16px;
+    background: url(../images/shedule/absent.png);
+}
+ul.patient-actions li.present {
+    width: 16px;
+    background: url(../images/shedule/present.png);
+}
+ul.patient-actions li.user {
+    width: 16px;
+    background: url(../images/shedule/user.png);
+}
+ul.patient-actions li.available {
+    width: 16px;
+    background: url(../images/shedule/available.png);
+}
+/*-------------------------------------------------------  datepicker ------------------------------------------------*/
+.ui-datepicker .ui-datepicker-next {
+    left: 22px;
+}
+.hasDatepicker .ui-widget.ui-widget-content{
+    border: 0;
+    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    min-width: 280px;
+}
+.hasDatepicker .ui-datepicker-header {
+    background: none;
+    border: 0;
+    padding: 16px 0;
+}
+.hasDatepicker .ui-state-default{
+    border: 0;
+    border-bottom: 4px solid #e34c4c;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7px 8px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
 }
