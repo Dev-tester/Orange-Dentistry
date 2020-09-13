@@ -1,15 +1,24 @@
 html,
 body {
     height: 100%;
+    font-size: 18px;
 }
-#root{
+#root-logo{
     width: 600px;
     height: 500px;
     margin: 30px auto 0;
 }
-#root .App-header{
+#root-logo .App-header{
     min-height: auto;
-    background: #eee;
+    background: #f6f7f8;
+    color: #888888;
+}
+#root-appoint {
+    position: fixed;
+    top: 72px;
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 40px;
 }
 .wrap {
     min-height: 100%;
@@ -211,43 +220,53 @@ a.desc:after {
 html,body{
     background: #f6f7f8;
 }
+body{
+    min-width: 1440px;
+}
 .navbar-72 {
     box-shadow: 0px 1px 4px #B0BAC5;
     background: #fff;
     margin: 0;
-    min-width: 1600px;
+    max-height: 72px;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 .navbar-72 .navbar-brand {
     height: 72px;
-    padding-top:12px;
+    padding-top:10px;
     padding-bottom: 16px;
 }
 .navbar-72 .navbar-nav > li > a {
-    border-bottom: 4px solid #fff;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     color: #313541;
     line-height: 39px;
 }
-.navbar-72 .navbar-nav > li:hover > a {
+.navbar-72 .navbar-nav > li:hover > a,.navbar-72 .navbar-nav > li.active > a {
     border-bottom: 4px solid #F08786;
     color: #F08786;
 }
 .navbar-72 .container {
-    width: 1570px;
+    width: calc(100% - 100px);
+    min-width: 1440px;
     margin-left: 0;
     padding-left: 40px;
 }
 .navbar-72 .navbar-collapse{
-    width: 100%;
-    max-height: 72px;
+    margin-left: 124px;
 }
 .navbar-72 .navbar-collapse .navbar-nav{
     float: none;
     margin: 0;
     display: flex;
     justify-content: space-between;
+}
+.login-widget {
+    position: fixed;
+    right: 94px;
+    top: 100px;
 }
 .user-block {
     display: flex;
@@ -259,12 +278,13 @@ html,body{
 }
 .user-data {
     margin-left: 16px;
+    margin-top: 2px;
     display: flex;
     flex-direction: column;
 }
 .user-data .name {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 700;
 }
 .user-data .position {
     font-size: 13px;
@@ -274,15 +294,15 @@ html,body{
     position: absolute;
     width: 20px;
     height: 21px;
-    top: 10px;
-    left: -76px;
+    top: 8px;
+    left: -75px;
 }
 button.btn.logout {
     position: absolute;
     top: 50px;
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
-.incimings {
+.incomings {
     box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     width: 280px;
@@ -301,11 +321,15 @@ button.btn.logout {
 .page-title {
     font-style: normal;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 26px;
     line-height: 36px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #3F4A56;
+}
+.page-breadcrumb {
+    font-size: 11px;
+    line-height: 20px;
 }
 .ui-block{
     background: #FFFFFF;
@@ -319,92 +343,10 @@ button.btn.logout {
 .page-search {
     color: #868789;
     padding: 12px 0 12px 20px;
-}
-.doctor-menu{
-    margin-top: 56px;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-}
-.doctor-menu ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-}
-.doctor-menu ul li {
-    display: flex;
-    padding: 0 36px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    text-transform: uppercase;
-}
-.main-schedule.ui-block {
-    margin-top: 40px;
-    padding-right: 40px;
-}
-.row.second {
-    padding-top: 32px;
-}
-.doctors-shedule{
-    text-align: center;
-}
-.top-row {
-    padding-left: 60px;
-    height: 108px;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-}
-.top-row span {
-    margin: 0 6px;
-}
-.doctors-shedule.row {
-    height: 40px;
-    font-weight: 600;
-    text-align: center;
-}
-ul.patient-actions {
-    list-style: none;
-    padding-left: 12px;
-    margin-top: 10px;
-}
-ul.patient-actions li {
-    width: 20px;
-    height: 16px;
-    display: inline-block;
-}
-.patient-shedule-wrap {
-    width: 224px;
-    display: flex;
-    padding: 0 0 16px 40px;
-}
-.patient-shedule-block {
-    border-left: 10px solid #e34c4c;
-    background: #F6F7F8;
-    border-radius: 10px;
-    width: 180px;
-    height: 72px;
-    padding-top: 12px;
-    margin-left: 16px;
-}
-.patient-name {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    margin-left: 10px;
-}
-.patient-time {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    align-items: center;
-    text-align: right;
-    color: #313541;
+    position: relative;
+    top: -10px;
+    left: 52px;
+    text-align: left;
 }
 ul.patient-actions li.called {
     background: url(../media/shedule/called.png);

@@ -37,8 +37,8 @@ class MainController extends \yii\web\Controller {
 			    'pageSize' => 20,
 		    ],
 	    ]);
-
-	    return $this->render('index', [
+	    $this->view->params['action'] = 'appoint';
+	    return $this->render('appoint', [
 		        'model' => $model,
 		        'productProvider' => $productProvider,
 		        'uploadsProvider' => null

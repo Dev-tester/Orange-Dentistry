@@ -29,7 +29,7 @@ AppAsset::register($this);
 HTML кодом (например, Javascript'ом), который нужно разместить в начале <body> страницы.-->
 <?php
 NavBar::begin([
-    'brandLabel' => Html::img('@web/images/logo.png', ['alt'=>Yii::$app->name]),
+    'brandLabel' => Html::img('@web/media/logo.png', ['alt'=>Yii::$app->name]),
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar navbar-top navbar-72',
@@ -45,22 +45,22 @@ else {
 	echo Nav::widget([
 		'options' => ['class' => 'navbar-nav'],
 		'items' => [
-			['label' => 'Картотека', 'url' => ['/site/index']],
-			['label' => 'Запись на приём', 'url' => ['/site/about']],
-			['label' => 'Прейскурант', 'url' => ['/site/contact']],
-			['label' => 'Касса', 'url' => ['/site/index']],
-			['label' => 'Отчёты', 'url' => ['/site/about']],
-			['label' => 'CRM', 'url' => ['/site/contact']],
-			['label' => 'Лаборатория', 'url' => ['/site/index']],
-			['label' => 'Материалы', 'url' => ['/site/about']],
-			['label' => 'Страхование', 'url' => ['/site/contact']],
-			['label' => 'Заработная плата', 'url' => ['/site/contact']],
+			['label' => 'Картотека', 'url' => ['/site/index'], 'options'=>['class'=> $this->params['action'] == 'cardIndex' ? 'active':'']],
+			['label' => 'Запись на приём', 'url' => ['/site/about'], 'options'=>['class'=> $this->params['action'] == 'appoint' ? 'active':'']],
+			['label' => 'Прейскурант', 'url' => ['/site/contact'], 'options'=>['class'=> $this->params['action'] == 'pricelist' ? 'active':'']],
+			['label' => 'Касса', 'url' => ['/site/index'], 'options'=>['class'=> $this->params['action'] == 'cashOffice' ? 'active':'']],
+			['label' => 'Отчёты', 'url' => ['/site/about'], 'options'=>['class'=> $this->params['action'] == 'reports' ? 'active':'']],
+			['label' => 'CRM', 'url' => ['/site/contact'], 'options'=>['class'=> $this->params['action'] == 'crm' ? 'active':'']],
+			['label' => 'Лаборатория', 'url' => ['/site/index'], 'options'=>['class'=> $this->params['action'] == 'laboratory' ? 'active':'']],
+			['label' => 'Материалы', 'url' => ['/site/about'], 'options'=>['class'=> $this->params['action'] == 'materials' ? 'active':'']],
+			['label' => 'Страхование', 'url' => ['/site/contact'], 'options'=>['class'=> $this->params['action'] == 'ensure' ? 'active':'']],
+			['label' => 'Заработная плата', 'url' => ['/site/contact'], 'options'=>['class'=> $this->params['action'] == 'sallary' ? 'active':'']],
 		],
 	]);
 }
 NavBar::end();
 ?>
-<div class="wrap" style="margin:28px 40px 0">
+<div class="wrap">
     <?= $content ?>
 </div>
 
