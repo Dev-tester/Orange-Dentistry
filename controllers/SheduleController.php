@@ -14,9 +14,9 @@ use app\models\LoginForm;
 use app\models\UploadedFile as Upload;
 use yii\web\UploadedFile;
 
-class MainController extends \yii\web\Controller {
+class SheduleController extends \yii\web\Controller {
 
-    public function actionIndex(){
+    public function actionRecords(){
 	    // проверяем авторизацию
     	if (Yii::$app->user->isGuest){                                                                                  // если не авторизован, авторизация
 		    $model = new LoginForm();
@@ -31,19 +31,7 @@ class MainController extends \yii\web\Controller {
 		    ]);
 	    }
 	    // показываем форму
-	    $model = new Upload();
-	    $productProvider = new ActiveDataProvider([
-		    'query' => Product::find()->where(['AND','buy_price>100','buy_price<200'])->orderBy(['title' => SORT_ASC]),
-		    'pagination' => [
-			    'pageSize' => 20,
-		    ],
-	    ]);
-	    $this->view->params['action'] = 'appoint';
-	    return $this->render('appoint', [
-		        'model' => $model,
-		        'productProvider' => $productProvider,
-		        'uploadsProvider' => null
-	    ]);
+	    echo "AAAAAAAAAAAAAAAAAAA";
     }
 
 	public function actionUpload(){

@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
+import Shedule from './Shedule';
 import "react-datepicker/dist/react-datepicker.css";
 import './Appoint.css';
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
@@ -14,7 +15,6 @@ class Appoint extends React.Component {
     super(props);
     this.state = {
       specializations: [  'Терапевты','Хирурги','Ортопеды','Ортодонты'],
-      names: [  'Иванов И.И.','Александрова А.А.','Буслаев И.Э.','Вердеревская И.И.'],
       startDate: new Date()
     }
     this.handleChange = this.handleChange.bind(this);
@@ -80,74 +80,13 @@ class Appoint extends React.Component {
               <div className="doctor-menu ui-block">
                 <ul>
                   {specializations.map((value, index) => {
-                    return <li><a key={index}>{value}</a></li>
+                    return <li key={index}><a>{value}</a></li>
                   })}
                 </ul>
               </div>
             </div>
             <div className="row">
-              <div className="main-schedule ui-block">
-                <div className="main-schedule-title">
-                  <div className="top-row">15 сентября 2020<span>|</span>1 смена</div>
-                  <div className="doctors-shedule row">
-                    {names.map((value, index) => {
-                      return <div className="col-sm-3 col-md-3 col-lg-3">{value}</div>
-                    })}
-                  </div>
-                  <div className="patients-shedule row">
-                    <div className="col-sm-3 col-md-3 col-lg-3">
-                      <div className="patient-shedule-wrap">
-                        <div className="patient-time">9:00</div>
-                        <div className="patient-shedule-block">
-                          <div className="patient-name">Бальсунов И.В.</div>
-                          <ul className="patient-actions">
-                            <li className="called"></li>
-                            <li className="user"></li>
-                          </ul>
-                          <span className="birthday"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 col-md-3 col-lg-3">
-                      <div className="patient-shedule-wrap">
-                        <div className="patient-time">9:00</div>
-                        <div className="patient-shedule-block">
-                          <div className="patient-name">Бальсунов И.В.</div>
-                          <ul className="patient-actions">
-                            <li className="called"></li>
-                          </ul>
-                          <span className="birthday"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 col-md-3 col-lg-3">
-                      <div className="patient-shedule-wrap">
-                        <div className="patient-time">9:00</div>
-                        <div className="patient-shedule-block">
-                          <div className="patient-name">Бальсунов И.В.</div>
-                          <ul className="patient-actions">
-                            <li className="called"></li>
-                            <li className="user"></li>
-                          </ul>
-                          <span className="birthday"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 col-md-3 col-lg-3">
-                      <div className="patient-shedule-wrap">
-                        <div className="patient-time">9:00</div>
-                        <div className="patient-shedule-block">
-                          <div className="patient-name">Бальсунов И.В.</div>
-                          <ul className="patient-actions">
-                            <li className="called"></li>
-                          </ul>
-                          <span className="birthday"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Shedule/>
             </div>
           </div>
           <div className="col-sm-2 col-md-2 col-lg-2">
