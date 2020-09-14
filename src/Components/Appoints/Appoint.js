@@ -88,6 +88,9 @@ class Appoint extends React.Component {
             <div className="row">
               <Shedule/>
             </div>
+            <div className="row">
+              <Shedule/>
+            </div>
           </div>
           <div className="col-sm-2 col-md-2 col-lg-2">
             <LiveFeed/>

@@ -30,8 +30,32 @@ class SheduleController extends \yii\web\Controller {
 			    'guest' => true
 		    ]);
 	    }
-	    // показываем форму
-	    echo "AAAAAAAAAAAAAAAAAAA";
+    	// из localhost:3000 не работает ?
+    	if (Yii::$app->request->isAjax){
+		    return ["aaa"=>"bbbb222"];
+	    }
+	    $connection = Yii::$app->getDb();
+	    $result = ['doctors' => [],'shedule' => []];
+	    $command = $connection->createCommand('SELECT 	doctors.id,"family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name,
+															branches.address as branch 
+													FROM 	doctors
+															INNER JOIN branches ON branches.id = doctors.branchid');
+	    $doctors = $command->queryAll();
+	    foreach ($doctors as $doctor){
+		    $result['doctors'][] = [
+			    'id' => $doctor['id'],
+		    	'name' => $doctor['name'],
+			    'branch' => $doctor['branch']
+		    ];
+	    }
+	    $command = $connection->createCommand('SELECT * FROM "shedule-reception" ORDER BY id ASC');
+	    $shedule = $command->queryAll();
+	    foreach ($shedule as $row){
+		    $doctorid = $row['doctorid'];
+		    $row['actions'] = explode(",",preg_replace("/[\{\}]/","",$row['actions']));
+		    $result['shedule'][$doctorid][] = $row;
+	    }
+    	return json_encode($result);
     }
 
 	public function actionUpload(){
