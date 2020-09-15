@@ -1,0 +1,503 @@
+html,
+body {
+    height: 100%;
+    font-size: 18px;
+}
+#root-logo{
+    width: 600px;
+    height: 500px;
+    margin: 30px auto 0;
+}
+#root-logo .App-header{
+    min-height: auto;
+    background: #f6f7f8;
+    color: #888888;
+}
+#root-appoint {
+    top: 72px;
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 40px;
+}
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding: 15px;
+    border: none;
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+.wrap > .container{
+    padding: 28px 0 0;
+    min-width: 1500px;
+}
+.container-all{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px);
+    align-items: center;
+}
+.container-top{
+    height: 0%;
+    overflow: hidden;
+    display: flex;
+}
+.container-middle{
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.container-bottom{
+    height: 80%;
+    overflow: hidden;
+    display: flex;
+}
+
+.table-wrapper {
+    height: calc(100% - 80px);
+    max-width: 1170px;
+    overflow: auto;
+}
+
+.container-all .pagination {
+    margin: 10px 0;
+}
+.container-all table.table tr td {
+    max-width: 500px;
+}
+.container-top.uploaded {
+    height: 40%;
+}
+.container-middle.uploaded {
+    background: #fafafa;
+    height: 10%;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 0 10px 70px;
+    flex-direction: row;
+}
+.container-bottom.uploaded {
+    height: 50%;
+}
+.container-middle button{
+    height: 60px;
+    padding: 20px 40px;
+    margin-top: 10px;
+    display: flex;
+}
+.container-middle .modal-body button, .container-middle.uploaded button{
+    height: 50px;
+    padding: 15px 40px;
+}
+.container-middle.uploaded button{
+    margin: 0 0 0 60px;
+}
+.container-all h4 {
+    margin: 0;
+    display: flex;
+}
+.container-middle.uploaded form select {
+    padding: 7px;
+    margin: 10px 0 10px 15px;;
+}
+.modal-header .close{
+    height: auto;
+    padding: 0;
+}
+.modal-body .comment {
+    position: relative;
+    top: -10px;
+    color: #bbb;
+    font-size: 14px;
+}
+/* ---------------------------------------------------------------------------- */
+html,body{
+    background: #f6f7f8;
+}
+body{
+    min-width: 1440px;
+}
+.navbar-72 {
+    box-shadow: 0px 1px 4px #B0BAC5;
+    background: #fff;
+    margin: 0;
+    max-height: 72px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.navbar-72 .navbar-brand {
+    height: 72px;
+    padding-top:10px;
+    padding-bottom: 16px;
+}
+.navbar-72 .navbar-nav > li > a {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #313541;
+    line-height: 39px;
+}
+.navbar-72 .navbar-nav > li:hover > a,.navbar-72 .navbar-nav > li.active > a {
+    border-bottom: 4px solid #F08786;
+    color: #F08786;
+}
+.navbar-72 .container {
+    width: calc(100% - 100px);
+    min-width: 1440px;
+    margin-left: 0;
+    padding-left: 40px;
+}
+.navbar-72 .navbar-collapse{
+    margin-left: 124px;
+}
+.navbar-72 .navbar-collapse .navbar-nav{
+    float: none;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.login-widget {
+    position: fixed;
+    right: 94px;
+    top: 100px;
+}
+.user-block {
+    display: flex;
+    flex-direction: row;
+}
+.img-block {
+    border-radius: 24px;
+    overflow: hidden;
+}
+.user-data {
+    margin-left: 16px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+}
+.user-data .name {
+    font-size: 17px;
+    font-weight: 700;
+}
+.user-data .position {
+    font-size: 13px;
+}
+.notifies-wrap {
+    background: url(../media/ring.png);
+    position: absolute;
+    width: 20px;
+    height: 21px;
+    top: 8px;
+    left: -75px;
+}
+button.btn.logout {
+    position: absolute;
+    top: 50px;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+.incomings {
+    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 280px;
+    height: 80px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FF9346;
+}
+.page-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 36px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #3F4A56;
+}
+.page-breadcrumb {
+    font-size: 11px;
+    line-height: 20px;
+}
+.ui-block{
+    background: #FFFFFF;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+.page-search {
+    color: #868789;
+    padding: 12px 0 12px 20px;
+    position: relative;
+    top: -10px;
+    left: 52px;
+    text-align: left;
+}
+.doctor-menu{
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px #B0BAC5;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+}
+.doctor-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-inline-start: 12px;
+}
+.doctor-menu ul li {
+    display: flex;
+    padding: 0 36px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+.doctor-menu ul li:hover a {
+    border-bottom: 4px solid #F08786;
+    color: #F08786;
+}
+.main-schedule.ui-block {
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px #B0BAC5;
+    margin-top: 40px;
+    padding-right: 40px;
+}
+.row.second {
+    padding-top: 32px;
+}
+.row.third {
+    padding-top: 16px;
+}
+.doctors-shedule{
+    text-align: center;
+}
+.top-row {
+    padding-left: 60px;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+.top-row span {
+    margin: 0 6px;
+}
+.doctors-shedule.row {
+    height: 40px;
+    font-weight: 600;
+    text-align: center;
+}
+ul.patient-actions {
+    list-style: none;
+    padding-left: 12px;
+    margin-top: 10px;
+    display: flex;
+}
+ul.patient-actions li {
+    width: 20px;
+    height: 16px;
+    margin-right: 10px;
+}
+.patient-shedule-wrap {
+    width: 224px;
+    display: flex;
+    padding: 0 0 16px 40px;
+}
+.patient-shedule-block {
+    border-left: 10px solid #e34c4c;
+    background: #F6F7F8;
+    border-radius: 10px;
+    width: 180px;
+    height: 72px;
+    padding-top: 12px;
+    margin-left: 16px;
+}
+.patient-name {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 10px;
+}
+.patient-time {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    align-items: center;
+    text-align: right;
+    color: #313541;
+}
+ul.patient-actions li.call {
+    background: url(../media/shedule/called.png);
+}
+ul.patient-actions li.red_umb {
+    width: 16px;
+    background: url(../media/shedule/absent.png);
+}
+ul.patient-actions li.green_umb {
+    width: 16px;
+    background: url(../media/shedule/present.png);
+}
+ul.patient-actions li.red_person {
+    width: 16px;
+    background: url(../media/shedule/user.png);
+}
+ul.patient-actions li.sms_verified {
+    background: url(../media/shedule/available.png);
+}
+ul.patient-actions li.sms_unverified {
+    background: url(../media/shedule/unverified.png);
+}
+.patient-empty-block {
+    border: 0;
+    background: url(../media/shedule/add.png);
+    min-width: 182px;
+    height: 16px;
+    margin-left: 16px;
+    cursor: pointer;
+}
+/*-------------------------------------------------------  datepicker ------------------------------------------------*/
+.ui-datepicker .ui-datepicker-next {
+    left: 22px;
+}
+.hasDatepicker .ui-widget.ui-widget-content{
+    border: 0;
+    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    min-width: 280px;
+}
+.hasDatepicker .ui-datepicker-header {
+    background: none;
+    border: 0;
+    padding: 16px 0;
+}
+.hasDatepicker .ui-state-default{
+    border: 0;
+    border-bottom: 4px solid #e34c4c;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7px 8px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+}
