@@ -58,40 +58,31 @@ class SheduleController extends \yii\web\Controller {
     	return json_encode($result);
     }
 
-	public function actionUpload(){
-    	$model = new Upload();
-		$uploadsProvider = null;
-		if (Yii::$app->request->isPost){
-			$model->priceFile = UploadedFile::getInstance($model, 'priceFile');
-			if ($model->upload()){
-				$uploadsProvider = new ArrayDataProvider([
-					'allModels' => $model->result,
-					'pagination' => [
-						'pageSize' => 10,
-					],
-				]);
+	public function actionPatients(){
+		// проверяем авторизацию
+		if (Yii::$app->user->isGuest){                                                                                  // если не авторизован, авторизация
+			$model = new LoginForm();
+			if ($model->load(Yii::$app->request->post()) && $model->login()) {
+				return $this->goBack();
 			}
-		}
-		$productProvider = new ActiveDataProvider([
-			'query' => Product::find()->where(['AND','buy_price>100','buy_price<200'])->orderBy(['title' => SORT_ASC]),
-			'pagination' => [
-				'pageSize' => 20,
-			],
-		]);
-		return $this->render('index', [
-				'model' => $model,
-				'productProvider' => $productProvider,
-				'uploadsProvider' => $uploadsProvider
-		]);
-	}
 
-	/**
-	 * Logout action.
-	 *
-	 * @return Response
-	 */
-	public function actionLogout(){
-		Yii::$app->user->logout();
-		return $this->goHome();
+			$model->password = '';
+			return $this->render('login', [
+				'model' => $model,
+				'guest' => true
+			]);
+		}
+		// из localhost:3000 не работает ?
+		if (Yii::$app->request->isAjax){
+			return ["aaa"=>"bbbb222"];
+		}
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio, patients.med_card_id, patients.birthday, patients.phone,med.*
+													FROM 	patients 
+															INNER JOIN medical_cards AS med ON med.id=patients.med_card_id
+													WHERE CAST (document_vectors as VARCHAR) ILIKE :query')
+								->bindValue(':query', '%'.$_GET['q'].'%');
+		$result = $command->queryAll();
+		return json_encode($result);
 	}
 }
