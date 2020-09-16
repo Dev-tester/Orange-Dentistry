@@ -1,22 +1,32 @@
 .patient-appoint-form {
   display: block;
-  z-index: 999;
-  position: absolute;
-  top: 12%;
-  left: 12%;
+  z-index: 1;
+  position: fixed;
+  top: 35%;
+  left: 28%;
   bottom: 0;
   right: 0;
   width: 800px;
   height: 288px;
-  background: #e5e5e5;
+  background: #f6f7f8;
   box-shadow: grey 1px 2px 3px;
   text-align: center;
+  border-radius: 5px;
 }
 
 .patient-appoint-form input {
   width: 606px;
   height: 72px;
   margin-bottom: 40px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: grey 1px 2px 3px;
+}
+.patient-appoint-form :-ms-input-placeholder {
+  text-align: center;
+}
+.patient-appoint-form input::placeholder {
+  text-align: center;
 }
 
 .patient-appoint-form .text {
@@ -45,4 +55,34 @@
   box-shadow: none !important;
   border-color: #fe9841 !important;
   width: 220px;
+}
+.search_results {
+  background-color: white;
+  position: fixed;
+  z-index: 2;
+  width: 606px;
+  height: auto;
+  top: 50%;
+  left: 33%;
+  max-height: 600px;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: grey 0px 0px 5px 0px;
+  margin-left: 3px;
+}
+.search_results li {
+  list-style-type: none;
+}
+.search_results p {
+  font-size: 12px;
+  line-height: 24px;
+}
+.search_results .col-lg-3:nth-child(2) p {
+  text-align: left;
+}
+.search_results .col-lg-3:nth-child(2) ul {
+  padding: 0 !important;
+}
+.search_results .col-lg-3:nth-child(2) li {
+  text-align: left;
 }

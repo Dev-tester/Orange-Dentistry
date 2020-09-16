@@ -1,6 +1,6 @@
 import React from 'react';
 import './Appoint.css';
-import Popbox from "./popbox"
+import Popbox from "./popbox";
 class Shedule extends React.Component {
 	constructor(props) {
 		super(props);
@@ -18,6 +18,8 @@ class Shedule extends React.Component {
 		this.callChange = this.callChange.bind(this);
 		this.timeChange = this.timeChange.bind(this);
 		this.clickEvent = this.clickEvent.bind(this);
+		this.appointClicked = this.appointClicked.bind(this)
+		this.closePopbox = this.closePopbox.bind(this)
 	}
 
 	componentDidMount() {
@@ -68,6 +70,17 @@ class Shedule extends React.Component {
 
 	clickEvent() {
 
+	}
+	appointClicked(e) {
+		e.preventDefault()
+		this.setState(() => {
+			return { appointButtonClicked: true }
+		})
+	}
+	closePopbox() {
+		this.setState(() => {
+			return { appointButtonClicked: false }
+		})
 	}
 
 	render() {
@@ -135,15 +148,15 @@ class Shedule extends React.Component {
 
 										)
 									}) : ''}
-									<button  className={"patient-appoint"}>Записать</button>
+									<button onClick={(e) => this.appointClicked(e)} className={"patient-appoint"}>Записать</button>
 								</div>
 
 							)
 						})}
 					</div>
 				</div>
-				<Popbox clicked = {this.state.appointButtonClicked}/>
-				</div>
+				<Popbox closeClicked={this.closePopbox} clicked={this.state.appointButtonClicked} />
+			</div>
 		)
 	}
 }
