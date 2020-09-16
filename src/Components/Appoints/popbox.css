@@ -1,0 +1,48 @@
+.patient-appoint-form {
+  display: block;
+  z-index: 999;
+  position: absolute;
+  top: 12%;
+  left: 12%;
+  bottom: 0;
+  right: 0;
+  width: 800px;
+  height: 288px;
+  background: #e5e5e5;
+  box-shadow: grey 1px 2px 3px;
+  text-align: center;
+}
+
+.patient-appoint-form input {
+  width: 606px;
+  height: 72px;
+  margin-bottom: 40px;
+}
+
+.patient-appoint-form .text {
+  margin-top: 20px;
+}
+
+.patient-appoint-form .input_container {
+  text-align: center;
+}
+
+.popbox_buttons .button_appoint button {
+  background: #3b80d6 !important;
+  border-radius: 50px !important;
+  color: white;
+  height: 40px;
+  box-shadow: none !important;
+  border-color: #3b80d6 !important;
+  width: 160px;
+}
+
+.popbox_buttons .button_add_patient button {
+  background: #fe9841 !important;
+  border-radius: 50px !important;
+  color: white;
+  height: 40px;
+  box-shadow: none !important;
+  border-color: #fe9841 !important;
+  width: 220px;
+}
