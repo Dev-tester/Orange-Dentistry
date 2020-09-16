@@ -16,24 +16,23 @@ use yii\web\UploadedFile;
 
 class SheduleController extends \yii\web\Controller {
 
-    public function actionRecords(){
-	    // проверяем авторизацию
-    	if (Yii::$app->user->isGuest){                                                                                  // если не авторизован, авторизация
-		    $model = new LoginForm();
-		    if ($model->load(Yii::$app->request->post()) && $model->login()) {
-			    return $this->goBack();
-		    }
+	public function behaviors()
+	{
+		return array_merge(parent::behaviors(), [
+			'corsFilter'  => [
+				'class' => \yii\filters\Cors::class,
+				'cors'  => [
+					'Origin'                           => ['http://localhost:3000'],
+					'Access-Control-Request-Method'    => ['POST','GET','PUT'],
+					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
+				],
+			],
 
-		    $model->password = '';
-		    return $this->render('login', [
-			    'model' => $model,
-			    'guest' => true
-		    ]);
-	    }
-    	// из localhost:3000 не работает ?
-    	if (Yii::$app->request->isAjax){
-		    return ["aaa"=>"bbbb222"];
-	    }
+		]);
+	}
+
+	public function actionRecords(){
 	    $connection = Yii::$app->getDb();
 	    $result = ['doctors' => [],'shedule' => []];
 	    $command = $connection->createCommand('SELECT 	doctors.id,"family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name,
@@ -59,23 +58,6 @@ class SheduleController extends \yii\web\Controller {
     }
 
 	public function actionPatients(){
-		// проверяем авторизацию
-		if (Yii::$app->user->isGuest){                                                                                  // если не авторизован, авторизация
-			$model = new LoginForm();
-			if ($model->load(Yii::$app->request->post()) && $model->login()) {
-				return $this->goBack();
-			}
-
-			$model->password = '';
-			return $this->render('login', [
-				'model' => $model,
-				'guest' => true
-			]);
-		}
-		// из localhost:3000 не работает ?
-		if (Yii::$app->request->isAjax){
-			return ["aaa"=>"bbbb222"];
-		}
 		$connection = Yii::$app->getDb();
 		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio, patients.med_card_id, patients.birthday, patients.phone,med.*
 													FROM 	patients 
