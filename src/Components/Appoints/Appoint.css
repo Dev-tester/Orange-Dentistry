@@ -323,7 +323,7 @@ button.react-datepicker__navigation {
     margin-left: 15px;
 }
 .livefeed-box .buttons button.call {
-    background: url('media/appoint/call.png');
+    background: url('media/appoint/call.png'); 
 }
 .livefeed-box .buttons button.calendar {
     background: url('media/appoint/canceled_apps.png');
@@ -332,4 +332,13 @@ button.react-datepicker__navigation {
     height: 60px;
     margin-top: -6px;
     margin-left: 10px;
+}
+.patient-appoint {
+    border: 1px solid grey;
+    border-radius: 50px;
+    width: 100px;
+    margin: 0 auto;
+}
+.unvisible {
+    display: none;
 }

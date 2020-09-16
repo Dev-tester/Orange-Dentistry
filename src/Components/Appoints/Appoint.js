@@ -46,6 +46,7 @@ class Appoint extends React.Component {
         Interval = this.state.Interval;
     return (
         <div className="App">
+          <div className="row">
           <div className="col-sm-2 col-md-2 col-lg-2">
             <div className="row">
               <div className="incomings">Входящие звонки</div>
@@ -56,6 +57,7 @@ class Appoint extends React.Component {
                   onChange={this.handleChange}
                   locale="ru"
                   inline
+                  
               />
             </div>
             <div className="row third text-left" style={{minWidth:'300px'}}>
@@ -77,10 +79,10 @@ class Appoint extends React.Component {
               </div>
             </div>
             <div className="row" style={{marginTop:'45px'}}>
-              <div className="doctor-menu ui-block">
+              <div className="doctor-menu ui-block col-lg-12">
                 <ul>
                   {specializations.map((value, index) => {
-                    return <li key={index}><a>{value}</a></li>
+                    return <div className="col-lg-2"><li key={index}><a>{value}</a></li></div>
                   })}
                 </ul>
               </div>
@@ -94,6 +96,7 @@ class Appoint extends React.Component {
           </div>
           <div className="col-sm-2 col-md-2 col-lg-2">
             <LiveFeed/>
+          </div>
           </div>
         </div>
     );
