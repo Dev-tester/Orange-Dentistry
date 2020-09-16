@@ -6,12 +6,7 @@ class Shedule extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			doctors: [
-				{ id: 1, name: "Иванов И. И.", branch: "Кубанская, 54" },
-				{ id: 2, name: "Александрова А. А.", branch: "Кубанская, 54" },
-				{ id: 3, name: "Буслаев И. Э.", branch: "Кубанская, 54" },
-				{ id: 4, name: "Вердеревская И. И.", branch: "Кубанская, 54" }
-			],
+			doctors: [],
 			records: [],
 			appointButtonClicked: false,
 		}
