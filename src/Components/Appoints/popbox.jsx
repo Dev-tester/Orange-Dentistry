@@ -33,7 +33,7 @@ class Popbox extends React.Component {
           return el.name.match(this.state.targetValue);
         });
         console.log(newUsers);
-        return { ...this.state, users: newUsers };
+        return { users: newUsers };
       });
     }
     if (this.state.targetValue === "") {
@@ -48,6 +48,7 @@ class Popbox extends React.Component {
           });
         });
     }
+
     console.log(this.state.users);
   }
 
@@ -155,13 +156,16 @@ class Popbox extends React.Component {
             {this.state.searchActive && this.state.users ? (
               <div className={"col-lg-12 search_results"}>
                 <div className="row">
-                  <div className="col-lg-3">
+                  <div className="col-lg-2">
                     <p>
                       {" "}
                       <strong>Номер карты</strong>{" "}
                     </p>
+                    {this.state.users.map((el, index) => {
+                      return <li key={index}>{el.med_card_id}</li>;
+                    })}
                   </div>
-                  <div className="col-lg-3">
+                  <div className="col-lg-4">
                     <p>
                       {" "}
                       <strong>ФИО</strong>{" "}
@@ -178,6 +182,9 @@ class Popbox extends React.Component {
                     <strong>
                       <p>Дата рождения</p>{" "}
                     </strong>{" "}
+                    {this.state.users.map((el, index) => {
+                      return <li key={index}>{el.birthday}</li>;
+                    })}
                   </div>
                   <div className="col-lg-3">
                     {" "}
@@ -185,6 +192,9 @@ class Popbox extends React.Component {
                       {" "}
                       <p>Номер телефона</p>{" "}
                     </strong>{" "}
+                    {this.state.users.map((el, index) => {
+                      return <li key={index}>{el.phone}</li>;
+                    })}
                   </div>
                 </div>
               </div>

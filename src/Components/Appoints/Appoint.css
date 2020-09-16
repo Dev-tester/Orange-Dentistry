@@ -1,344 +1,344 @@
-.doctor-menu{
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px #B0BAC5;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
+.doctor-menu {
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px #b0bac5;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
 }
 .doctor-menu ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding-inline-start: 12px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding-inline-start: 12px;
 }
 .doctor-menu ul li {
-    display: flex;
-    padding: 0 36px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    text-transform: uppercase;
+  display: flex;
+  padding: 0 36px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+  text-transform: uppercase;
 }
-.doctor-menu ul li a{
-    border-bottom: 4px solid transparent;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    line-height: 38px;
-    color: #16181E;
+.doctor-menu ul li a {
+  border-bottom: 4px solid transparent;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  line-height: 38px;
+  color: #16181e;
 }
 .doctor-menu ul li:hover a {
-    border-bottom: 4px solid #3B80D6;
-    color: #3B80D6;
-    text-decoration: none;
+  border-bottom: 4px solid #3b80d6;
+  color: #3b80d6;
+  text-decoration: none;
 }
 .main-schedule.ui-block {
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px #B0BAC5;
-    margin-top: 40px;
-    padding-right: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px #b0bac5;
+  margin-top: 40px;
+  padding-right: 40px;
 }
 .row.second {
-    padding-top: 32px;
+  padding-top: 32px;
 }
 .row.third {
-    padding-top: 16px;
+  padding-top: 16px;
 }
-.doctors-shedule{
-    text-align: center;
+.doctors-shedule {
+  text-align: center;
 }
 .top-row {
-    padding-left: 60px;
-    height: 108px;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
+  padding-left: 60px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
 }
 .top-row span {
-    margin: 0 6px;
+  margin: 0 6px;
 }
 .doctors-shedule.row {
-    height: 40px;
-    font-weight: 600;
-    text-align: center;
+  height: 40px;
+  font-weight: 600;
+  text-align: center;
 }
 .doctors-shedule .name {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: center;
-    color: #313541;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #313541;
 }
 .doctors-shedule .branch {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    text-align: center;
-    color: #16181E;
-    padding-bottom: 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #16181e;
+  padding-bottom: 20px;
 }
 ul.patient-actions {
-    list-style: none;
-    padding-left: 12px;
-    margin-top: 10px;
+  list-style: none;
+  padding-left: 12px;
+  margin-top: 10px;
 }
 ul.patient-actions li {
-    width: 20px;
-    height: 16px;
-    display: inline-block;
+  width: 20px;
+  height: 16px;
+  display: inline-block;
 }
 .patient-shedule-wrap {
-    width: 224px;
-    display: flex;
-    padding: 0 0 16px 40px;
+  width: 224px;
+  display: flex;
+  padding: 0 0 16px 40px;
 }
 .patient-shedule-block {
-    border-left: 10px solid transparent;
-    background: #F6F7F8;
-    border-radius: 10px;
-    min-width: 180px;
-    height: 72px;
-    padding-top: 12px;
-    margin-left: 16px;
+  border-left: 10px solid transparent;
+  background: #f6f7f8;
+  border-radius: 10px;
+  min-width: 180px;
+  height: 72px;
+  padding-top: 12px;
+  margin-left: 16px;
 }
-.patient-shedule-block.red{
-    border-left: 10px solid #e34c4c;
+.patient-shedule-block.red {
+  border-left: 10px solid #e34c4c;
 }
-.patient-shedule-block.red_gray{
-    border-left: 10px solid #313541;
+.patient-shedule-block.red_gray {
+  border-left: 10px solid #313541;
 }
-.patient-shedule-block.yellow{
-    border-left: 10px solid #F7B422;
+.patient-shedule-block.yellow {
+  border-left: 10px solid #f7b422;
 }
-.patient-shedule-block.green{
-    border-left: 10px solid #56BD5B;
+.patient-shedule-block.green {
+  border-left: 10px solid #56bd5b;
 }
 .patient-name {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    margin-left: 10px;
-    text-align: left;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 10px;
+  text-align: left;
 }
 .patient-time {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    align-items: center;
-    text-align: right;
-    color: #313541;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  align-items: center;
+  text-align: right;
+  color: #313541;
 }
 .react-datepicker {
-    border: 0;
-    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding-right: 7px;
-    padding-left: 7px;
+  border: 0;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding-right: 7px;
+  padding-left: 7px;
 }
-.react-datepicker__header{
-    border: 0;
-    background: #fff;
+.react-datepicker__header {
+  border: 0;
+  background: #fff;
 }
 .react-datepicker__current-month {
-    border-bottom: 1px solid #eee;
-    padding-top: 8px;
-    padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+  padding-top: 8px;
+  padding-bottom: 14px;
 }
 button.react-datepicker__navigation {
-    top: 20px;
+  top: 20px;
 }
-.react-datepicker__navigation--next{
-    right: auto;
-    left: 40px;
+.react-datepicker__navigation--next {
+  right: auto;
+  left: 40px;
 }
 .react-datepicker__week {
-    display: flex;
+  display: flex;
 }
 .react-datepicker__month {
-    margin: 0;
+  margin: 0;
 }
 .react-datepicker__day-name {
-    font-style: normal;
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    color: #B0BAC5;
-    width: 38px;
-    margin: 0;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #b0bac5;
+  width: 38px;
+  margin: 0;
 }
 .react-datepicker__day-names {
-    display: flex;
-    justify-content: center;
-    padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
 }
 .react-datepicker__day {
-    border: 0;
-    margin: 3px 0;
-    width: 38px;
-    height: 40px;
-    color: #868789;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: 0;
+  margin: 3px 0;
+  width: 38px;
+  height: 40px;
+  color: #868789;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .react-datepicker__day.react-datepicker__day--outside-month {
-    color: #DFE6EE;
+  color: #dfe6ee;
 }
-.react-datepicker__day.react-datepicker__day--selected{
-    border-radius: 8px;
-    background: #E34C4C;
-    color: #F6F7F8;
+.react-datepicker__day.react-datepicker__day--selected {
+  border-radius: 8px;
+  background: #e34c4c;
+  color: #f6f7f8;
 }
-.react-datepicker__day.react-datepicker__day--keyboard-selected{
-    border: 0!important;
-    background: rgba(227,76,76,0.5);
-    color: #fff;
+.react-datepicker__day.react-datepicker__day--keyboard-selected {
+  border: 0 !important;
+  background: rgba(227, 76, 76, 0.5);
+  color: #fff;
 }
-.filters-box{
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    height: 344px;
-    padding: 15px;
-    font-size: 13px;
+.filters-box {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  height: 344px;
+  padding: 15px;
+  font-size: 13px;
 }
 .filters-box .row {
-    margin: 0;
+  margin: 0;
 }
 .filters-box .row.title {
-    font-size: 16px;
-    font-weight: 700;
+  font-size: 16px;
+  font-weight: 700;
 }
-.filters-box .row div{
-    padding: 0;
-    padding-top: 6px;
-    padding-bottom: 6px;
+.filters-box .row div {
+  padding: 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
-.filters-box .row select{
-    border: 1px solid #DFE6EE;
-    border-radius: 4px;
-    background: #FFFFFF;
-    box-sizing: border-box;
-    width: 100%;
-    height: 40px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    color: #B0BAC5;
-    padding-left: 8px;
+.filters-box .row select {
+  border: 1px solid #dfe6ee;
+  border-radius: 4px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: #b0bac5;
+  padding-left: 8px;
 }
-.filters-box .row select option{
-    padding: 8px;
+.filters-box .row select option {
+  padding: 8px;
 }
-.filters-box .intervals div{
-    padding-left: 4px;
-    padding-right: 4px;
+.filters-box .intervals div {
+  padding-left: 4px;
+  padding-right: 4px;
 }
-.filters-box .buttons{
-    padding-top: 20px;
+.filters-box .buttons {
+  padding-top: 20px;
 }
-.filters-box .clear{
-    text-align: right;
+.filters-box .clear {
+  text-align: right;
 }
-.filters-box .row button{
-    border: 0;
-    border-radius: 15px;
-    height: 32px;
-    padding: 0 11px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: #F6F7F8;
+.filters-box .row button {
+  border: 0;
+  border-radius: 15px;
+  height: 32px;
+  padding: 0 11px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #f6f7f8;
 }
-.filters-box .clear button{
-    background: #FE9841;
-    margin-right: 8px;
+.filters-box .clear button {
+  background: #fe9841;
+  margin-right: 8px;
 }
-.filters-box .update button{
-    background: #3B80D6;
-    margin-left: 8px;
+.filters-box .update button {
+  background: #3b80d6;
+  margin-left: 8px;
 }
 /******************************** Живая лента ***************************************/
 .livefeed-box {
-    background: #FFFFFF;
-    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px 15px;
-    width: 280px;
-    height: 100%;
-    margin-top: 110px;
-    margin-left: 16px;
+  background: #ffffff;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px 15px;
+  width: 280px;
+  height: 100%;
+  margin-top: 110px;
+  margin-left: 16px;
 }
 .event-wrap {
-    background: #F4F7FA;
-    border: 1px solid #DFE6EE;
-    box-sizing: border-box;
-    border-radius: 4px 4px 0px 0px;
-    display: flex;
-    align-items: center;
-    height: 72px;
+  background: #f4f7fa;
+  border: 1px solid #dfe6ee;
+  box-sizing: border-box;
+  border-radius: 4px 4px 0px 0px;
+  display: flex;
+  align-items: center;
+  height: 72px;
 }
-.event-wrap.odd{
-    background: #fff;
+.event-wrap.odd {
+  background: #fff;
 }
 .event-wrap .col-sm-6.col-md-6.col-lg-6 {
-    padding: 0;
-    padding-left: 12px;
-    display: flex;
-    flex-direction: column;
+  padding: 0;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
 }
 #events-box {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: #313541;
-    text-align: left;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #313541;
+  text-align: left;
 }
-.livefeed-box .buttons{
-    display: flex;
-    padding-bottom: 6px;
+.livefeed-box .buttons {
+  display: flex;
+  padding-bottom: 6px;
 }
 .livefeed-box .buttons button {
-    border: 0;
-    width: 40px;
-    height: 40px;
-    margin-left: 15px;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
 }
 .livefeed-box .buttons button.call {
-    background: url('media/appoint/call.png'); 
+  background: url("media/appoint/call.png");
 }
 .livefeed-box .buttons button.calendar {
-    background: url('media/appoint/canceled_apps.png');
-    background-position: -6px -6px;
-    width: 60px;
-    height: 60px;
-    margin-top: -6px;
-    margin-left: 10px;
+  background: url("media/appoint/canceled_apps.png");
+  background-position: -6px -6px;
+  width: 60px;
+  height: 60px;
+  margin-top: -6px;
+  margin-left: 10px;
 }
 .patient-appoint {
-    border: 1px solid grey;
-    border-radius: 50px;
-    width: 100px;
-    margin: 0 auto;
+  border: 1px solid grey;
+  border-radius: 50px;
+  width: 100px;
+  margin: 0 auto;
 }
 .unvisible {
-    display: none;
+  display: none;
 }
