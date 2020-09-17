@@ -28,7 +28,7 @@ class Shedule extends React.Component {
 			});
 		});
 		// это prod
-		fetch("http://dentistry.test/shedule/records",{
+		fetch("shedule/records",{
 			mode: "no-cors",
 		})
 		.then(res => res.json())
