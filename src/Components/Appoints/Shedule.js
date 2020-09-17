@@ -1,16 +1,13 @@
+import $ from 'jquery'; // для работы dev, на prod - закомментить
 import React from 'react';
 import './Appoint.css';
 import Popbox from "./popbox";
+
 class Shedule extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			doctors: [
-				{ id: 1, name: "Иванов И. И.", branch: "Кубанская, 54" },
-				{ id: 2, name: "Александрова А. А.", branch: "Кубанская, 54" },
-				{ id: 3, name: "Буслаев И. Э.", branch: "Кубанская, 54" },
-				{ id: 4, name: "Вердеревская И. И.", branch: "Кубанская, 54" }
-			],
+			doctors: [],
 			records: [],
 			appointButtonClicked: false,
 		}
@@ -23,41 +20,16 @@ class Shedule extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			isLoaded: true,
-			records: [[], JSON.parse('[' +
-				'{"id":1,"appointedtime":"09:00","patientid":1,"doctorid":1,"patient":"Бальсунов И. В.","status":"green","actions":["sms_verified","red_umb"]},' +
-				'{"id":2,"appointedtime":"09:30","patientid":2,"doctorid":1,"patient":"Караваева К. С.","status":"green","actions":["sms_verified","call"]},' +
-				'{"id":3,"appointedtime":"10:00","patientid":3,"doctorid":1,"patient":"Овощников К. А.","status":"green","actions":["red_umb"]},' +
-				'{"id":4,"appointedtime":"10:30","patientid":4,"doctorid":1,"patient":"Горлатых Е. М.","status":"red_gray","actions":["sms_unverified","red_person","green_umb"]},' +
-				'{"id":5,"appointedtime":"11:30","patientid":5,"doctorid":1,"patient":"Чемерис Н. .","status":"green","actions":["red_person"]},' +
-				'{"id":6,"appointedtime":"13:00","patientid":6,"doctorid":1,"patient":"Воронина М. С.","status":"yellow","actions":["green_umb","red_person"]},' +
-				'{"id":7,"appointedtime":"13:30","patientid":7,"doctorid":1,"patient":"Первак М. М.","status":"green","actions":["sms_unverified"]},' +
-				'{"id":8,"appointedtime":"14:00","patientid":8,"doctorid":1,"patient":"Сытников Ю. Ф.","status":"red_gray","actions":["sms_unverified","call"]}]'
-			)]
+		// эта подложка для localhost:3000. На prod - закоментить
+		let self = this;
+		return $.get("http://dentistry.test/shedule/records", function (response) {
+			let result = JSON.parse(response);
+			self.setState({
+				isLoaded: true,
+				doctors: result.doctors,
+				records: result.shedule
+			});
 		});
-		// fetch("http://dentistry.test/shedule/records",{
-		// 	mode: "no-cors",
-		// })
-		// .then(res => res.json())
-		// .then(
-		// 	(result) => {
-		// 		console.log(JSON.stringify(result.shedule[1]));
-		// 		this.setState({
-		// 			isLoaded: true,
-		// 			doctors: result.doctors,
-		// 			records: result.shedule
-		// 		});
-		// 	},
-		// 	// Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-		// 	// чтобы не перехватывать исключения из ошибок в самих компонентах.
-		// 	(error) => {
-		// 		this.setState({
-		// 			isLoaded: true,
-		// 			error
-		// 		});
-		// 	}
-		// )
 	}
 
 	callChange(calls) {

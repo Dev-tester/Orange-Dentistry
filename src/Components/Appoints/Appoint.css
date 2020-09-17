@@ -38,6 +38,7 @@
   box-shadow: 0px 1px 4px #b0bac5;
   margin-top: 40px;
   padding-right: 40px;
+  height: 100vh;
 }
 .row.second {
   padding-top: 32px;
@@ -341,4 +342,17 @@ button.react-datepicker__navigation {
 }
 .unvisible {
   display: none;
+}
+
+.patient-empty-block {
+  border-radius: 50px;
+  width: 100px;
+  height: 10px;
+  color: lightgrey;
+}
+
+.main-schedule-title .patient-block {
+  height: 40px;
+  background: #b0bac5;
+  border-radius: 10px;
 }

@@ -74,29 +74,29 @@ class Popbox extends React.Component {
         });
       });
   }
-  componentDidUpdate() {
-    if (this.state.targetValue === "") {
-      axios
-        .get(
-          `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
-        )
-        .then((response) => {
-          console.log(response);
-          this.setState(() => {
-            return { users: response.data.items };
-          });
-        });
-    }
-    if (!this.state.users && this.state.targetValue > 0) {
-      this.setState(() => {
-        let newUsers = this.state.users.filter((el) => {
-          return el.name.match(this.state.targetValue);
-        });
-        console.log(newUsers);
-        return { users: newUsers };
-      });
-    }
-  }
+  //   componentDidUpdate() {
+  //     if (this.state.targetValue === "") {
+  //       axios
+  //         .get(
+  //           `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
+  //         )
+  //         .then((response) => {
+  //           console.log(response);
+  //           this.setState(() => {
+  //             return { users: response.data.items };
+  //           });
+  //         });
+  //     }
+  //     if (!this.state.users && this.state.targetValue > 0) {
+  //       this.setState(() => {
+  //         let newUsers = this.state.users.filter((el) => {
+  //           return el.name.match(this.state.targetValue);
+  //         });
+  //         console.log(newUsers);
+  //         return { users: newUsers };
+  //       });
+  //     }
+  //   }
 
   render() {
     {
