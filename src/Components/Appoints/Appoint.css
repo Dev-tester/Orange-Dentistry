@@ -353,6 +353,7 @@ button.react-datepicker__navigation {
   width: 100px;
   height: 10px;
   color: lightgrey;
+  height: 16px !important;
 }
 
 .main-schedule-title .patient-block {

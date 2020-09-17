@@ -1,0 +1,36 @@
+.record-saved {
+  display: block;
+  z-index: 3 !important;
+  position: fixed;
+  top: 32%;
+  left: 34%;
+  bottom: 0;
+  right: 0;
+  width: 513px;
+  height: 340px;
+  background: #f6f7f8;
+  box-shadow: grey 1px 2px 3px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.green-box {
+  border: 1px solid green;
+  margin: 22px 36px;
+  width: 409px;
+  height: 52px;
+  border-radius: 3px;
+}
+.left-box,
+.right-box {
+  text-align: left;
+}
+.green-box .appoint {
+  line-height: 41px;
+}
+.green-box .succs-img {
+  background: #56bd5b;
+  flex: 0 0 13.333333% !important;
+  max-width: 13.333333% !important;
+}

@@ -6,7 +6,7 @@
   left: 28%;
   bottom: 0;
   right: 0;
-  width: 800px;
+  width: 900px;
   height: 692px;
   background: #f6f7f8;
   box-shadow: grey 1px 2px 3px;
@@ -41,4 +41,7 @@
 .add-new-record .close-btn {
   position: absolute;
   right: 20px;
+}
+.comment {
+  height: 100px;
 }

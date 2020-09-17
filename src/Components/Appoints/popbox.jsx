@@ -1,6 +1,7 @@
 import * as axios from "axios";
 import React from "react";
 import AddNewRecord from "../AddNewRecord/AddNewRecord";
+import RecordSaved from "../RecordCreated/RecordSaved";
 import Close from "./media/appoint/Close";
 import "./popbox.css";
 
@@ -14,11 +15,14 @@ class Popbox extends React.Component {
       users: [],
       usersPortion: 7,
       addNewRecordClicked: false,
+      recordSaved: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchActiveOn = this.searchActiveOn.bind(this);
     this.searchActiveOff = this.searchActiveOff.bind(this);
     this.addNewRecordClose = this.addNewRecordClose.bind(this);
+    this.saveRecordClick = this.saveRecordClick.bind(this);
+    this.saveRecordClose = this.saveRecordClose.bind(this);
   }
 
   handleChange(e) {
@@ -73,6 +77,16 @@ class Popbox extends React.Component {
   addNewRecordClose() {
     this.setState(() => {
       return { addNewRecordClicked: false };
+    });
+  }
+  saveRecordClick() {
+    this.setState(() => {
+      return { recordSaved: true };
+    });
+  }
+  saveRecordClose() {
+    this.setState(() => {
+      return { recordSaved: false };
     });
   }
   componentDidMount() {
@@ -216,7 +230,16 @@ class Popbox extends React.Component {
               </div>
             ) : null}
             {this.state.addNewRecordClicked ? (
-              <AddNewRecord AddNewRecordClose={this.addNewRecordClose} />
+              <div>
+                <AddNewRecord
+                  closed={this.addNewRecordClose}
+                  AddNewRecordClose={this.addNewRecordClose}
+                  saveRecord={this.saveRecordClick}
+                />
+              </div>
+            ) : null}
+            {this.state.recordSaved ? (
+              <RecordSaved closeSaveRecord={this.saveRecordClose} />
             ) : null}
           </div>
         );

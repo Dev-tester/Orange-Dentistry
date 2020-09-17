@@ -102,7 +102,7 @@ class Shedule extends React.Component {
 										return (!record.patientid ?
 											<div className="patient-shedule-wrap blanked" key={recordIndex}>
 												<div className="patient-time">{record.appointedtime}</div>
-												<button className="patient-empty-block">--------+-------</button>
+												<button className="patient-empty-block" onClick={(e) => this.appointClicked(e)}></button>
 											</div>
 											:
 											<div className="patient-shedule-wrap" key={recordIndex}>
