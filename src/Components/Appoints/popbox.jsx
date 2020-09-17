@@ -1,5 +1,6 @@
 import * as axios from "axios";
 import React from "react";
+import AddNewRecord from "../AddNewRecord/AddNewRecord";
 import Close from "./media/appoint/Close";
 import "./popbox.css";
 
@@ -12,10 +13,12 @@ class Popbox extends React.Component {
       targetValue: "",
       users: [],
       usersPortion: 7,
+      addNewRecordClicked: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchActiveOn = this.searchActiveOn.bind(this);
     this.searchActiveOff = this.searchActiveOff.bind(this);
+    this.addNewRecordClose = this.addNewRecordClose.bind(this);
   }
 
   handleChange(e) {
@@ -62,6 +65,16 @@ class Popbox extends React.Component {
       return { ...this.state, searchActive: false };
     });
   }
+  addNewRecordClick() {
+    this.setState(() => {
+      return { addNewRecordClicked: true };
+    });
+  }
+  addNewRecordClose() {
+    this.setState(() => {
+      return { addNewRecordClicked: false };
+    });
+  }
   componentDidMount() {
     axios
       .get(
@@ -74,8 +87,8 @@ class Popbox extends React.Component {
         });
       });
   }
-  //   componentDidUpdate() {
-  //     if (this.state.targetValue === "") {
+  //   componentDidUpdate(prevProps, prevState) {
+  //     if (this.state !== prevState) {
   //       axios
   //         .get(
   //           `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
@@ -86,15 +99,16 @@ class Popbox extends React.Component {
   //             return { users: response.data.items };
   //           });
   //         });
-  //     }
-  //     if (!this.state.users && this.state.targetValue > 0) {
-  //       this.setState(() => {
-  //         let newUsers = this.state.users.filter((el) => {
-  //           return el.name.match(this.state.targetValue);
+
+  //       if (!this.state.users && this.state.targetValue > 0) {
+  //         this.setState(() => {
+  //           let newUsers = this.state.users.filter((el) => {
+  //             return el.name.match(this.state.targetValue);
+  //           });
+  //           console.log(newUsers);
+  //           return { users: newUsers };
   //         });
-  //         console.log(newUsers);
-  //         return { users: newUsers };
-  //       });
+  //       }
   //     }
   //   }
 
@@ -136,7 +150,7 @@ class Popbox extends React.Component {
                 onChange={(e) => this.handleChange(e)}
                 onFocus={() => this.searchActiveOn()}
                 onBlur={() => this.searchActiveOff()}
-                className={"mx-auto"}
+                className={"mx-auto patient-appoint-form-input"}
                 type={"text"}
                 placeholder={
                   "Начните вводить номер карты / Фамилию или номер телефона"
@@ -146,10 +160,12 @@ class Popbox extends React.Component {
             <div className="col-lg-12 popbox_buttons">
               <div className="row">
                 <div className={"offset-lg-3 col-lg-3 button_appoint"}>
-                  <button>Записать на прием</button>
+                  <button onClick>Записать на прием</button>
                 </div>
                 <div className={"col-lg-4 button_add_patient"}>
-                  <button>Добавить нового пациента</button>
+                  <button onClick={() => this.addNewRecordClick()}>
+                    Добавить нового пациента
+                  </button>
                 </div>
               </div>
             </div>
@@ -198,6 +214,9 @@ class Popbox extends React.Component {
                   </div>
                 </div>
               </div>
+            ) : null}
+            {this.state.addNewRecordClicked ? (
+              <AddNewRecord AddNewRecordClose={this.addNewRecordClose} />
             ) : null}
           </div>
         );

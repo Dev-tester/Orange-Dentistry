@@ -335,10 +335,14 @@ button.react-datepicker__navigation {
   margin-left: 10px;
 }
 .patient-appoint {
-  border: 1px solid grey;
-  border-radius: 50px;
+  border-radius: 30px;
+  background-color: #3b80d6;
   width: 100px;
-  margin: 0 auto;
+  color: white;
+  box-shadow: none !important;
+  border-color: unset !important;
+  border-style: unset !important;
+  height: 40px;
 }
 .unvisible {
   display: none;
