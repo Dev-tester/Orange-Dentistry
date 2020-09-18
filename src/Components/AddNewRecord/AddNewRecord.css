@@ -45,3 +45,7 @@
 .comment {
   height: 100px;
 }
+
+.input-name {
+  text-align: right;
+}

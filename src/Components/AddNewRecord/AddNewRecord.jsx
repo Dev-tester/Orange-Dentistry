@@ -8,6 +8,8 @@ class AddNewRecord extends React.Component {
     return (
       <div className="add-new-record">
         <form
+          action="/shedule/addpatient"
+          method="post"
           onSubmit={(e) => {
             e.preventDefault();
             this.props.closed();
@@ -21,21 +23,30 @@ class AddNewRecord extends React.Component {
                 </div>
               </div>
               <div className="row mt-lg-3 mb-lg-3">
-                <div className="col-lg-4">
+                <div
+                  className="col-lg-4 input-name
+"
+                >
                   Врач:{" "}
                   <span>
                     {" "}
                     <strong>Такой то</strong>{" "}
                   </span>{" "}
                 </div>
-                <div className="col-lg-4">
+                <div
+                  className="col-lg-4 input-name
+"
+                >
                   Дата:{" "}
                   <span>
                     {" "}
                     <strong>Такая то</strong>{" "}
                   </span>
                 </div>
-                <div className="col-lg-4">
+                <div
+                  className="col-lg-4 input-name
+"
+                >
                   Время:{" "}
                   <span>
                     {" "}
@@ -53,9 +64,15 @@ class AddNewRecord extends React.Component {
                     </span>{" "}
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Фамилия</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Фамилия
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="lastname"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александрова"
@@ -63,9 +80,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Имя</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Имя
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="name"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александра"
@@ -73,9 +96,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Отчество</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Отчество
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="patronymic"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александровна"
@@ -83,9 +112,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Город</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Город
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="city"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Краснодар"
@@ -93,9 +128,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Улица</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Улица
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="street"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Красная"
@@ -106,9 +147,10 @@ class AddNewRecord extends React.Component {
                     <div className="row">
                       <div className="col-lg-6">
                         <div className="row">
-                          <div className="col-lg-2 ">Дом</div>
+                          <div className="col-lg-2 input-name">Дом</div>
                           <div className="col-lg-8">
                             <input
+                              name="home"
                               className="add-new-record-input"
                               type="text"
                               placeholder="209a"
@@ -118,9 +160,15 @@ class AddNewRecord extends React.Component {
                       </div>
                       <div className="col-lg-6">
                         <div className="row">
-                          <div className="col-lg-4">Корпус</div>
+                          <div
+                            className="col-lg-4 input-name
+"
+                          >
+                            Корпус
+                          </div>
                           <div className="col-lg-8">
                             <input
+                              name="pavilion"
                               className="add-new-record-input"
                               type="text"
                               placeholder="209"
@@ -133,9 +181,10 @@ class AddNewRecord extends React.Component {
                   <div className="row mt-lg-2">
                     <div className="col-lg-12">
                       <div className="row">
-                        <div className="col-lg-6">Квартира</div>
+                        <div className="col-lg-6 input-name">Квартира</div>
                         <div className="col-lg-6">
                           <input
+                            name="flat"
                             className="add-new-record-input"
                             type="text"
                             placeholder="209"
@@ -146,9 +195,15 @@ class AddNewRecord extends React.Component {
                     <div className="col-lg-12">
                       {" "}
                       <div className="row mt-lg-2">
-                        <div className="col-lg-4">Комментарий</div>
+                        <div
+                          className="col-lg-4 input-name
+"
+                        >
+                          Комментарий
+                        </div>
                         <div className="col-lg-8">
                           <input
+                            name="comment"
                             className="add-new-record-input comment mb-lg-2"
                             type="text"
                             placeholder="Информация отсутствует"
@@ -161,9 +216,15 @@ class AddNewRecord extends React.Component {
                 <div className="col-lg-7">
                   <div className="col-lg-12 mb-lg-3">
                     <div className="row">
-                      <div className="col-lg-4">Дата рождения</div>
+                      <div
+                        className="col-lg-4 input-name
+"
+                      >
+                        Дата рождения
+                      </div>
                       <div className="col-lg-8">
                         <input
+                          name="birthDate"
                           className="add-new-record-input"
                           type="text"
                           placeholder="дд.мм.гггг"
@@ -172,23 +233,36 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Пол</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Пол
+                    </div>
                     <div className="col-lg-8">
                       <div className="row">
                         <div className="col-lg-6">
                           {" "}
-                          <input type="checkbox" name="" id="" /> мужской
+                          <input type="checkbox" name="genderMen" id="" />{" "}
+                          мужской
                         </div>
                         <div className="col-lg-6">
-                          <input type="checkbox" name="" id="" /> женский
+                          <input type="checkbox" name="genderWomen" id="" />{" "}
+                          женский
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Мобильный телефон</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Мобильный телефон
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="phoneNumber"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="8-918-476-33-24"
@@ -196,9 +270,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Email</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Email
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="email"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="email@examle.com"
@@ -206,9 +286,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Родитель</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Родитель
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="parent"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александрова Алла Игоревна"
@@ -216,9 +302,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Откуда узнал</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Откуда узнал
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="radio"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="рекомендации друзей"
@@ -227,9 +319,15 @@ class AddNewRecord extends React.Component {
                   </div>
 
                   <div className="row">
-                    <div className="col-lg-4">Страховая компания</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Страховая компания
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="insurance"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="СПАС"
@@ -237,9 +335,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Действителен с</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Действителен с
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="insuranceFrom"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="12.09.2010"
@@ -247,9 +351,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Действителен до</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Действителен до
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="insuranceUntill"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="12.09.2010"
@@ -257,9 +367,15 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-lg-4">Описание</div>
+                    <div
+                      className="col-lg-4 input-name
+"
+                    >
+                      Описание
+                    </div>
                     <div className="col-lg-8">
                       <input
+                        name="description"
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="пусто"
@@ -267,7 +383,10 @@ class AddNewRecord extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 offset-lg-4 mt-lg-3">
+                <div
+                  className="col-lg-4 
+ offset-lg-4 mt-lg-3"
+                >
                   <button
                     onClick={() => this.props.saveRecord()}
                     className="save-button"

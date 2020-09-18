@@ -28,22 +28,22 @@ class Popbox extends React.Component {
   handleChange(e) {
     console.log(e.target.value);
     e.preventDefault();
-    let value = e.target.value;
+    const value = e.target.value;
     console.log(e.target.value);
     this.setState(() => {
       return { targetValue: value };
     });
 
-    if (this.state.targetValue.length > 0) {
-      this.setState(() => {
-        let newUsers = this.state.users.filter((el) => {
-          return el.name.match(this.state.targetValue);
+    if (value.length > 0) {
+      this.setState((prevState) => {
+        const newUsers = prevState.users.filter((el) => {
+          return el.name.match(value);
         });
         console.log(newUsers);
         return { users: newUsers };
       });
     }
-    if (this.state.targetValue === "") {
+    if (value === "") {
       axios
         .get(
           `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
@@ -54,6 +54,7 @@ class Popbox extends React.Component {
             return { users: response.data.items };
           });
         });
+      console.log(this.state.users);
     }
 
     console.log(this.state.users);

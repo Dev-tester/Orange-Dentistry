@@ -55,6 +55,13 @@ class RecordSaved extends React.Component {
                 </div>
               </div>
             </div>
+            <div className="col-lg-12">
+              <input
+                className="input-recordSaved"
+                type="text"
+                placeholder="Комментарий"
+              />
+            </div>
           </div>
         </div>
       </div>

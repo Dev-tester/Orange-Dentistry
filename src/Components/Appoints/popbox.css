@@ -45,6 +45,7 @@
   box-shadow: none !important;
   border-color: #3b80d6 !important;
   width: 160px;
+  border-style: none !important;
 }
 
 .popbox_buttons .button_add_patient button {
@@ -55,6 +56,7 @@
   box-shadow: none !important;
   border-color: #fe9841 !important;
   width: 220px;
+  border-style: none !important;
 }
 .search_results {
   background-color: white;
