@@ -2,6 +2,7 @@ import ru from 'date-fns/locale/ru';
 import React from 'react';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 import './Appoint.css';
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
@@ -44,60 +45,65 @@ class Appoint extends React.Component {
 			timeTo = this.state.timeTo,
 			Interval = this.state.Interval;
 		return (
-			<div className="App">
-				<div className="row">
-					<div className="col-sm-2 col-md-2 col-lg-2">
-						<div className="row">
-							<div className="incomings">Входящие звонки</div>
-						</div>
-						<div className="row second text-left" style={{ minWidth: '300px' }}>
-							<DatePicker
-								selected={this.state.startDate}
-								onChange={this.handleChange}
-								locale="ru"
-								inline
+			<BrowserRouter>
+				<div className="App">
+					<div className="row">
+						<div className="col-sm-2 col-md-2 col-lg-2">
+							<div className="row">
+								<div className="incomings">Входящие звонки</div>
+							</div>
+							<div className="row second text-left" style={{ minWidth: '300px' }}>
+								<DatePicker
+									selected={this.state.startDate}
+									onChange={this.handleChange}
+									locale="ru"
+									inline
 
-							/>
+								/>
+							</div>
+							<div className="row third text-left" style={{ minWidth: '300px' }}>
+								<Filters />
+							</div>
 						</div>
-						<div className="row third text-left" style={{ minWidth: '300px' }}>
-							<Filters />
-						</div>
-					</div>
-					<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth: '1216px' }}>
-						<div className="row" style={{ margin: '10px -30px' }}>
-							<div className="col-sm-4 col-md-4 col-lg-4 text-left">
-								<div className="page-title">Запись на приём</div>
-								<div className="page-breadcrumb">
-									<span style={{ color: '#F08786' }}>Главная</span>
-									<span>*</span>
-									<span>Запись на приём</span>
+						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth: '1216px' }}>
+							<div className="row" style={{ margin: '10px -30px' }}>
+								<div className="col-sm-4 col-md-4 col-lg-4 text-left">
+									<div className="page-title">Запись на приём</div>
+									<div className="page-breadcrumb">
+										<span style={{ color: '#F08786' }}>Главная</span>
+										<span>*</span>
+										<span>Запись на приём</span>
+									</div>
+								</div>
+								<div className="col-sm-6 col-md-6 col-lg-6">
+									<div className="page-search ui-block">Поиск</div>
 								</div>
 							</div>
-							<div className="col-sm-6 col-md-6 col-lg-6">
-								<div className="page-search ui-block">Поиск</div>
+							<div className="row" style={{ marginTop: '45px' }}>
+								<div className="doctor-menu ui-block col-lg-12">
+									<ul>
+										{specializations.map((value, index) => {
+											return <div className="col-lg-2"><li key={index}><NavLink to={`/${value}`}>{value}</NavLink></li></div>
+										})}
+									</ul>
+								</div>
+							</div>
+							<div className="row">
+								<Route path="/Терапевты"
+									render={() => (<Shedule />)} />
+
+							</div>
+							<div className="row">
+								<Route path="/Терапевты"
+									render={() => (<Shedule />)} />
 							</div>
 						</div>
-						<div className="row" style={{ marginTop: '45px' }}>
-							<div className="doctor-menu ui-block col-lg-12">
-								<ul>
-									{specializations.map((value, index) => {
-										return <div className="col-lg-2"><li key={index}><a>{value}</a></li></div>
-									})}
-								</ul>
-							</div>
+						<div className="col-sm-2 col-md-2 col-lg-2">
+							<LiveFeed />
 						</div>
-						<div className="row">
-							<Shedule />
-						</div>
-						<div className="row">
-							<Shedule />
-						</div>
-					</div>
-					<div className="col-sm-2 col-md-2 col-lg-2">
-						<LiveFeed />
 					</div>
 				</div>
-			</div>
+			</BrowserRouter>
 		);
 	}
 }
