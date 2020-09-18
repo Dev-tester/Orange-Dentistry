@@ -2,6 +2,7 @@ import $ from "jquery"; // для работы dev, на prod - закоммен
 import React from "react";
 import "./Appoint.css";
 import Vector from "./media/appoint/Vector";
+import PatientPopboxInfo from "./PatientPopboxInfo/PatientPopboxInfo";
 import Popbox from "./popbox";
 
 class Shedule extends React.Component {
@@ -12,6 +13,7 @@ class Shedule extends React.Component {
       records: [],
       appointButtonClicked: false,
       hideBtnClicked: false,
+      patientInfoBtnClicked: true,
     };
     this.intervals = [
       "09:00",
@@ -174,6 +176,7 @@ class Shedule extends React.Component {
                                 {record.appointedtime}
                               </div>
                               <div
+                                // здесь будет onClick для модалки с конкретным пациентом
                                 className={
                                   "patient-shedule-block " + record.status
                                 }
@@ -230,7 +233,8 @@ class Shedule extends React.Component {
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
         />
-      </div>
+        {this.state.patientInfoBtnClicked ? <PatientPopboxInfo /> : null}
+      </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );
   }
 }
