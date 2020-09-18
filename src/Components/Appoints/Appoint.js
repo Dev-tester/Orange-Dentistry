@@ -83,7 +83,7 @@ class Appoint extends React.Component {
 								<div className="doctor-menu ui-block col-lg-12">
 									<ul>
 										{specializations.map((value, index) => {
-											return <div className="col-lg-2"><li className="doctor-item" key={index}><NavLink to={`/${value}`} activeClassName="active-link">{value}</NavLink></li></div>
+											return <div key={index} className="col-lg-2"><li className="doctor-item" ><NavLink to={`/${value}`} activeClassName="active-link">{value}</NavLink></li></div>
 										})}
 									</ul>
 								</div>

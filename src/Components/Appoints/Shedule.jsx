@@ -13,7 +13,7 @@ class Shedule extends React.Component {
       records: [],
       appointButtonClicked: false,
       hideBtnClicked: false,
-      patientInfoBtnClicked: true,
+      patientInfoBtnClicked: false,
     };
     this.intervals = [
       "09:00",
@@ -35,13 +35,17 @@ class Shedule extends React.Component {
     this.closePopbox = this.closePopbox.bind(this);
     this.hideShedule = this.hideShedule.bind(this);
     this.showShedule = this.showShedule.bind(this);
+    this.showPatientInfo = this.showPatientInfo.bind(this);
+    this.closePatientInfo = this.closePatientInfo.bind(this);
   }
 
   componentDidMount() {
     // эта подложка для localhost:3000. На prod - закоментить
     let self = this;
     return $.get("http://dentistry.test/shedule/records", function (response) {
+      console.log(response);
       let result = JSON.parse(response);
+      console.log(result);
       self.setState({
         isLoaded: true,
         doctors: result.doctors,
@@ -74,6 +78,16 @@ class Shedule extends React.Component {
   showShedule() {
     this.setState(() => {
       return { hideBtnClicked: false };
+    });
+  }
+  showPatientInfo() {
+    this.setState(() => {
+      return { patientInfoBtnClicked: true };
+    });
+  }
+  closePatientInfo() {
+    this.setState(() => {
+      return { patientInfoBtnClicked: false };
     });
   }
 
@@ -176,7 +190,7 @@ class Shedule extends React.Component {
                                 {record.appointedtime}
                               </div>
                               <div
-                                // здесь будет onClick для модалки с конкретным пациентом
+                                onClick={() => this.showPatientInfo()}
                                 className={
                                   "patient-shedule-block " + record.status
                                 }
@@ -233,7 +247,9 @@ class Shedule extends React.Component {
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
         />
-        {this.state.patientInfoBtnClicked ? <PatientPopboxInfo /> : null}
+        {this.state.patientInfoBtnClicked ? (
+          <PatientPopboxInfo closePatientInfo={this.closePatientInfo} />
+        ) : null}
       </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );
   }

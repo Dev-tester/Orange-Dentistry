@@ -114,6 +114,7 @@ ul.patient-actions li {
   height: 72px;
   padding-top: 12px;
   margin-left: 16px;
+  cursor: pointer;
 }
 .patient-shedule-block.red {
   border-left: 10px solid #e34c4c;

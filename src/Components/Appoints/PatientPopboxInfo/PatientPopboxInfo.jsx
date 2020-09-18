@@ -1,4 +1,6 @@
 import React from "react";
+import CancelRecord from "../CancelRecord/CancelRecord";
+import ChangeRecord from "../ChangeRecord/ChangeRecord";
 import Bell from "../media/appoint/Bell";
 import Chair from "../media/appoint/Chair/Chair";
 import Clock from "../media/appoint/Clock/Clock";
@@ -7,7 +9,38 @@ import Finish from "../media/appoint/Finish/Finish";
 import "./PatientPopboxInfo.css";
 
 class PatientPopboxInfo extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      changeRecordBtnClicked: false,
+      cancelRecordBtnClicked: false,
+    };
+    this.changeRecordOpen = this.changeRecordOpen.bind(this);
+    this.changeRecordClose = this.changeRecordClose.bind(this);
+    this.cancelRecordOpen = this.cancelRecordOpen.bind(this);
+    this.cancelRecordClose = this.cancelRecordClose.bind(this);
+  }
+
+  changeRecordOpen() {
+    this.setState(() => {
+      return { changeRecordBtnClicked: true };
+    });
+  }
+  changeRecordClose() {
+    this.setState(() => {
+      return { changeRecordBtnClicked: false };
+    });
+  }
+  cancelRecordOpen() {
+    this.setState(() => {
+      return { cancelRecordBtnClicked: true };
+    });
+  }
+  cancelRecordClose() {
+    this.setState(() => {
+      return { cancelRecordBtnClicked: false };
+    });
+  }
   render() {
     return (
       <div className="patient-info-popbox">
@@ -86,7 +119,7 @@ class PatientPopboxInfo extends React.Component {
                   <div className="row">
                     {" "}
                     <div className="col-lg-1 offset-lg-9">
-                      <Close />
+                      <Close closeClicked={this.props.closePatientInfo} />
                     </div>{" "}
                   </div>
                 </div>
@@ -95,10 +128,16 @@ class PatientPopboxInfo extends React.Component {
                   <p>Разделить интервал</p>{" "}
                 </div>
                 <hr />
-                <div className="col-lg-12 mb-lg-1">
+                <div
+                  onClick={() => this.changeRecordOpen()}
+                  className="col-lg-12 mb-lg-1"
+                >
                   <p>Изменить запись</p>
                 </div>
-                <div className="col-lg-12">
+                <div
+                  onClick={() => this.cancelRecordOpen()}
+                  className="col-lg-12"
+                >
                   <p>Отменить прием</p>
                 </div>
                 <hr />
@@ -110,6 +149,12 @@ class PatientPopboxInfo extends React.Component {
                 </div>
               </div>
             </div>
+            {this.state.changeRecordBtnClicked ? (
+              <ChangeRecord changeRecordClose={this.changeRecordClose} />
+            ) : null}
+            {this.state.cancelRecordBtnClicked ? (
+              <CancelRecord cancelRecordClose={this.cancelRecordClose} />
+            ) : null}
           </div>
         </div>
       </div>
