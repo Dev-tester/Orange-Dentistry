@@ -1,47 +1,17 @@
+import $ from "jquery"; // для работы dev, на prod - закомментить
 import React from "react";
 import "./Appoint.css";
+import Vector from "./media/appoint/Vector";
 import Popbox from "./popbox";
 
 class Shedule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      doctors: [
-        { id: 1, name: "Иванов И. И.", branch: "Кубанская, 54" },
-        { id: 2, name: "Александрова А. А.", branch: "Кубанская, 54" },
-        { id: 3, name: "Буслаев И. Э.", branch: "Кубанская, 54" },
-        { id: 4, name: "Вердеревская И. И.", branch: "Кубанская, 54" },
-      ],
-      records: [
-        {
-          id: 1,
-          appointedtime: "09:00",
-          patientid: 1,
-          doctorid: 1,
-          patient: "Бальсунов И. В.",
-          status: "green",
-          actions: ["sms_verified", "red_umb"],
-        },
-        {
-          id: 2,
-          appointedtime: "09:30",
-          patientid: 2,
-          doctorid: 1,
-          patient: "Караваева К. С.",
-          status: "green",
-          actions: ["sms_verified", "call"],
-        },
-        {
-          id: 3,
-          appointedtime: "10:00",
-          patientid: 3,
-          doctorid: 1,
-          patient: "Овощников К. А.",
-          status: "green",
-          actions: ["red_umb"],
-        },
-      ],
+      doctors: [],
+      records: [],
       appointButtonClicked: false,
+      hideBtnClicked: false,
     };
     this.intervals = [
       "09:00",
@@ -61,49 +31,22 @@ class Shedule extends React.Component {
     this.clickEvent = this.clickEvent.bind(this);
     this.appointClicked = this.appointClicked.bind(this);
     this.closePopbox = this.closePopbox.bind(this);
+    this.hideShedule = this.hideShedule.bind(this);
+    this.showShedule = this.showShedule.bind(this);
   }
 
-  //   componentDidMount() {
-  //     this.setState({
-  //       isLoaded: true,
-  //       records: [
-  //         [],
-  //         JSON.parse(
-  //           "[" +
-  //             '{"id":1,"appointedtime":"09:00","patientid":1,"doctorid":1,"patient":"Бальсунов И. В.","status":"green","actions":["sms_verified","red_umb"]},' +
-  //             '{"id":2,"appointedtime":"09:30","patientid":2,"doctorid":1,"patient":"Караваева К. С.","status":"green","actions":["sms_verified","call"]},' +
-  //             '{"id":3,"appointedtime":"10:00","patientid":3,"doctorid":1,"patient":"Овощников К. А.","status":"green","actions":["red_umb"]},' +
-  //             '{"id":4,"appointedtime":"10:30","patientid":4,"doctorid":2,"patient":"Горлатых Е. М.","status":"red_gray","actions":["sms_unverified","red_person","green_umb"]},' +
-  //             '{"id":5,"appointedtime":"11:30","patientid":5,"doctorid":2,"patient":"Чемерис Н. .","status":"green","actions":["red_person"]},' +
-  //             '{"id":6,"appointedtime":"13:00","patientid":6,"doctorid":3,"patient":"Воронина М. С.","status":"yellow","actions":["green_umb","red_person"]},' +
-  //             '{"id":7,"appointedtime":"13:30","patientid":7,"doctorid":3,"patient":"Первак М. М.","status":"green","actions":["sms_unverified"]},' +
-  //             '{"id":8,"appointedtime":"14:00","patientid":8,"doctorid":3,"patient":"Сытников Ю. Ф.","status":"red_gray","actions":["sms_unverified","call"]}]'
-  //         ),
-  //       ],
-  //     });
-  //     // fetch("http://dentistry.test/shedule/records",{
-  //     // 	mode: "no-cors",
-  //     // })
-  //     // .then(res => res.json())
-  //     // .then(
-  //     // 	(result) => {
-  //     // 		console.log(JSON.stringify(result.shedule[1]));
-  //     // 		this.setState({
-  //     // 			isLoaded: true,
-  //     // 			doctors: result.doctors,
-  //     // 			records: result.shedule
-  //     // 		});
-  //     // 	},
-  //     // 	// Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-  //     // 	// чтобы не перехватывать исключения из ошибок в самих компонентах.
-  //     // 	(error) => {
-  //     // 		this.setState({
-  //     // 			isLoaded: true,
-  //     // 			error
-  //     // 		});
-  //     // 	}
-  //     // )
-  //   }
+  componentDidMount() {
+    // эта подложка для localhost:3000. На prod - закоментить
+    let self = this;
+    return $.get("http://dentistry.test/shedule/records", function (response) {
+      let result = JSON.parse(response);
+      self.setState({
+        isLoaded: true,
+        doctors: result.doctors,
+        records: result.shedule,
+      });
+    });
+  }
 
   callChange(calls) {}
 
@@ -121,8 +64,24 @@ class Shedule extends React.Component {
       return { appointButtonClicked: false };
     });
   }
+  hideShedule() {
+    this.setState((prevState) => {
+      return { hideBtnClicked: true };
+    });
+  }
+  showShedule() {
+    this.setState(() => {
+      return { hideBtnClicked: false };
+    });
+  }
 
   render() {
+    let date = new Date();
+    let today = date.getDate();
+    let thisMonth = date.getMonth();
+    console.log(today);
+    console.log(thisMonth);
+
     let doctors = this.state.doctors,
       records = this.state.records,
       Interval = this.state.Interval;
@@ -159,38 +118,114 @@ class Shedule extends React.Component {
     //let nextTime = this.intervals.indexOf(record.appointedtime)+1;
     return (
       <div className="main-schedule ui-block col-lg-12">
-        <div className="main-schedule-title">
-          <div className="top-row">
-            15 сентября 2020<span>|</span>1 смена
+        {this.state.hideBtnClicked ? null : (
+          <div className="row">
+            <div className="col-lg-1 offset-lg-11 hide-shedule-btn">
+              <button onClick={() => this.hideShedule()}></button>
+            </div>
           </div>
-          <div className="doctors-shedule row">
-            {doctors.map((value, index) => {
-              return (
-                <div className="col-sm-3 col-md-3 col-lg-3" key={index}>
-                  <div className="name">{value.name}</div>
-                  <div className="branch">{value.branch}</div>{" "}
-                  {this.intervals.map((el) => {
-                    return (
-                      <div className="row mb-lg-2">
-                        <div className="col-lg-4">{el}</div>
+        )}
 
-                        {this.state.records.map((record) => {
-                          if (record.appointedtime === el) {
-                            return (
-                              <div className="col-lg-6 patient-block">
-                                {record.patient}
+        {!this.state.hideBtnClicked ? (
+          <div className="main-schedule-title">
+            <div className="top-row">
+              <strong>
+                {today} сентября 2020<span>|</span>I смена
+              </strong>
+            </div>
+            <div className="doctors-shedule row">
+              {doctors.map((value, index) => {
+                return (
+                  <div className="col-sm-3 col-md-3 col-lg-3" key={index}>
+                    <div className="name">{value.name}</div>
+                    <div className="branch">{value.branch}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="patients-shedule row">
+              {doctors.map((doctor, doctorIndex) => {
+                return (
+                  <div
+                    className="col-sm-3 col-md-3 col-lg-3 patient-squad"
+                    key={doctorIndex}
+                  >
+                    {records[doctor.id]
+                      ? records[doctor.id].map((record, recordIndex) => {
+                          return !record.patientid ? (
+                            <div
+                              className="patient-shedule-wrap blanked"
+                              key={recordIndex}
+                            >
+                              <div className="patient-time">
+                                {record.appointedtime}
                               </div>
-                            );
-                          }
-                        })}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                              <button
+                                className="patient-empty-block"
+                                onClick={(e) => this.appointClicked(e)}
+                              ></button>
+                            </div>
+                          ) : (
+                            <div
+                              className="patient-shedule-wrap"
+                              key={recordIndex}
+                            >
+                              <div className="patient-time">
+                                {record.appointedtime}
+                              </div>
+                              <div
+                                className={
+                                  "patient-shedule-block " + record.status
+                                }
+                              >
+                                <div className="patient-name">
+                                  {record.patient}
+                                </div>
+                                <ul className="patient-actions">
+                                  {record.actions.map((action, actionIndex) => {
+                                    return (
+                                      <li
+                                        className={action}
+                                        key={actionIndex}
+                                      ></li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            </div>
+                          );
+                        })
+                      : ""}
+                    <button
+                      onClick={(e) => this.appointClicked(e)}
+                      className={"patient-appoint"}
+                    >
+                      Записать
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="show-shedule-btn pb-4">
+            <div className="row">
+              <div className="col-lg-5 offset-lg-1 left-line">
+                {" "}
+                <hr />
+              </div>
+              <div className="col-lg-1 circle-btn">
+                <button onClick={() => this.showShedule()}>
+                  <Vector />
+                </button>
+              </div>
+              <div className="col-lg-5 right-line">
+                <hr />
+              </div>
+            </div>
+          </div>
+        )}
+
         <Popbox
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}

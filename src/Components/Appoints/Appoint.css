@@ -38,7 +38,10 @@
   box-shadow: 0px 1px 4px #b0bac5;
   margin-top: 40px;
   padding-right: 40px;
-  height: 104vh;
+  height: auto;
+  max-height: 112vh;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
 }
 .row.second {
   padding-top: 32px;
@@ -345,7 +348,7 @@ button.react-datepicker__navigation {
   height: 40px;
   margin-left: 82px;
   position: absolute;
-  bottom: -37px;
+  bottom: 4px;
   left: 52px;
 }
 .unvisible {
@@ -364,4 +367,44 @@ button.react-datepicker__navigation {
   height: 40px;
   background: #b0bac5;
   border-radius: 10px;
+}
+
+.hide-shedule-btn button {
+  background: #b0bac5;
+  border-radius: 5px;
+  width: 16px;
+  height: 4px;
+  border-style: none;
+  border-color: unset;
+  margin-left: 86px;
+  margin-top: 22px;
+}
+.patient-squad:nth-last-child(-n + 1) {
+  margin-bottom: 40px;
+}
+.circle-btn {
+  padding-top: 19px;
+}
+.circle-btn button {
+  border: 1px solid #868789;
+  border-radius: 50px;
+  border-color: #868789;
+  width: 32px;
+  height: 32px;
+
+  background: transparent;
+}
+.circle-btn button:active,
+.circle-btn button:focus {
+  outline: none;
+}
+.circle-btn button::-moz-focus-inner {
+  border: 0;
+}
+.left-line hr,
+.right-line hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }

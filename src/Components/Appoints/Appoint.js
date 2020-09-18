@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import './Appoint.css';
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
-import Shedule from './Shedule.js';
+import Shedule from './Shedule.jsx';
 registerLocale('ru', ru);
 
 
