@@ -2,7 +2,7 @@ import ru from 'date-fns/locale/ru';
 import React from 'react';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Redirect, Route } from 'react-router-dom';
 import './Appoint.css';
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
@@ -46,6 +46,7 @@ class Appoint extends React.Component {
 			Interval = this.state.Interval;
 		return (
 			<BrowserRouter>
+				<Redirect push to="/Терапевты" />
 				<div className="App">
 					<div className="row">
 						<div className="col-sm-2 col-md-2 col-lg-2">

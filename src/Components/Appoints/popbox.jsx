@@ -175,7 +175,7 @@ class Popbox extends React.Component {
             <div className="col-lg-12 popbox_buttons">
               <div className="row">
                 <div className={"offset-lg-3 col-lg-3 button_appoint"}>
-                  <button onClick>Записать на прием</button>
+                  <button>Записать на прием</button>
                 </div>
                 <div className={"col-lg-4 button_add_patient"}>
                   <button onClick={() => this.addNewRecordClick()}>
