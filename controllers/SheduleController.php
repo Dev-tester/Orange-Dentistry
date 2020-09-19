@@ -38,7 +38,9 @@ class SheduleController extends \yii\web\Controller {
 	    $command = $connection->createCommand('SELECT 	doctors.id,"family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name,
 															branches.address as branch 
 													FROM 	doctors
-															INNER JOIN branches ON branches.id = doctors.branchid');
+															INNER JOIN branches ON branches.id = doctors.branchid
+													WHERE	specid = :specid')
+		                        ->bindValue(':specid',$_GET['specid']);
 	    $doctors = $command->queryAll();
 	    foreach ($doctors as $doctor){
 		    $result['doctors'][] = [

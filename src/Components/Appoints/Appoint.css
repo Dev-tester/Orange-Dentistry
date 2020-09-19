@@ -49,6 +49,7 @@
   max-height: 112vh;
   transition: all 0.3s ease-in-out;
   overflow: hidden;
+  position: relative;
 }
 .row.second {
   padding-top: 32px;
@@ -60,11 +61,13 @@
   text-align: center;
 }
 .top-row {
-  padding-left: 60px;
-  height: 108px;
+  height: 106px;
+  padding-left: 38px;
+  padding-top: 14px;
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.4px;
 }
 .top-row span {
   margin: 0 6px;
@@ -73,6 +76,10 @@
   height: 40px;
   font-weight: 600;
   text-align: center;
+  padding-left: 48px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  letter-spacing: -0.6px;
 }
 .doctors-shedule .name {
   font-style: normal;
@@ -95,11 +102,19 @@ ul.patient-actions {
   list-style: none;
   padding-left: 12px;
   margin-top: 10px;
+  margin-bottom: 12px;
+  display: flex;
 }
 ul.patient-actions li {
   width: 20px;
   height: 16px;
-  display: inline-block;
+  margin-right: 10px;
+}
+.patient-squad {
+  position: relative;
+  padding-bottom: 100px;
+  flex: 0 0 24%;
+  max-width: 24%;
 }
 .patient-shedule-wrap {
   width: 224px;
@@ -108,13 +123,13 @@ ul.patient-actions li {
 }
 .patient-shedule-block {
   border-left: 10px solid transparent;
-  background: #f6f7f8;
+  background: #F6F7F8;
   border-radius: 10px;
   min-width: 180px;
-  height: 72px;
-  padding-top: 12px;
+  min-height: 42px;
+  padding-top: 10px;
   margin-left: 16px;
-  cursor: pointer;
+  text-align: left;
 }
 .patient-shedule-block.red {
   border-left: 10px solid #e34c4c;
@@ -134,17 +149,17 @@ ul.patient-actions li {
   font-size: 16px;
   line-height: 24px;
   margin-left: 10px;
-  text-align: left;
 }
 .patient-time {
   font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 11px;
   line-height: 16px;
   align-items: center;
   text-align: right;
   color: #313541;
 }
+/********************************************** Date Picker ****************************************************/
 .react-datepicker {
   border: 0;
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
@@ -218,6 +233,33 @@ button.react-datepicker__navigation {
   background: rgba(227, 76, 76, 0.5);
   color: #fff;
 }
+.ui-datepicker .ui-datepicker-next {
+  left: 22px;
+}
+.hasDatepicker .ui-widget.ui-widget-content{
+  border: 0;
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  min-width: 280px;
+}
+.hasDatepicker .ui-datepicker-header {
+  background: none;
+  border: 0;
+  padding: 16px 0;
+}
+.hasDatepicker .ui-state-default{
+  border: 0;
+  border-bottom: 4px solid #e34c4c;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 7px 8px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+}
+/******************************************************* filters ******************************************************/
 .filters-box {
   border-radius: 10px;
   background: #fff;
@@ -236,8 +278,7 @@ button.react-datepicker__navigation {
 }
 .filters-box .row div {
   padding: 0;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-bottom: 12px;
 }
 .filters-box .row select {
   border: 1px solid #dfe6ee;
@@ -287,7 +328,7 @@ button.react-datepicker__navigation {
   background: #3b80d6;
   margin-left: 8px;
 }
-/******************************** Живая лента ***************************************/
+/**************************************************** Живая лента *****************************************************/
 .livefeed-box {
   background: #ffffff;
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
@@ -346,18 +387,20 @@ button.react-datepicker__navigation {
   margin-left: 10px;
 }
 .patient-appoint {
+  border: 0;
   border-radius: 30px;
   background-color: #3b80d6;
   width: 100px;
   color: white;
   box-shadow: none !important;
-  border-color: unset !important;
-  border-style: unset !important;
   height: 40px;
+  line-height: 20px;
   margin-left: 82px;
+  padding-bottom: 5px;
   position: absolute;
-  bottom: 4px;
   left: 52px;
+  bottom: 52px;
+  font-weight: 300;
 }
 .unvisible {
   display: none;
@@ -369,6 +412,7 @@ button.react-datepicker__navigation {
   height: 10px;
   color: lightgrey;
   height: 16px !important;
+  position: absolute;
 }
 
 .main-schedule-title .patient-block {
@@ -378,18 +422,18 @@ button.react-datepicker__navigation {
 }
 
 .hide-shedule-btn button {
+  border: none;
   background: #b0bac5;
   border-radius: 5px;
   width: 16px;
   height: 4px;
-  border-style: none;
-  border-color: unset;
-  margin-left: 86px;
-  margin-top: 22px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
 }
-.patient-squad:nth-last-child(-n + 1) {
+/*.patient-squad:nth-last-child(-n + 1) {     // зачем???
   margin-bottom: 40px;
-}
+}*/
 .circle-btn {
   padding-top: 19px;
 }

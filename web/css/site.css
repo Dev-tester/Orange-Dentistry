@@ -349,104 +349,6 @@ button.btn.logout {
     left: 52px;
     text-align: left;
 }
-.doctor-menu{
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px #B0BAC5;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-}
-.doctor-menu ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding-inline-start: 12px;
-}
-.doctor-menu ul li {
-    display: flex;
-    padding: 0 36px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    text-transform: uppercase;
-}
-.doctor-menu ul li:hover a {
-    border-bottom: 4px solid #F08786;
-    color: #F08786;
-}
-.main-schedule.ui-block {
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px #B0BAC5;
-    margin-top: 40px;
-    padding-right: 40px;
-}
-.row.second {
-    padding-top: 32px;
-}
-.row.third {
-    padding-top: 16px;
-}
-.doctors-shedule{
-    text-align: center;
-}
-.top-row {
-    padding-left: 60px;
-    height: 108px;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-}
-.top-row span {
-    margin: 0 6px;
-}
-.doctors-shedule.row {
-    height: 40px;
-    font-weight: 600;
-    text-align: center;
-}
-ul.patient-actions {
-    list-style: none;
-    padding-left: 12px;
-    margin-top: 10px;
-    display: flex;
-}
-ul.patient-actions li {
-    width: 20px;
-    height: 16px;
-    margin-right: 10px;
-}
-.patient-shedule-wrap {
-    width: 224px;
-    display: flex;
-    padding: 0 0 16px 40px;
-}
-.patient-shedule-block {
-    border-left: 10px solid #e34c4c;
-    background: #F6F7F8;
-    border-radius: 10px;
-    width: 180px;
-    height: 72px;
-    padding-top: 12px;
-    margin-left: 16px;
-}
-.patient-name {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    margin-left: 10px;
-}
-.patient-time {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    align-items: center;
-    text-align: right;
-    color: #313541;
-}
 ul.patient-actions li.call {
     background: url(../media/shedule/called.png);
 }
@@ -473,33 +375,6 @@ ul.patient-actions li.sms_unverified {
     background: url(../media/shedule/add.png);
     min-width: 182px;
     height: 16px;
-    margin-left: 16px;
+    margin-left: 40px;
     cursor: pointer;
-}
-/*-------------------------------------------------------  datepicker ------------------------------------------------*/
-.ui-datepicker .ui-datepicker-next {
-    left: 22px;
-}
-.hasDatepicker .ui-widget.ui-widget-content{
-    border: 0;
-    box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    min-width: 280px;
-}
-.hasDatepicker .ui-datepicker-header {
-    background: none;
-    border: 0;
-    padding: 16px 0;
-}
-.hasDatepicker .ui-state-default{
-    border: 0;
-    border-bottom: 4px solid #e34c4c;
-    background: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 7px 8px;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
 }
