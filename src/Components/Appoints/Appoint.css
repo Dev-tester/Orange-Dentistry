@@ -1,18 +1,18 @@
-.doctor-menu {
+.med-directions-menu {
   border-radius: 10px;
   box-shadow: 0px 1px 4px #b0bac5;
   height: 80px;
   display: flex;
   flex-direction: row;
 }
-.doctor-menu ul {
+.med-directions-menu ul {
   list-style: none;
   display: flex;
   align-items: center;
   margin: 0;
   padding-inline-start: 12px;
 }
-.doctor-menu ul li {
+.med-directions-menu ul li {
   display: flex;
   padding: 0 36px;
   font-style: normal;
@@ -20,21 +20,22 @@
   font-size: 15px;
   line-height: 24px;
   text-transform: uppercase;
+  cursor:pointer;
 }
-.doctor-menu ul li a {
+.med-directions-menu ul li a {
   border-bottom: 4px solid transparent;
   padding-top: 20px;
   padding-bottom: 20px;
   line-height: 38px;
   color: #16181e;
 }
-.doctor-menu ul li:hover a {
+.med-directions-menu ul li:hover a {
   border-bottom: 4px solid #3b80d6;
   color: #3b80d6;
   text-decoration: none;
 }
 
-.doctor-menu ul li a.active-link {
+.med-directions-menu ul li a.active-link {
   border-bottom: 4px solid #3b80d6;
   color: #3b80d6;
   text-decoration: none;
@@ -71,6 +72,9 @@
 }
 .top-row span {
   margin: 0 6px;
+  font-size: 20px;
+  font-weight: 100;
+  color: #aaa;
 }
 .doctors-shedule.row {
   height: 40px;

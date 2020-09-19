@@ -7,6 +7,7 @@ import './Appoint.css';
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
 import Shedule from './Shedule.jsx';
+import $ from "jquery";
 registerLocale('ru', ru);
 
 
@@ -14,39 +15,47 @@ class Appoint extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			specializations: ['Терапевты', 'Хирурги', 'Ортопеды', 'Ортодонты'],
-			startDate: new Date()
+			directions: [],
+			records: [],
+			startDate: new Date(),
+			medDirection:1,// Терапевты по умолчанию
 		}
-		this.handleChange = this.handleChange.bind(this);
+		this.calendarChange = this.calendarChange.bind(this);
+		this.switchMedicalDirection = this.switchMedicalDirection.bind(this);
 	}
 
 	componentDidMount() {
-		/*jQuery('#dp-container').datepicker($.extend({}, $.datepicker.regional['ru-Ru'],{
-			  "yearRange":"2016:2024",
-			  "showOtherMonths":true,
-			  "defaultDate":null,
-			  "altField":"#w0",
-			  "dateFormat":"dd-mm-yy"
-			}
-		));*/
+		let self = this;
+		return $.get("http://dentistry.test/shedule/directions", function (response){
+			let result = JSON.parse(response);
+			self.setState({
+				directions: result
+			});
+		});
 	}
 
-	handleChange(date) {
+	calendarChange(date) {
 		this.setState({
 			startDate: date
 		});
 	};
 
+	switchMedicalDirection(direction,evt){
+		// class=active-link
+		this.setState({
+			medDirection: direction
+		});
+	}
+
 	render() {
 		let branches = this.state.branches,
-			specializations = this.state.specializations,
+			directions = this.state.directions,
 			names = this.state.names,
 			timeFrom = this.state.timeFrom,
 			timeTo = this.state.timeTo,
 			Interval = this.state.Interval;
 		return (
 			<BrowserRouter>
-				<Redirect push to="/Терапевты" />
 				<div className="App">
 					<div className="row">
 						<div className="col-sm-2 col-md-2 col-lg-2">
@@ -56,23 +65,22 @@ class Appoint extends React.Component {
 							<div className="row second text-left" style={{ minWidth: '300px' }}>
 								<DatePicker
 									selected={this.state.startDate}
-									onChange={this.handleChange}
+									onChange={this.calendarChange}
 									locale="ru"
 									inline
-
 								/>
 							</div>
 							<div className="row third text-left" style={{ minWidth: '300px' }}>
-								<Filters />
+								<Filters currentDate={this.state.startDate} medDirection={this.state.medDirection} />
 							</div>
 						</div>
-						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth: '1216px' }}>
+						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth:'1216px' }}>
 							<div className="row" style={{ margin: '10px -30px' }}>
 								<div className="col-sm-4 col-md-4 col-lg-4 text-left">
 									<div className="page-title">Запись на приём</div>
 									<div className="page-breadcrumb">
 										<span style={{ color: '#F08786' }}>Главная</span>
-										<span>*</span>
+										<span>•</span>
 										<span>Запись на приём</span>
 									</div>
 								</div>
@@ -81,25 +89,22 @@ class Appoint extends React.Component {
 								</div>
 							</div>
 							<div className="row" style={{ marginTop: '45px' }}>
-								<div className="doctor-menu ui-block col-lg-12">
+								<div className="med-directions-menu ui-block col-lg-12">
 									<ul>
-										{specializations.map((value, index) => {
-											return <div key={index} className="col-lg-2"><li className="doctor-item" ><NavLink to={`/${value}`} activeClassName="active-link">{value}</NavLink></li></div>
+										{directions.map((value, index) => {
+											return <li className="direct-item" key={index} onClick={this.switchMedicalDirection.bind(this, value.id)}><a className={value.id==this.state.medDirection ? 'active-link':''}>{value.title}</a></li>
 										})}
 									</ul>
 								</div>
 							</div>
 							<div className="row">
-								<Route path="/Терапевты"
-									render={() => (<Shedule />)} />
-
+								<Shedule currentDate={this.state.startDate} medDirection={this.state.medDirection} stage={'I'}/>
 							</div>
 							<div className="row">
-								<Route path="/Терапевты"
-									render={() => (<Shedule />)} />
+								<Shedule currentDate={this.state.startDate} medDirection={this.state.medDirection} stage={'II'}/>
 							</div>
 						</div>
-						<div className="col-sm-2 col-md-2 col-lg-2">
+						<div className="col-sm-2 col-md-2 col-lg-2" style={{padding:0}}>
 							<LiveFeed />
 						</div>
 					</div>

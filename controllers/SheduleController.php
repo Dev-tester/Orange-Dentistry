@@ -38,9 +38,9 @@ class SheduleController extends \yii\web\Controller {
 	    $command = $connection->createCommand('SELECT 	doctors.id,"family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name,
 															branches.address as branch 
 													FROM 	doctors
-															INNER JOIN branches ON branches.id = doctors.branchid
-													WHERE	specid = :specid')
-		                        ->bindValue(':specid',$_GET['specid']);
+															INNER JOIN branches ON branches.id = doctors.branch_id
+													WHERE	direction_id = :direction_id')
+		                        ->bindValue(':direction_id',$_GET['direction']);
 	    $doctors = $command->queryAll();
 	    foreach ($doctors as $doctor){
 		    $result['doctors'][] = [
@@ -49,15 +49,44 @@ class SheduleController extends \yii\web\Controller {
 			    'branch' => $doctor['branch']
 		    ];
 	    }
-	    $command = $connection->createCommand('SELECT * FROM "shedule-reception" ORDER BY id ASC');
+	    $command = $connection->createCommand('SELECT shedule.* 
+													FROM "shedule-reception" AS shedule
+															INNER JOIN doctors ON doctors.id = shedule.doctor_id
+													WHERE date = :date AND doctors.direction_id = :direction_id
+													ORDER BY shedule.id ASC')
+								->bindValue(':date',$_GET['date'])
+								->bindValue(':direction_id',$_GET['direction']);
 	    $shedule = $command->queryAll();
 	    foreach ($shedule as $row){
-		    $doctorid = $row['doctorid'];
+		    $doctorid = $row['doctor_id'];
 		    $row['actions'] = explode(",",preg_replace("/[\{\}]/","",$row['actions']));
 		    $result['shedule'][$doctorid][] = $row;
 	    }
     	return json_encode($result);
     }
+
+	public function actionDirections(){
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand('SELECT * FROM "ref-med-directions"');
+		$result = $command->queryAll();
+		return json_encode($result);
+	}
+
+	public function actionFilters(){
+		$connection = Yii::$app->getDb();
+		$result = ['directions' => [],'doctors' => []];
+		$command = $connection->createCommand('SELECT * FROM "ref-med-directions"');
+		$result['directions'] = $command->queryAll();
+		$command = $connection->createCommand('SELECT shedule.doctor_id, "family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name
+													FROM "shedule-reception" AS shedule
+															INNER JOIN doctors ON doctors.id = shedule.doctor_id
+													WHERE date = :date AND doctors.direction_id = :direction_id
+													GROUP BY doctor_id,family,name,surname')
+			->bindValue(':date',$_GET['date'])
+			->bindValue(':direction_id',$_GET['direction']);
+		$result['doctors'] = $command->queryAll();
+		return json_encode($result);
+	}
 
 	public function actionPatients(){
 		$connection = Yii::$app->getDb();

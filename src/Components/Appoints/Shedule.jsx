@@ -1,5 +1,7 @@
 import $ from "jquery"; // для работы dev, на prod - закомментить
 import React from "react";
+import {format} from 'date-fns';
+import ru from 'date-fns/locale/ru';
 import "./Appoint.css";
 import Vector from "./media/appoint/Vector";
 import PatientPopboxInfo from "./PatientPopboxInfo/PatientPopboxInfo";
@@ -15,6 +17,8 @@ class Shedule extends React.Component {
 			appointButtonClicked: false,
 			hideBtnClicked: false,
 			patientInfoBtnClicked: false,
+			currentDate:this.props.currentDate,
+			medDirection:this.props.medDirection
 		};
 		this.intervals = [
 			"09:00",
@@ -39,20 +43,36 @@ class Shedule extends React.Component {
 		this.showPatientInfo = this.showPatientInfo.bind(this);
 		this.closePatientInfo = this.closePatientInfo.bind(this);
 		this.setEmptyIntervalsButtons = this.setEmptyIntervalsButtons.bind(this);
+		this.getCurrentShedule = this.getCurrentShedule.bind(this);
 	}
 
 	componentDidMount() {
 		// эта подложка для localhost:3000. На prod - закоментить
+		this.getCurrentShedule(this.state.currentDate,this.state.medDirection);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState(nextProps);
+		this.getCurrentShedule(nextProps.currentDate, nextProps.medDirection);
+	}
+
+	getCurrentShedule(currentDate, medDirection){
 		let self = this;
-		return $.get("http://dentistry.test/shedule/records?specid=1", function (response) {
-			let result = JSON.parse(response);
-			let records = self.setEmptyIntervalsButtons(result.shedule);
-			self.setState({
-				isLoaded: true,
-				doctors: result.doctors,
-				records: records,
-			});
-		});
+		return $.get("http://dentistry.test/shedule/records",
+			{
+				date:currentDate.toLocaleDateString(),
+				direction:medDirection
+			},
+			function (response) {
+				let result = JSON.parse(response);
+				let records = self.setEmptyIntervalsButtons(result.shedule);
+				self.setState({
+					isLoaded: true,
+					doctors: result.doctors,
+					records: records,
+				});
+			}
+		);
 	}
 
 	// устанавливаем кнопки "Запись на приём" там где нет приёмов
@@ -76,7 +96,7 @@ class Shedule extends React.Component {
 					for (let idx = 0; idx < lastIdx; idx++) {
 						console.log(idx);
 						records[userId].splice(idx, 0, {
-							patientid: null,
+							patient_id: null,
 							appointedtime: this.intervals[idx],
 						});
 					}
@@ -89,7 +109,7 @@ class Shedule extends React.Component {
 						//console.log(idx);
 						//console.log(records[userId]);
 						records[userId].splice(idx, 0, {
-							patientid: null,
+							patient_id: null,
 							appointedtime: this.intervals[idx],
 						});
 					}
@@ -105,6 +125,7 @@ class Shedule extends React.Component {
 	timeChange(time) {}
 
 	clickEvent() {}
+
 	appointClicked(e) {
 		e.preventDefault();
 		this.setState(() => {
@@ -160,7 +181,7 @@ class Shedule extends React.Component {
 					<div className="main-schedule-title">
 						<div className="top-row">
 							<strong>
-								{today} сентября 2020<span>|</span>I смена
+								{format(this.state.currentDate, 'do MMMM u', {locale: ru}).replace(/-е/,'')}<span>|</span>{this.props.stage} смена
 							</strong>
 						</div>
 						<div className="doctors-shedule row">
@@ -182,7 +203,7 @@ class Shedule extends React.Component {
 									>
 										{records[doctor.id]
 											? records[doctor.id].map((record, recordIndex) => {
-													return !record.patientid ? (
+													return !record.patient_id ? (
 														<div
 															className="patient-shedule-wrap blanked"
 															key={recordIndex}
@@ -223,6 +244,12 @@ class Shedule extends React.Component {
 																	}):''}
 																</ul>
 															</div>
+															{this.state.patientInfoBtnClicked ? (
+																<PatientPopboxInfo
+																	patientName={record.patient}
+																	closePatientInfo={this.closePatientInfo}
+																/>
+															) : null}
 														</div>
 													);
 												})
