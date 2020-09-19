@@ -52,7 +52,7 @@ class PatientPopboxInfo extends React.Component {
                   {" "}
                   <p className="name">
                     {" "}
-                    <strong>Чемерис Наталья</strong>{" "}
+                    <strong>{this.props.patientName}</strong>{" "}
                   </p>{" "}
                   <p className="birth-date">12.03.1962</p>
                 </div>

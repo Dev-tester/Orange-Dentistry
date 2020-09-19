@@ -257,16 +257,13 @@ class Shedule extends React.Component {
 					</div>
 				)}
 
-				<Popbox
-					closeClicked={this.closePopbox}
-					clicked={this.state.appointButtonClicked}
-				/>
-				{this.state.patientInfoBtnClicked ? (
-					<PatientPopboxInfo closePatientInfo={this.closePatientInfo} />
-				) : null}
-			</div> // прописать под <Popbox /> модалку для редактирования юзеров
-		);
-	}
+        <Popbox
+          closeClicked={this.closePopbox}
+          clicked={this.state.appointButtonClicked}
+        />
+      </div> // прописать под <Popbox /> модалку для редактирования юзеров
+    );
+  }
 }
 
 export default Shedule;
