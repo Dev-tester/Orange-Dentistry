@@ -1,0 +1,51 @@
+.add-new-record {
+  display: block;
+  z-index: 0 !important;
+  position: fixed;
+  top: 17%;
+  left: 28%;
+  bottom: 0;
+  right: 0;
+  width: 900px;
+  height: 692px;
+  background: #f6f7f8;
+  box-shadow: grey 1px 2px 3px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.visible {
+  display: unset !important;
+}
+.add-new-record-input {
+  height: 40px;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  box-shadow: grey 1px 2px 3px;
+}
+.add-new-record .col-lg-4 {
+  line-height: 35px;
+}
+.add-new-record .save-button {
+  border-radius: 30px;
+  background-color: #3b80d6;
+  width: 150px;
+  color: white;
+  box-shadow: none !important;
+  border-color: unset !important;
+  border-style: unset !important;
+  height: 40px;
+}
+
+.add-new-record .close-btn {
+  position: absolute;
+  right: 20px;
+}
+.comment {
+  height: 100px;
+}
+
+.input-name {
+  text-align: right;
+}

@@ -1,0 +1,66 @@
+.container {
+  padding-right: 0px !important;
+}
+
+.patient-info-popbox {
+  display: block;
+  z-index: 5 !important;
+  position: fixed;
+  top: 32%;
+  left: 34%;
+  bottom: 0;
+  right: 0;
+  width: 650px;
+  height: 278px;
+  background: #f6f7f8;
+  box-shadow: grey 1px 2px 3px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.patient-info-popbox p {
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+}
+.patient-info-popbox .right-part {
+  background: white;
+  height: 278px;
+}
+
+.status-patient {
+  color: #f08786;
+  text-align: right;
+}
+.visit-time {
+  text-align: right;
+}
+.status-buttons button {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: white;
+  border-style: unset;
+  box-shadow: grey 1px 1px 7px 0px;
+}
+.name,
+.birth-date {
+  text-align: left;
+}
+.left-part:nth-child(1) {
+  padding: 0 55px !important;
+}
+.inProgress-btn button {
+  background: #3b80d6;
+}
+.comment p {
+  text-align: left;
+  line-height: normal;
+}
+.right-part hr {
+  width: 83%;
+  border-color: #dfe6ee;
+}
+.right-part p {
+  color: #3b80d6;
+  cursor: pointer;
+}
