@@ -3,7 +3,33 @@ import Close from "../Appoints/media/appoint/Close";
 import "./AddNewRecord.css";
 
 class AddNewRecord extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lastname: "",
+      name: "",
+      patronymic: "",
+      city: "",
+      street: "",
+      home: "",
+      pavilion: "",
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.inputLastName = React.createRef();
+    this.inputName = React.createRef();
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+  handleChange(e) {
+    this.setState(() => {
+      return { [e.target.name]: e.target.value };
+    });
+  }
   render() {
     return (
       <div className="add-new-record">
@@ -12,7 +38,7 @@ class AddNewRecord extends React.Component {
           method="post"
           onSubmit={(e) => {
             e.preventDefault();
-            this.props.closed();
+            this.handleSubmit(e);
           }}
         >
           <div className="col-lg-12">
@@ -72,7 +98,9 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="lastname"
+                        value={this.state.lastname}
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александрова"
@@ -88,6 +116,8 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        value={this.state.name}
+                        onChange={(e) => this.handleChange(e, name)}
                         name="name"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -104,6 +134,8 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        value={this.state.patronymic}
+                        onChange={(e) => this.handleChange(e, name)}
                         name="patronymic"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -120,6 +152,8 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        value={this.state.city}
+                        onChange={(e) => this.handleChange(e, name)}
                         name="city"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -136,6 +170,8 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        value={this.state.street}
+                        onChange={(e) => this.handleChange(e, name)}
                         name="street"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -150,6 +186,8 @@ class AddNewRecord extends React.Component {
                           <div className="col-lg-2 input-name">Дом</div>
                           <div className="col-lg-8">
                             <input
+                              value={this.state.home}
+                              onChange={(e) => this.handleChange(e, name)}
                               name="home"
                               className="add-new-record-input"
                               type="text"
@@ -168,6 +206,7 @@ class AddNewRecord extends React.Component {
                           </div>
                           <div className="col-lg-8">
                             <input
+                              onChange={(e) => this.handleChange(e, name)}
                               name="pavilion"
                               className="add-new-record-input"
                               type="text"
@@ -184,6 +223,7 @@ class AddNewRecord extends React.Component {
                         <div className="col-lg-6 input-name">Квартира</div>
                         <div className="col-lg-6">
                           <input
+                            onChange={(e) => this.handleChange(e, name)}
                             name="flat"
                             className="add-new-record-input"
                             type="text"
@@ -203,6 +243,7 @@ class AddNewRecord extends React.Component {
                         </div>
                         <div className="col-lg-8">
                           <input
+                            onChange={(e) => this.handleChange(e, name)}
                             name="comment"
                             className="add-new-record-input comment mb-lg-2"
                             type="text"
@@ -224,6 +265,7 @@ class AddNewRecord extends React.Component {
                       </div>
                       <div className="col-lg-8">
                         <input
+                          onChange={(e) => this.handleChange(e, name)}
                           name="birthDate"
                           className="add-new-record-input"
                           type="text"
@@ -243,11 +285,21 @@ class AddNewRecord extends React.Component {
                       <div className="row">
                         <div className="col-lg-6">
                           {" "}
-                          <input type="checkbox" name="genderMen" id="" />{" "}
+                          <input
+                            onChange={(e) => this.handleChange(e, name)}
+                            type="checkbox"
+                            name="genderMen"
+                            id=""
+                          />{" "}
                           мужской
                         </div>
                         <div className="col-lg-6">
-                          <input type="checkbox" name="genderWomen" id="" />{" "}
+                          <input
+                            onChange={(e) => this.handleChange(e, name)}
+                            type="checkbox"
+                            name="genderWomen"
+                            id=""
+                          />{" "}
                           женский
                         </div>
                       </div>
@@ -262,6 +314,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="phoneNumber"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -278,6 +331,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="email"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -294,6 +348,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="parent"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -310,6 +365,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="radio"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -327,6 +383,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="insurance"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -343,6 +400,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="insuranceFrom"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -359,6 +417,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="insuranceUntill"
                         className="add-new-record-input mb-lg-2"
                         type="text"
@@ -375,6 +434,7 @@ class AddNewRecord extends React.Component {
                     </div>
                     <div className="col-lg-8">
                       <input
+                        onChange={(e) => this.handleChange(e, name)}
                         name="description"
                         className="add-new-record-input mb-lg-2"
                         type="text"
