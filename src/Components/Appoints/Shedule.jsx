@@ -43,9 +43,8 @@ class Shedule extends React.Component {
     // эта подложка для localhost:3000. На prod - закоментить
     let self = this;
     return $.get("http://dentistry.test/shedule/records", function (response) {
-      console.log(response);
       let result = JSON.parse(response);
-      console.log(result);
+      console.log(result.shedule);
       self.setState({
         isLoaded: true,
         doctors: result.doctors,
@@ -209,6 +208,12 @@ class Shedule extends React.Component {
                                   })}
                                 </ul>
                               </div>
+                              {this.state.patientInfoBtnClicked ? (
+                                <PatientPopboxInfo
+                                  patientName={record.patient}
+                                  closePatientInfo={this.closePatientInfo}
+                                />
+                              ) : null}
                             </div>
                           );
                         })
@@ -247,9 +252,6 @@ class Shedule extends React.Component {
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
         />
-        {this.state.patientInfoBtnClicked ? (
-          <PatientPopboxInfo closePatientInfo={this.closePatientInfo} />
-        ) : null}
       </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );
   }

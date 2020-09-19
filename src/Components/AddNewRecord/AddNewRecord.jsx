@@ -1,3 +1,4 @@
+import * as axios from "axios";
 import React from "react";
 import Close from "../Appoints/media/appoint/Close";
 import "./AddNewRecord.css";
@@ -35,6 +36,8 @@ class AddNewRecord extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.state);
+    axios.post("https://ru.reactjs.org/docs/forms", this.state);
   }
   handleChange(e) {
     const input = e.target;
@@ -46,6 +49,7 @@ class AddNewRecord extends React.Component {
     return (
       <div className="add-new-record">
         <form
+          id="newPatient"
           action="/shedule/addpatient"
           method="post"
           onSubmit={(e) => {
@@ -116,6 +120,7 @@ class AddNewRecord extends React.Component {
                         className="add-new-record-input mb-lg-2"
                         type="text"
                         placeholder="Александрова"
+                        form="newPatient"
                       />
                     </div>
                   </div>
