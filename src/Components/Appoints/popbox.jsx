@@ -111,8 +111,14 @@ class Popbox extends React.Component {
     debugger;
     let target = e;
     console.log(target);
-    if (target.key === "Backspace" && this.state.targetValue.length === 1) {
-      this.state.users.splice(0, this.state.users.length + 1);
+    if (target.key === "Backspace" && this.state.targetValue.length <= 1) {
+      this.setState(() => {
+        const usersNullArr = this.state.users.splice(
+          0,
+          this.state.users.length + 1
+        );
+        return { users: usersNullArr };
+      });
     }
   }
   componentDidMount() {}
