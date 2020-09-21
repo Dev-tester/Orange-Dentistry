@@ -11,6 +11,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Patient;
 use app\models\MedCard;
+use app\models\SheduleReception;
 
 class SheduleController extends \yii\web\Controller {
 
@@ -115,19 +116,30 @@ class SheduleController extends \yii\web\Controller {
 	}
 
 	public function actionAddrecord(){
+		// TODO действующий пациент
+		// создаём/обновляем пациента
 		$Patient = new Patient();
-		$Patient->load(Yii::$app->request->post(),'');
-		$Patient->save(false);
-		print_r($Patient);
-		//else return json_encode(["submit" => "Ошибка создания пациента"]);
+		$params = Yii::$app->request->post();
+		if ($Patient->load($params,'') && $Patient->validate()) $Patient->save();
+		$errors = $Patient->getErrors();
+		if (count($errors)) return json_encode(["type" => "Ошибка создания пациента", 'errors' => $errors]);
+		// создаём/обновляем медицинскую карту
 		$MedCard = new MedCard();
 		$MedCard->patient_id = $Patient->getId();
-		$MedCard->load(Yii::$app->request->post(),'');
-		$MedCard->save();
-		// ставим карточку
+		if ($MedCard->load($params,'') && $MedCard->validate()) $MedCard->save();
+		$errors = $MedCard->getErrors();
+		if (count($errors)) return json_encode(["type" => "Ошибка создания медицинской карты Пациента", 'errors' => $errors]);
+		// ставим карточку пациенту
 		$Patient->med_card_id = $MedCard->getId();
-		$Patient->save(false);
-		//else return json_encode(["submit" => "Ошибка создания медицинской карты Пациента"]);
-		return json_encode(["submit" => "ok"]);
+		$Patient->save();
+		// создаём запись в Расписании
+		$Shedule = new SheduleReception();
+		$Shedule->appointedtime = $params['appointTime'];
+		$Shedule->patient_id = $Patient->getId();
+		$Shedule->doctor_id = $params['doctor'];
+		$Shedule->patient = $params['family'].' '.mb_substr($params['name'], 0, 1).'.'.mb_substr($params['surname'], 0, 1).'.';
+		$Shedule->date = $params['date'];
+		$Shedule->save();
+		return json_encode(["type" => "ok"]);
 	}
 }

@@ -32,10 +32,10 @@ class Patient extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['id'], 'required'],
+			[['family','name','phone'], 'required'],
 			[['id', 'med_card_id'], 'integer'],
 			[['family','name','surname'], 'string', 'max' => 255],
-			[['birthday'], 'date'],
+			[['birthday'], 'date','format' => 'dd.MM.yyyy'],
 			[['last_visit'], 'datetime'],
 			[['phone'], 'string', 'max' => 32],
 			[['id'], 'unique'],

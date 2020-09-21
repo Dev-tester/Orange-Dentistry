@@ -32,10 +32,10 @@ class MedCard extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['id', 'patient_id', 'valid_from'], 'required'],
 			[['id', 'status_id','patient_id'], 'integer'],
 			[['description','comment'], 'string', 'max' => 2048],
 			[['valid_from','valid_to'], 'date'],
+			[['patient_id'], 'required'],
 			[['id'], 'unique'],
 		];
 	}
@@ -70,7 +70,7 @@ class MedCard extends \yii\db\ActiveRecord
 	/**
 	 * Finds user by username
 	 *
-	 * @param string $username
+	 * @param string $patient_id
 	 * @return static|null
 	 */
 	public static function findByPatientId($patient_id){

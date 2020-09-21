@@ -46,7 +46,7 @@ class Shedule extends React.Component {
 	addAppoint(props,evt) {
 		evt.preventDefault();
 		let doctor = this.parent.state.doctors.filter(function (doctor){
-			return doctor.id == props.doctor;
+			return doctor.id == props.doctorId;
 		});
 		props.doctor = doctor[0].name;
 		let interval = this.parent.intervals.indexOf(props.time),
@@ -140,7 +140,7 @@ class Shedule extends React.Component {
 															<button
 																className="patient-empty-block"
 																onClick={this.addAppoint.bind(this, {
-																										doctor: doctor.id,
+																										doctorId: doctor.id,
 																										time: record.appointedtime,
 																									}
 																)}
@@ -186,8 +186,8 @@ class Shedule extends React.Component {
 											: ""}
 										<button
 											onClick={this.addAppoint.bind(this, {
-													doctor: doctor.id,
-													time: '9:00',
+													doctorId: doctor.id,
+													time: '09:00',
 												}
 											)}
 											className={"patient-appoint"}

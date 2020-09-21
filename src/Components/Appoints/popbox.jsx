@@ -77,21 +77,25 @@ class Popbox extends React.Component {
 	}
 	saveRecordClick(form, appoint, evt) {
 		let self = this;
-		form.doctor = appoint.doctor;
+		form.doctor = appoint.doctorId;
 		form.date = appoint.date;
 		form.appointTime = appoint.time;
 		$.post("shedule/addrecord", form, function (response){
 			let result = JSON.parse(response);
-			self.setState(() => {
-				return { recordSaved: true };
-			});
+			if (result.type != 'ok') alert(result.errors)
+			else {
+				self.setState({
+					addNewPatientClicked:false,
+					recordSaved: true
+				});
+			}
 		});
 		return false;
 	}
 
 	saveRecordClose() {
-		this.setState(() => {
-			return { recordSaved: false };
+		this.setState({
+			recordSaved: false
 		});
 	}
 
