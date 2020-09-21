@@ -91,7 +91,7 @@ class ChangeRecord extends React.Component {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">
-                    <div className="col-lg-1 offset-lg-9">
+                    <div className="col-lg-1 offset-lg-11">
                       {" "}
                       <Close closeClicked={this.props.changeRecordClose} />
                     </div>

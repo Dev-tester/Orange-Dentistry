@@ -28,9 +28,9 @@
   margin-left: 0;
 }
 .add-new-record .row.headers {
-  margin-top: 52px!important;
+  margin-top: 52px !important;
   margin-left: 52px;
-  margin-bottom: 30px!important;
+  margin-bottom: 30px !important;
 }
 .add-new-record .headers .input-name {
   text-align: left;
@@ -66,14 +66,14 @@
 .add-new-record-input {
   height: 40px;
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid #DFE6EE;
+  background: #ffffff;
+  border: 1px solid #dfe6ee;
   box-sizing: border-box;
   border-radius: 4px;
   padding: 12px;
 }
 .add-new-record-input::placeholder {
-  color: #B0BAC5;
+  color: #b0bac5;
 }
 .add-new-record .row.splitted div {
   padding: 0;
@@ -82,7 +82,7 @@
 .add-new-record .row.splitted {
   display: flex;
   justify-content: flex-end;
-  margin-right: 15px!important;
+  margin-right: 15px !important;
 }
 .add-new-record .col-lg-4 {
   line-height: 35px;
@@ -100,7 +100,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  color: #F6F7F8;
+  color: #f6f7f8;
   padding-bottom: 4px;
 }
 
@@ -114,4 +114,7 @@
 
 .input-name {
   text-align: right;
+}
+input[name="gender"] {
+  border-color: #3b80d6;
 }
