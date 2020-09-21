@@ -1,9 +1,25 @@
+import $ from "jquery";
 import React from "react";
 import Close from "../media/appoint/Close";
 import "./ChangeRecord.css";
 
 class ChangeRecord extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      doctors: [],
+    };
+  }
+  componentDidMount() {
+    return $.get("http://dentistry.test/shedule/records", (response) => {
+      let result = JSON.parse(response);
+      console.log(result.doctors);
+      console.log(result.shedule);
+      this.setState(() => {
+        return { doctors: result.doctors };
+      });
+    });
+  }
   render() {
     return (
       <div className="patient-changeRecord-popbox">
@@ -23,11 +39,9 @@ class ChangeRecord extends React.Component {
                       <p>Дата:</p>
                     </div>
                     <div className="col-lg-10">
-                      <input
-                        className="input-date"
-                        type="text"
-                        placeholder="20.09.2020"
-                      />
+                      <select className="input-date">
+                        <option value="date">20.09.2020</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -37,23 +51,19 @@ class ChangeRecord extends React.Component {
                       <div className="row">
                         <div className="col-lg-6 text-left">Прием с:</div>
                         <div className="col-lg-6">
-                          <input
-                            className="input-from"
-                            type="text"
-                            placeholder="11:30"
-                          />
+                          <select className="input-date">
+                            <option value="timeFrom">11:30</option>
+                          </select>
                         </div>
                       </div>
                     </div>
                     <div className="col-lg-5">
                       <div className="row">
                         <div className="col-lg-5 text-left">до:</div>
-                        <div className="col-lg-7">
-                          <input
-                            className="input-untill"
-                            type="text"
-                            placeholder="12:00"
-                          />
+                        <div className="col-lg-7 untill">
+                          <select className="input-untill">
+                            <option value="timeUntill">12:00</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -66,6 +76,11 @@ class ChangeRecord extends React.Component {
                       <p>Врач:</p>
                     </div>
                     <div className="col-lg-10 ">
+                      <select>
+                        {this.state.doctors.map((el) => {
+                          return <option value={el.name}>{el.name}</option>;
+                        })}
+                      </select>
                       <input
                         className="input-doctor"
                         type="text"

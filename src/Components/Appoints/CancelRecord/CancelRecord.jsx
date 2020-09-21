@@ -31,11 +31,16 @@ class CancelRecord extends React.Component {
                       <p>Причина:</p>
                     </div>
                     <div className="col-lg-10 ">
-                      <input
-                        className="input-doctor"
-                        type="text"
-                        placeholder="Неизвестна"
-                      />
+                      <select className="input-doctor">
+                        <option value="undefined">Неизвестна</option>
+                        <option value="refusalToAccept">Отказ от приема</option>
+                        <option value="refusalOfTreatment">
+                          Отказ от лечения
+                        </option>
+
+                        <option value="canceledByDoc">Отменен врачом</option>
+                        <option value="errorAppoint">Ошибка добавления</option>
+                      </select>
                     </div>
                   </div>
                 </div>

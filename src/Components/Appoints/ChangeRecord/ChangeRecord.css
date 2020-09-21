@@ -6,8 +6,8 @@
   display: block;
   z-index: 6 !important;
   position: fixed;
-  top: 32%;
-  left: 34%;
+  top: 31%;
+  left: 32%;
   bottom: 0;
   right: 0;
   width: 750px;
@@ -18,7 +18,8 @@
   border-radius: 5px;
   font-size: 13px;
 }
-.patient-changeRecord-popbox input {
+.patient-changeRecord-popbox input,
+select {
   height: 40px;
 }
 .input-from,
@@ -62,4 +63,10 @@
 }
 .patient-changeRecord-popbox .right-part .save-btn button {
   background: #3b80d6;
+}
+.input-date {
+  width: 56px;
+}
+.untill {
+  padding: 0;
 }
