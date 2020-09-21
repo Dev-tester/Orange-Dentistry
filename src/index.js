@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Appoint from './Components/Appoints/Appoint';
-import App from './App';
 import Logo from './Logo';
-import * as serviceWorker from './serviceWorker';
 function ge(element){
 	return (typeof element == "string" || typeof element == "number") ? document.getElementById(element) : element;
 }
