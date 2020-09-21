@@ -26,6 +26,7 @@ class Popbox extends React.Component {
     this.saveRecordClose = this.saveRecordClose.bind(this);
     this.inputWasFocused = this.inputWasFocused.bind(this);
     this.inputUnfocused = this.inputUnfocused.bind(this);
+    this.deleteArrUsersFromState = this.deleteArrUsersFromState.bind(this);
   }
 
   getUsers() {
@@ -106,6 +107,14 @@ class Popbox extends React.Component {
       return { recordSaved: false };
     });
   }
+  deleteArrUsersFromState(e) {
+    debugger;
+    let target = e;
+    console.log(target);
+    if (target.key === "Backspace" && this.state.targetValue.length === 1) {
+      this.state.users.splice(0, this.state.users.length + 1);
+    }
+  }
   componentDidMount() {}
   //   componentDidUpdate(prevProps, prevState) {
   //     if (this.state !== prevState) {
@@ -133,6 +142,10 @@ class Popbox extends React.Component {
   //   }
 
   render() {
+    let matchesNone =
+      this.state.searchWasFocused &&
+      this.state.targetValue.length > 0 &&
+      this.state.users.length === 0;
     {
       if (this.props.clicked) {
         return (
@@ -167,6 +180,7 @@ class Popbox extends React.Component {
 
             <div className={"col-lg-12 input_container"}>
               <input
+                onKeyDown={(e) => this.deleteArrUsersFromState(e)}
                 onChange={(e) => this.handleChange(e)}
                 onFocus={() => this.searchActiveOn()}
                 onBlur={() => this.searchActiveOff()}
@@ -177,16 +191,10 @@ class Popbox extends React.Component {
                 }
               ></input>
             </div>
-            {this.state.searchWasFocused &&
-            this.state.targetValue.length > 0 &&
-            this.state.users.length === 0 ? (
-              <p>Совпадений не найдено</p>
-            ) : null}
+            {matchesNone ? <p>Совпадений не найдено</p> : null}
             <div className="col-lg-12 popbox_buttons">
               <div className="row">
-                {this.state.searchWasFocused &&
-                this.state.targetValue.length > 0 &&
-                this.state.users.length === 0 ? null : (
+                {matchesNone ? null : (
                   <div className={"offset-lg-3 col-lg-3 button_appoint"}>
                     <button>Записать на прием</button>
                   </div>
