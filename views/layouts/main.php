@@ -66,7 +66,7 @@ NavBar::end();
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Valles <?= date('Y') ?></p>
+        <p class="pull-left">&copy; ST Dentistry <?= date('Y') ?></p>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

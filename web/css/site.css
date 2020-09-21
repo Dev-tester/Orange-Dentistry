@@ -230,15 +230,25 @@ body{
     background: #fff;
     margin: 0;
     max-height: 72px;
+    padding: 0;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
 }
+.navbar-72 .container {
+    width: calc(100% - 100px);
+    max-width: inherit;
+    min-width: 1440px;
+    margin-left: 0;
+    padding-left: 40px;
+    display: block;
+}
 .navbar-72 .navbar-brand {
     height: 72px;
     padding-top:10px;
     padding-bottom: 16px;
+    margin-right: 0;
 }
 .navbar-72 .navbar-nav > li > a {
     font-style: normal;
@@ -251,12 +261,6 @@ body{
     border-bottom: 4px solid #F08786;
     color: #F08786;
 }
-.navbar-72 .container {
-    width: calc(100% - 100px);
-    min-width: 1440px;
-    margin-left: 0;
-    padding-left: 40px;
-}
 .navbar-72 .navbar-collapse{
     margin-left: 124px;
 }
@@ -265,6 +269,7 @@ body{
     margin: 0;
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
 }
 .login-widget {
     position: fixed;
@@ -303,6 +308,7 @@ body{
 button.btn.logout {
     position: absolute;
     top: 50px;
+    font-size: 14px;
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 .incomings {
