@@ -44,6 +44,7 @@ class Shedule extends React.Component {
     let self = this;
     return $.get("http://dentistry.test/shedule/records", function (response) {
       let result = JSON.parse(response);
+      console.log(result.doctors);
       console.log(result.shedule);
       self.setState({
         isLoaded: true,

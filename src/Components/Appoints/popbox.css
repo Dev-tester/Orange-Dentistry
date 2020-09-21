@@ -66,11 +66,12 @@
   height: auto;
   top: 50%;
   left: 31%;
-  max-height: 600px;
+  max-height: 400px;
   padding: 0;
   border-radius: 5px;
   box-shadow: grey 0px 0px 5px 0px;
   margin-left: 3px;
+  overflow-y: scroll;
 }
 .search_results li {
   list-style-type: none;

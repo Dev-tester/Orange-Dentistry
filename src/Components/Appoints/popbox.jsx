@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import $ from "jquery";
 import React from "react";
 import AddNewRecord from "../AddNewRecord/AddNewRecord";
 import RecordSaved from "../RecordCreated/RecordSaved";
@@ -16,6 +16,7 @@ class Popbox extends React.Component {
       usersPortion: 7,
       addNewRecordClicked: false,
       recordSaved: false,
+      searchWasFocused: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchActiveOn = this.searchActiveOn.bind(this);
@@ -23,6 +24,19 @@ class Popbox extends React.Component {
     this.addNewRecordClose = this.addNewRecordClose.bind(this);
     this.saveRecordClick = this.saveRecordClick.bind(this);
     this.saveRecordClose = this.saveRecordClose.bind(this);
+    this.inputWasFocused = this.inputWasFocused.bind(this);
+    this.inputUnfocused = this.inputUnfocused.bind(this);
+  }
+
+  getUsers() {
+    return $.get("http://dentistry.test/shedule/records", (response) => {
+      let result = JSON.parse(response);
+      console.log(result.doctors);
+      console.log(result.shedule);
+      let arr = Object.values(result.shedule);
+      let newUsers = arr.flat(Infinity);
+      return newUsers;
+    });
   }
 
   handleChange(e) {
@@ -35,34 +49,36 @@ class Popbox extends React.Component {
     });
 
     if (value.length > 0) {
-      this.setState((prevState) => {
-        const newUsers = prevState.users.filter((el) => {
-          return el.name.match(value);
-        });
+      return $.get("http://dentistry.test/shedule/patients?q=", (response) => {
+        let newUsers = JSON.parse(response);
         console.log(newUsers);
-        return { users: newUsers };
+        // let arr = Object.values(result.shedule);
+        // const newUsers = arr.flat(Infinity);
+        // console.log(newUsers);
+        this.setState(() => {
+          const neededUsers = newUsers.filter((el) => {
+            return el.fio.toLowerCase().match(value.toLowerCase());
+          });
+          console.log(newUsers);
+          return { users: neededUsers };
+        });
       });
     }
-    if (value === "") {
-      axios
-        .get(
-          `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
-        )
-        .then((response) => {
-          console.log(response);
-          this.setState(() => {
-            return { users: response.data.items };
-          });
-        });
-      console.log(this.state.users);
-    }
-
-    console.log(this.state.users);
   }
 
+  inputWasFocused() {
+    this.setState(() => {
+      return { searchWasFocused: true };
+    });
+  }
+  inputUnfocused() {
+    this.setState(() => {
+      return { searchWasFocused: false };
+    });
+  }
   searchActiveOn() {
     this.setState(() => {
-      return { ...this.state, searchActive: true };
+      return { ...this.state, searchActive: true, searchWasFocused: true };
     });
   }
   searchActiveOff() {
@@ -90,18 +106,7 @@ class Popbox extends React.Component {
       return { recordSaved: false };
     });
   }
-  componentDidMount() {
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.state.usersPortion}`
-      )
-      .then((response) => {
-        console.log(response);
-        this.setState(() => {
-          return { users: response.data.items };
-        });
-      });
-  }
+  componentDidMount() {}
   //   componentDidUpdate(prevProps, prevState) {
   //     if (this.state !== prevState) {
   //       axios
@@ -172,11 +177,21 @@ class Popbox extends React.Component {
                 }
               ></input>
             </div>
+            {this.state.searchWasFocused &&
+            this.state.targetValue.length > 0 &&
+            this.state.users.length === 0 ? (
+              <p>Совпадений не найдено</p>
+            ) : null}
             <div className="col-lg-12 popbox_buttons">
               <div className="row">
-                <div className={"offset-lg-3 col-lg-3 button_appoint"}>
-                  <button>Записать на прием</button>
-                </div>
+                {this.state.searchWasFocused &&
+                this.state.targetValue.length > 0 &&
+                this.state.users.length === 0 ? null : (
+                  <div className={"offset-lg-3 col-lg-3 button_appoint"}>
+                    <button>Записать на прием</button>
+                  </div>
+                )}
+
                 <div className={"col-lg-4 button_add_patient"}>
                   <button onClick={() => this.addNewRecordClick()}>
                     Добавить нового пациента
@@ -184,7 +199,7 @@ class Popbox extends React.Component {
                 </div>
               </div>
             </div>
-            {this.state.searchActive && this.state.users ? (
+            {this.state.searchActive && this.state.users.length > 0 ? (
               <div className={"col-lg-12 search_results"}>
                 <div className="row">
                   <div className="col-lg-2">
@@ -192,9 +207,11 @@ class Popbox extends React.Component {
                       {" "}
                       <strong>Номер карты</strong>{" "}
                     </p>
-                    {this.state.users.map((el, index) => {
-                      return <li key={index}>{el.med_card_id}</li>;
-                    })}
+                    <ul>
+                      {this.state.users.map((el, index) => {
+                        return <li key={index}>{el.med_card_id}</li>;
+                      })}
+                    </ul>
                   </div>
                   <div className="col-lg-4">
                     <p>
@@ -204,7 +221,7 @@ class Popbox extends React.Component {
 
                     <ul>
                       {this.state.users.map((el, index) => {
-                        return <li key={index}>{el.name}</li>;
+                        return <li key={index}>{el.fio}</li>;
                       })}
                     </ul>
                   </div>
@@ -213,9 +230,11 @@ class Popbox extends React.Component {
                     <strong>
                       <p>Дата рождения</p>{" "}
                     </strong>{" "}
-                    {this.state.users.map((el, index) => {
-                      return <li key={index}>{el.birthday}</li>;
-                    })}
+                    <ul>
+                      {this.state.users.map((el, index) => {
+                        return <li key={index}>{el.birthday}</li>;
+                      })}
+                    </ul>
                   </div>
                   <div className="col-lg-3">
                     {" "}
@@ -223,13 +242,16 @@ class Popbox extends React.Component {
                       {" "}
                       <p>Номер телефона</p>{" "}
                     </strong>{" "}
-                    {this.state.users.map((el, index) => {
-                      return <li key={index}>{el.phone}</li>;
-                    })}
+                    <ul>
+                      {this.state.users.map((el, index) => {
+                        return <li key={index}>{el.phone}</li>;
+                      })}
+                    </ul>
                   </div>
                 </div>
               </div>
             ) : null}
+
             {this.state.addNewRecordClicked ? (
               <div>
                 <AddNewRecord
