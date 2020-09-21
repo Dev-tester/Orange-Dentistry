@@ -27,6 +27,9 @@
 .add-new-record .row {
   margin-left: 0;
 }
+.add-new-record .row.gender {
+  width: 100%;
+}
 .add-new-record .row.headers {
   margin-top: 52px!important;
   margin-left: 52px;
@@ -54,6 +57,7 @@
   font-size: 16px;
   text-align: left;
   margin-left: 37px;
+  float: none;
 }
 .add-new-record .med-card span {
   padding-right: 8px;
