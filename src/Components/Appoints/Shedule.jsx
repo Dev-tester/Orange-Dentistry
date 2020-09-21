@@ -11,113 +11,30 @@ class Shedule extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			doctors: [],
-			records: [],
-			specs:1,
+			addAppoint: {},
 			appointButtonClicked: false,
 			hideBtnClicked: false,
 			patientInfoBtnClicked: false,
 			currentDate:this.props.currentDate,
 			medDirection:this.props.medDirection
 		};
-		this.intervals = [
-			"09:00",
-			"09:30",
-			"10:00",
-			"10:30",
-			"11:00",
-			"11:30",
-			"12:00",
-			"12:30",
-			"13:00",
-			"13:30",
-			"14:00",
-		];
 		this.callChange = this.callChange.bind(this);
 		this.timeChange = this.timeChange.bind(this);
 		this.clickEvent = this.clickEvent.bind(this);
-		this.appointClicked = this.appointClicked.bind(this);
+		this.addAppoint = this.addAppoint.bind(this);
 		this.closePopbox = this.closePopbox.bind(this);
 		this.hideShedule = this.hideShedule.bind(this);
 		this.showShedule = this.showShedule.bind(this);
 		this.showPatientInfo = this.showPatientInfo.bind(this);
 		this.closePatientInfo = this.closePatientInfo.bind(this);
-		this.setEmptyIntervalsButtons = this.setEmptyIntervalsButtons.bind(this);
-		this.getCurrentShedule = this.getCurrentShedule.bind(this);
+		this.parent = this.props.Appoint;
 	}
 
 	componentDidMount() {
-		// эта подложка для localhost:3000. На prod - закоментить
-		this.getCurrentShedule(this.state.currentDate,this.state.medDirection);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState(nextProps);
-		this.getCurrentShedule(nextProps.currentDate, nextProps.medDirection);
-	}
-
-	getCurrentShedule(currentDate, medDirection){
-		let self = this;
-		return $.get("http://dentistry.test/shedule/records",
-			{
-				date:currentDate.toLocaleDateString(),
-				direction:medDirection
-			},
-			function (response) {
-				let result = JSON.parse(response);
-				let records = self.setEmptyIntervalsButtons(result.shedule);
-				self.setState({
-					isLoaded: true,
-					doctors: result.doctors,
-					records: records,
-				});
-			}
-		);
-	}
-
-	// устанавливаем кнопки "Запись на приём" там где нет приёмов
-	setEmptyIntervalsButtons(records){
-		// перебираем всех пользователей
-		for (let userId in records) {
-			let userRecords = records[userId];
-			//console.log(userRecords);
-			// перебираем все записи пользователя
-			for (let recordId in userRecords) {
-				let lastRecord = userRecords[recordId],
-					nextRecord = userRecords[parseInt(recordId) + 1],
-					time = lastRecord.appointedtime,
-					lastIdx = 0,
-					nextIdx = 0,
-					nextTime = nextRecord ? nextRecord.appointedtime : 0;
-				// находим ближайшее время в шаблоне расписания для текущего и следующего приёма
-				while (time > this.intervals[lastIdx]) lastIdx++;
-				// если пустые интервалы сначала
-				if (recordId=='0' && lastIdx > 0){
-					for (let idx = 0; idx < lastIdx; idx++) {
-						console.log(idx);
-						records[userId].splice(idx, 0, {
-							patient_id: null,
-							appointedtime: this.intervals[idx],
-						});
-					}
-				}
-				while (nextTime > this.intervals[nextIdx]) nextIdx++;
-				// если пропуск вставляем
-				if (nextIdx > lastIdx + 1) {
-					console.log(time, lastIdx, nextIdx);
-					for (let idx = lastIdx + 1; idx < nextIdx; idx++) {
-						//console.log(idx);
-						//console.log(records[userId]);
-						records[userId].splice(idx, 0, {
-							patient_id: null,
-							appointedtime: this.intervals[idx],
-						});
-					}
-				}
-			}
-			//console.log(records[userId]);
-		}
-		return records;
 	}
 
 	callChange(calls) {}
@@ -126,10 +43,21 @@ class Shedule extends React.Component {
 
 	clickEvent() {}
 
-	appointClicked(e) {
-		e.preventDefault();
-		this.setState(() => {
-			return { appointButtonClicked: true };
+	addAppoint(props,evt) {
+		evt.preventDefault();
+		let doctor = this.parent.state.doctors.filter(function (doctor){
+			return doctor.id == props.doctor;
+		});
+		props.doctor = doctor[0].name;
+		let interval = this.parent.intervals.indexOf(props.time),
+			nextTime;
+		if (interval == 10) nextTime = '14:30';
+		else nextTime = this.parent.intervals[interval+1];
+		props.nextTime = nextTime;
+		props.date = this.parent.state.currentDate.toLocaleDateString();
+		this.setState({
+			addAppoint: props,
+			appointButtonClicked: true
 		});
 	}
 	closePopbox() {
@@ -165,10 +93,8 @@ class Shedule extends React.Component {
 		//console.log(today);
 		//console.log(thisMonth);
 
-		let doctors = this.state.doctors,
-			records = this.state.records,
-			Interval = this.state.Interval;
-		//let nextTime = this.intervals.indexOf(record.appointedtime)+1;
+		let doctors = this.parent.state.doctors,
+			records = this.parent.state.records;
 		return (
 			<div className="main-schedule ui-block col-lg-12">
 				{this.state.hideBtnClicked ? null : (
@@ -213,7 +139,11 @@ class Shedule extends React.Component {
 															</div>
 															<button
 																className="patient-empty-block"
-																onClick={(e) => this.appointClicked(e)}
+																onClick={this.addAppoint.bind(this, {
+																										doctor: doctor.id,
+																										time: record.appointedtime,
+																									}
+																)}
 															></button>
 														</div>
 													) : (
@@ -255,7 +185,11 @@ class Shedule extends React.Component {
 												})
 											: ""}
 										<button
-											onClick={(e) => this.appointClicked(e)}
+											onClick={this.addAppoint.bind(this, {
+													doctor: doctor.id,
+													time: '9:00',
+												}
+											)}
 											className={"patient-appoint"}
 										>
 											Записать
@@ -287,6 +221,7 @@ class Shedule extends React.Component {
         <Popbox
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
+		  appoint={this.state.addAppoint}
         />
       </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );

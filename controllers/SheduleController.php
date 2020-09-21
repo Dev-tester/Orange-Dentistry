@@ -9,10 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\Product;
-use app\models\LoginForm;
-use app\models\UploadedFile as Upload;
-use yii\web\UploadedFile;
+use app\models\Patient;
+use app\models\MedCard;
 
 class SheduleController extends \yii\web\Controller {
 
@@ -30,6 +28,16 @@ class SheduleController extends \yii\web\Controller {
 			],
 
 		]);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function beforeAction($action){
+		if ($action->id == 'addrecord') {
+			$this->enableCsrfValidation = false;
+		}
+		return parent::beforeAction($action);
 	}
 
 	public function actionRecords(){
@@ -77,7 +85,7 @@ class SheduleController extends \yii\web\Controller {
 		$result = ['directions' => [],'doctors' => []];
 		$command = $connection->createCommand('SELECT * FROM "ref-med-directions"');
 		$result['directions'] = $command->queryAll();
-		$command = $connection->createCommand('SELECT shedule.doctor_id, "family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name
+		$command = $connection->createCommand('SELECT shedule.doctor_id AS id, "family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name
 													FROM "shedule-reception" AS shedule
 															INNER JOIN doctors ON doctors.id = shedule.doctor_id
 													WHERE date = :date AND doctors.direction_id = :direction_id
@@ -90,12 +98,36 @@ class SheduleController extends \yii\web\Controller {
 
 	public function actionPatients(){
 		$connection = Yii::$app->getDb();
-		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio, patients.med_card_id, patients.birthday, patients.phone,med.*
+		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio,
+															patients."family",
+															patients."name",
+															patients."surname",
+															patients.med_card_id,
+															TO_CHAR(patients.birthday, \'dd.mm.YYYY\') AS birthday,
+															patients.phone,
+															med.*
 													FROM 	patients 
 															INNER JOIN medical_cards AS med ON med.id=patients.med_card_id
 													WHERE CAST (document_vectors as VARCHAR) ILIKE :query')
 								->bindValue(':query', '%'.$_GET['q'].'%');
 		$result = $command->queryAll();
 		return json_encode($result);
+	}
+
+	public function actionAddrecord(){
+		$Patient = new Patient();
+		$Patient->load(Yii::$app->request->post(),'');
+		$Patient->save(false);
+		print_r($Patient);
+		//else return json_encode(["submit" => "Ошибка создания пациента"]);
+		$MedCard = new MedCard();
+		$MedCard->patient_id = $Patient->getId();
+		$MedCard->load(Yii::$app->request->post(),'');
+		$MedCard->save();
+		// ставим карточку
+		$Patient->med_card_id = $MedCard->getId();
+		$Patient->save(false);
+		//else return json_encode(["submit" => "Ошибка создания медицинской карты Пациента"]);
+		return json_encode(["submit" => "ok"]);
 	}
 }

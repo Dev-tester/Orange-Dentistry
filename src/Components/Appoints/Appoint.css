@@ -1,3 +1,6 @@
+.container{
+  width: 100%;
+}
 .med-directions-menu {
   border-radius: 10px;
   box-shadow: 0px 1px 4px #b0bac5;
@@ -10,11 +13,11 @@
   display: flex;
   align-items: center;
   margin: 0;
-  padding-inline-start: 12px;
+  padding-inline-start: 0px;
 }
 .med-directions-menu ul li {
   display: flex;
-  padding: 0 36px;
+  padding: 0 35px;
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -170,6 +173,7 @@ ul.patient-actions li {
   border-radius: 10px;
   padding-right: 7px;
   padding-left: 7px;
+  padding-bottom: 20px;
 }
 .react-datepicker__header {
   border: 0;
@@ -214,7 +218,7 @@ button.react-datepicker__navigation {
   border: 0;
   margin: 3px 0;
   width: 38px;
-  height: 40px;
+  height: 36px;
   color: #868789;
   font-style: normal;
   font-weight: normal;
@@ -339,7 +343,7 @@ button.react-datepicker__navigation {
   border-radius: 10px;
   padding: 20px 15px;
   width: 280px;
-  height: 100%;
+  height: auto;
   margin-top: 110px;
   margin-left: 16px;
 }

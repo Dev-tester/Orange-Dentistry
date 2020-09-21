@@ -37,6 +37,7 @@ class Filters extends React.Component {
 		this.setFilters = this.setFilters.bind(this);
 		this.clear = this.clear.bind(this);
 		this.apply = this.apply.bind(this);
+		this.parent = this.props.Appoint;
 	}
 
 	componentDidMount() {
@@ -49,7 +50,7 @@ class Filters extends React.Component {
 
 	setFilters(currentDate, medDirection){
 		let self = this;
-		$.get("http://dentistry.test/shedule/filters",
+		$.get("shedule/filters",
 			{
 				date:currentDate.toLocaleDateString(),
 				direction:medDirection
@@ -84,33 +85,33 @@ class Filters extends React.Component {
 		});
 	};
 
-	doctorChange(doctorId){
+	doctorChange(evt){
 		let filters = this.state.filters;
-		filters.doctor = doctorId;
+		filters.doctor = evt.target.value;
 		this.setState({
 			filters: filters
 		});
 	};
 
-	timeFromChange(time){
+	timeFromChange(evt){
 		let filters = this.state.filters;
-		filters.timeFrom = time;
+		filters.timeFrom = evt.target.value;
 		this.setState({
 			filters: filters
 		});
 	};
 
-	timeToChange(time){
+	timeToChange(evt){
 		let filters = this.state.filters;
-		filters.timeTo = time;
+		filters.timeTo = evt.target.value;
 		this.setState({
 			filters: filters
 		});
 	};
 
-	IntervalChange(interval){
+	IntervalChange(evt){
 		let filters = this.state.filters;
-		filters.Interval = interval;
+		filters.Interval = evt.target.value;
 		this.setState({
 			filters: filters
 		});
@@ -144,10 +145,43 @@ class Filters extends React.Component {
 				Interval: '',
 			}
 		});
+		this.parent.setState({
+			records: this.parent.state.allRecords
+		});
 	}
 
+	// TODO сделать множественный выбор SELECT2
 	apply(){
-
+		let records = this.parent.state.allRecords,
+			filters = this.state.filters;
+		if (this.state.filters.doctor){
+			let records_ = {};
+			records_[filters.doctor] = records[filters.doctor];
+			records = records_;
+		}
+		if (filters.timeFrom){
+			for (let userId in records){
+				records[userId] = records[userId].filter(function (record) {
+					return record.appointedtime >= filters.timeFrom;
+				});
+			}
+		}
+		if (filters.timeTo){
+			for (let userId in records) {
+				records[userId] = records[userId].filter(function (record) {
+					return record.appointedtime < filters.timeTo;
+				});
+			}
+		}
+		// TODO узнать логику фильтрации по интервалам
+		/*if (filters.Interval){
+			records = records.filter(function(record){
+				return record.doctor_id == filters.Interval;
+			});
+		}*/
+		this.parent.setState({
+			records: records
+		});
 	}
 
 	render() {

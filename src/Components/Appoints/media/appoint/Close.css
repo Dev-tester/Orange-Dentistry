@@ -1,4 +1,8 @@
-.svg_btn {
+.close-xbutton {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
-  margin-left: 51px;
 }

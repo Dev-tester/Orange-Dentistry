@@ -16,28 +16,47 @@ class Appoint extends React.Component {
 		super(props);
 		this.state = {
 			directions: [],
+			doctors: [],
 			records: [],
-			startDate: new Date(),
+			allRecords: [],
+			currentDate: new Date(),
 			medDirection:1,// Терапевты по умолчанию
 		}
+		this.intervals = [
+			"09:00",
+			"09:30",
+			"10:00",
+			"10:30",
+			"11:00",
+			"11:30",
+			"12:00",
+			"12:30",
+			"13:00",
+			"13:30",
+			"14:00",
+		];
 		this.calendarChange = this.calendarChange.bind(this);
 		this.switchMedicalDirection = this.switchMedicalDirection.bind(this);
+		this.getCurrentShedule = this.getCurrentShedule.bind(this);
+		this.setEmptyIntervalsButtons = this.setEmptyIntervalsButtons.bind(this);
 	}
 
 	componentDidMount() {
 		let self = this;
-		return $.get("http://dentistry.test/shedule/directions", function (response){
+		$.get("shedule/directions", function (response){
 			let result = JSON.parse(response);
 			self.setState({
 				directions: result
 			});
+			self.getCurrentShedule(self.state.currentDate,self.state.medDirection);
 		});
 	}
 
 	calendarChange(date) {
 		this.setState({
-			startDate: date
+			currentDate: date
 		});
+		this.getCurrentShedule(date,this.state.medDirection);
 	};
 
 	switchMedicalDirection(direction,evt){
@@ -45,6 +64,71 @@ class Appoint extends React.Component {
 		this.setState({
 			medDirection: direction
 		});
+		this.getCurrentShedule(this.state.currentDate,direction);
+	}
+
+	getCurrentShedule(currentDate, medDirection){
+		let self = this;
+		return $.get("shedule/records",
+			{
+				date:currentDate.toLocaleDateString(),
+				direction:medDirection
+			},
+			function (response) {
+				let result = JSON.parse(response);
+				let records = self.setEmptyIntervalsButtons(result.shedule);
+				self.setState({
+					doctors: result.doctors,
+					records: records,
+					allRecords: records,
+				});
+			}
+		);
+	}
+
+	// устанавливаем кнопки "Запись на приём" там где нет приёмов
+	setEmptyIntervalsButtons(records){
+		// перебираем всех пользователей
+		for (let userId in records) {
+			let userRecords = records[userId];
+			//console.log(userRecords);
+			// перебираем все записи пользователя
+			for (let recordId in userRecords) {
+				let lastRecord = userRecords[recordId],
+					nextRecord = userRecords[parseInt(recordId) + 1],
+					time = lastRecord.appointedtime,
+					lastIdx = 0,
+					nextIdx = 0,
+					nextTime = nextRecord ? nextRecord.appointedtime : 0;
+				// находим ближайшее время в шаблоне расписания для текущего и следующего приёма
+				while (time > this.intervals[lastIdx]) lastIdx++;
+				// если пустые интервалы сначала
+				if (recordId=='0' && lastIdx > 0){
+					for (let idx = 0; idx < lastIdx; idx++) {
+						console.log(idx);
+						records[userId].splice(idx, 0, {
+							patient_id: null,
+							appointedtime: this.intervals[idx],
+						});
+					}
+				}
+				while (nextTime > this.intervals[nextIdx]) nextIdx++;
+				// если пропуск вставляем
+				if (nextIdx > lastIdx + 1) {
+					console.log(time, lastIdx, nextIdx);
+					for (let idx = lastIdx + 1; idx < nextIdx; idx++) {
+						//console.log(idx);
+						//console.log(records[userId]);
+						records[userId].splice(idx, 0, {
+							patient_id: null,
+							appointedtime: this.intervals[idx],
+						});
+					}
+				}
+			}
+			//console.log(records[userId]);
+		}
+		return records;
 	}
 
 	render() {
@@ -64,14 +148,14 @@ class Appoint extends React.Component {
 							</div>
 							<div className="row second text-left" style={{ minWidth: '300px' }}>
 								<DatePicker
-									selected={this.state.startDate}
+									selected={this.state.currentDate}
 									onChange={this.calendarChange}
 									locale="ru"
 									inline
 								/>
 							</div>
 							<div className="row third text-left" style={{ minWidth: '300px' }}>
-								<Filters currentDate={this.state.startDate} medDirection={this.state.medDirection} />
+								<Filters currentDate={this.state.currentDate} medDirection={this.state.medDirection} Appoint={this}/>
 							</div>
 						</div>
 						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth:'1216px' }}>
@@ -98,10 +182,10 @@ class Appoint extends React.Component {
 								</div>
 							</div>
 							<div className="row">
-								<Shedule currentDate={this.state.startDate} medDirection={this.state.medDirection} stage={'I'}/>
+								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'I'} Appoint={this}/>
 							</div>
 							<div className="row">
-								<Shedule currentDate={this.state.startDate} medDirection={this.state.medDirection} stage={'II'}/>
+								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'II'} Appoint={this}/>
 							</div>
 						</div>
 						<div className="col-sm-2 col-md-2 col-lg-2" style={{padding:0}}>
