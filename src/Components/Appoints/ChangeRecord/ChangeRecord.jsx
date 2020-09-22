@@ -14,7 +14,7 @@ class ChangeRecord extends React.Component {
                 <div className="col-lg-12 mb-2 pt-lg-2 text-left">
                   <p>
                     {" "}
-                    <strong>Чемерис Наталья</strong>{" "}
+                    <strong>{this.props.selectPatient.name}</strong>{" "}
                   </p>
                 </div>
                 <div className="col-lg-12 mb-lg-2">
@@ -40,7 +40,7 @@ class ChangeRecord extends React.Component {
                           <input
                             className="input-from"
                             type="text"
-                            placeholder="11:30"
+                            placeholder={this.props.selectPatient.time}
                           />
                         </div>
                       </div>

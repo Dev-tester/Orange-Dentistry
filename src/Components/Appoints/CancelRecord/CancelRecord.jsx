@@ -15,11 +15,11 @@ class CancelRecord extends React.Component {
                     <div className="col-lg-6">
                       <p>
                         {" "}
-                        <strong>Чемерис Наталья</strong>{" "}
+                        <strong>{this.props.selectPatient.name}</strong>{" "}
                       </p>
                     </div>
                     <div className="col-lg-6 text-rifght">
-                      <p>11:30 - 12:00 (0:30)</p>
+                      <p>{this.props.selectPatient.time}</p>
                     </div>
                   </div>
                 </div>

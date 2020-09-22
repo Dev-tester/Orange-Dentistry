@@ -1,31 +1,32 @@
-import React from 'react';
 import $ from "jquery";
+import React from 'react';
+import './Filters.css';
 
 class Filters extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			branches: [	'Филиалы',
-						'Краснодар','Армавир','Новороссийск'],
+			branches: ['Филиалы',
+				'Краснодар', 'Армавир', 'Новороссийск'],
 			directions: ['Мед.направление',
-						'Терапевты','Хирурги','Ортопеды','Ортодонты'],
+				'Терапевты', 'Хирурги', 'Ортопеды', 'Ортодонты'],
 			doctors: ['Врач',
-					'Иванов И.И.','Александрова А.А.','Буслаев И.Э.','Вердеревская И.И.'],
-			timeFrom:[	'с',
-						'9:00',  '9:30','10:00','10:30','11:00','11:30','12:00','12:30',
-						'13:00','13:00','14:00','14:30','15:00','15:30','16:00','16:30',
-						'17:00','17:30','18:00','18:30','19:00','19:30'],
-			timeTo:[	'до',
-						'9:00',  '9:30','10:00','10:30','11:00','11:30','12:00','12:30',
-						'13:00','13:00','14:00','14:30','15:00','15:30','16:00','16:30',
-						'17:00','17:30','18:00','18:30','19:00','19:30'],
-			Interval:['минут','15 минут','30 минут'],
-			filters:{
-				direction:'',
-				doctor:'',
-				timeFrom:'',
-				timeTo:'',
-				Interval:'',
+				'Иванов И.И.', 'Александрова А.А.', 'Буслаев И.Э.', 'Вердеревская И.И.'],
+			timeFrom: ['с',
+				'9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+				'13:00', '13:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+				'17:00', '17:30', '18:00', '18:30', '19:00', '19:30'],
+			timeTo: ['до',
+				'9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+				'13:00', '13:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+				'17:00', '17:30', '18:00', '18:30', '19:00', '19:30'],
+			Interval: ['минут', '15 минут', '30 минут'],
+			filters: {
+				direction: '',
+				doctor: '',
+				timeFrom: '',
+				timeTo: '',
+				Interval: '',
 			}
 		}
 		this.branchChange = this.branchChange.bind(this);
@@ -48,17 +49,17 @@ class Filters extends React.Component {
 		this.setFilters(nextProps.currentDate, nextProps.medDirection);
 	}
 
-	setFilters(currentDate, medDirection){
+	setFilters(currentDate, medDirection) {
 		let self = this;
 		$.get("shedule/filters",
 			{
-				date:currentDate.toLocaleDateString(),
-				direction:medDirection
+				date: currentDate.toLocaleDateString(),
+				direction: medDirection
 			},
 			function (response) {
 				let result = JSON.parse(response);
-				result.doctors.unshift({id:0,name:'Врач'})
-				result.directions.unshift({id:0,title:'Мед.направление'})
+				result.doctors.unshift({ id: 0, name: 'Врач' })
+				result.directions.unshift({ id: 0, title: 'Мед.направление' })
 				self.setState({
 					doctors: result.doctors,
 					directions: result.directions,
@@ -67,14 +68,11 @@ class Filters extends React.Component {
 		);
 	}
 
-	branchChange(branches){
+	branchChange(branches) {
 		return;
-		this.setState({
-			branches: branches
-		});
 	};
 
-	medDirectionChange(evt){
+	medDirectionChange(evt) {
 		let directionId = evt.target.value;
 		// TODO надо ли currentDate в state?
 		this.setFilters(this.props.currentDate, directionId);
@@ -85,7 +83,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	doctorChange(evt){
+	doctorChange(evt) {
 		let filters = this.state.filters;
 		filters.doctor = evt.target.value;
 		this.setState({
@@ -93,7 +91,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	timeFromChange(evt){
+	timeFromChange(evt) {
 		let filters = this.state.filters;
 		filters.timeFrom = evt.target.value;
 		this.setState({
@@ -101,7 +99,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	timeToChange(evt){
+	timeToChange(evt) {
 		let filters = this.state.filters;
 		filters.timeTo = evt.target.value;
 		this.setState({
@@ -109,7 +107,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	IntervalChange(evt){
+	IntervalChange(evt) {
 		let filters = this.state.filters;
 		filters.Interval = evt.target.value;
 		this.setState({
@@ -117,23 +115,23 @@ class Filters extends React.Component {
 		});
 	};
 
-	clear(){
-		$('#branches option').each(function(){
+	clear() {
+		$('#branches option').each(function () {
 			this.selected = false;
 		});
-		$('#directions option').each(function(){
+		$('#directions option').each(function () {
 			this.selected = false;
 		});
-		$('#doctors option').each(function(){
+		$('#doctors option').each(function () {
 			this.selected = false;
 		});
-		$('#timefrom option').each(function(){
+		$('#timefrom option').each(function () {
 			this.selected = false;
 		});
-		$('#timeto option').each(function(){
+		$('#timeto option').each(function () {
 			this.selected = false;
 		});
-		$('#interval option').each(function(){
+		$('#interval option').each(function () {
 			this.selected = false;
 		});
 		this.setState({
@@ -151,22 +149,22 @@ class Filters extends React.Component {
 	}
 
 	// TODO сделать множественный выбор SELECT2
-	apply(){
+	apply() {
 		let records = this.parent.state.allRecords,
 			filters = this.state.filters;
-		if (this.state.filters.doctor){
+		if (this.state.filters.doctor) {
 			let records_ = {};
 			records_[filters.doctor] = records[filters.doctor];
 			records = records_;
 		}
-		if (filters.timeFrom){
-			for (let userId in records){
+		if (filters.timeFrom) {
+			for (let userId in records) {
 				records[userId] = records[userId].filter(function (record) {
 					return record.appointedtime >= filters.timeFrom;
 				});
 			}
 		}
-		if (filters.timeTo){
+		if (filters.timeTo) {
 			for (let userId in records) {
 				records[userId] = records[userId].filter(function (record) {
 					return record.appointedtime < filters.timeTo;
@@ -224,7 +222,7 @@ class Filters extends React.Component {
 					</div>
 				</div>
 				<div className="row intervals">
-					<div className="col-sm-4 col-md-4 col-lg-4" style={{paddingLeft:0}}>
+					<div className="col-sm-4 col-md-4 col-lg-4" style={{ paddingLeft: 0 }}>
 						<select id="timefrom" onChange={this.timeFromChange}>
 							{timeFrom.map((value, index) => {
 								return <option value={value} key={index}>{value}</option>
@@ -238,7 +236,7 @@ class Filters extends React.Component {
 							})}
 						</select>
 					</div>
-					<div className="col-sm-4 col-md-4 col-lg-4" style={{paddingRight:0}}>
+					<div className="col-sm-4 col-md-4 col-lg-4" style={{ paddingRight: 0 }}>
 						<select id="interval" onChange={this.IntervalChange}>
 							{Interval.map((value, index) => {
 								return <option value={value} key={index}>{value}</option>
