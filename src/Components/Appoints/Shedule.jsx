@@ -27,6 +27,7 @@ class Shedule extends React.Component {
     this.showShedule = this.showShedule.bind(this);
     this.showPatientInfo = this.showPatientInfo.bind(this);
     this.closePatientInfo = this.closePatientInfo.bind(this);
+    this.getNearestTime = this.getNearestTime.bind(this);
     this.parent = this.props.Appoint;
     this.selectPatient = this.selectPatient.bind(this);
   }
@@ -43,48 +44,49 @@ class Shedule extends React.Component {
 
   clickEvent() {}
 
-  addAppoint(props, evt) {
-    evt.preventDefault();
-    let doctor = this.parent.state.doctors.filter(function (doctor) {
-      return doctor.id == props.doctorId;
-    });
-    props.doctor = doctor[0].name;
-    let interval = this.parent.intervals.indexOf(props.time),
-      nextTime;
-    if (interval == 10) nextTime = "14:30";
-    else nextTime = this.parent.intervals[interval + 1];
-    props.nextTime = nextTime;
-    props.date = this.parent.state.currentDate.toLocaleDateString();
-    this.setState({
-      addAppoint: props,
-      appointButtonClicked: true,
-    });
-  }
-  closePopbox() {
-    this.setState(() => {
-      return { appointButtonClicked: false };
-    });
-  }
-  hideShedule() {
-    this.setState((prevState) => {
-      return { hideBtnClicked: true };
-    });
-  }
-  showShedule() {
-    this.setState(() => {
-      return { hideBtnClicked: false };
-    });
-  }
-  showPatientInfo() {
-    this.setState(() => {
-      return { patientInfoBtnClicked: true };
-    });
-  }
-  closePatientInfo() {
-    this.setState(() => {
-      return { patientInfoBtnClicked: false };
-    });
-  }
+	addAppoint(props,evt) {
+		evt.preventDefault();
+		let doctor = this.parent.state.doctors.filter(function (doctor){
+			return doctor.id == props.doctorId;
+		});
+		props.doctor = doctor[0].name;
+		props.time = this.getNearestTime(props.doctorId);
+		let interval = this.parent.intervals.indexOf(props.time),
+			nextTime;
+		if (interval == 10) nextTime = '14:30';
+		else nextTime = this.parent.intervals[interval+1];
+		props.nextTime = nextTime;
+		props.date = this.parent.state.currentDate.toLocaleDateString();
+		this.setState({
+			addAppoint: props,
+			appointButtonClicked: true
+		});
+	}
+	closePopbox() {
+		this.setState(() => {
+			return { appointButtonClicked: false };
+		});
+	}
+	hideShedule() {
+		this.setState((prevState) => {
+			return { hideBtnClicked: true };
+		});
+	}
+	showShedule() {
+		this.setState(() => {
+			return { hideBtnClicked: false };
+		});
+	}
+	showPatientInfo() {
+		this.setState(() => {
+			return { patientInfoBtnClicked: true };
+		});
+	}
+	closePatientInfo() {
+		this.setState(() => {
+			return { patientInfoBtnClicked: false };
+		});
+	}
   selectPatient(props, evt) {
     this.setState({
       selectedPatient: props,
@@ -92,12 +94,31 @@ class Shedule extends React.Component {
     });
   }
 
-  render() {
-    let date = new Date();
-    let today = date.getDate();
-    let thisMonth = date.getMonth();
-    //console.log(today);
-    //console.log(thisMonth);
+	getNearestTime(doctorId){
+		let records = this.parent.state.records,
+			doctorRecords = records[doctorId];
+		if (!doctorRecords || !doctorRecords.length) return '09:00';
+		let nextTime = '';
+		for (let idx in this.parent.intervals){
+			let time = this.parent.intervals[idx],
+				existing = doctorRecords.filter(function (record) {
+				return record.appointedtime == time;
+			});
+			if (!existing.length){
+				nextTime = time;
+				break;
+			}
+		}
+		console.log(nextTime);
+		return nextTime;
+	}
+
+	render() {
+		let date = new Date();
+		let today = date.getDate();
+		let thisMonth = date.getMonth();
+		//console.log(today);
+		//console.log(thisMonth);
 
     let doctors = this.parent.state.doctors,
       records = this.parent.state.records;
@@ -240,7 +261,8 @@ class Shedule extends React.Component {
         <Popbox
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
-          appoint={this.state.addAppoint}
+		      appoint={this.state.addAppoint}
+		      AppointForm={this.parent}
         />
       </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );

@@ -92,11 +92,14 @@ class Popbox extends React.Component {
     return false;
   }
 
-  saveRecordClose() {
-    this.setState({
-      recordSaved: false,
-    });
-  }
+	saveRecordClose() {
+		this.setState({
+			recordSaved: false
+		});
+		// обновляем расписание
+		let form = this.props.AppointForm
+		form.getCurrentShedule(form.state.currentDate, form.state.medDirection)
+	}
 
   componentDidMount() {}
 

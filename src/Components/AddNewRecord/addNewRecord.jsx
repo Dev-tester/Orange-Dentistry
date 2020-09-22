@@ -6,28 +6,29 @@ class AddNewRecord extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      family: this.props.patient.family,
-      name: this.props.patient.name,
-      surname: this.props.patient.surname,
-      med_card_id: this.props.patient.medCard || "",
-      city: "",
-      street: "",
-      house: "",
-      building: "",
-      flat: "",
-      comment: "",
-      birthday: this.props.patient.birthday,
-      gender: "",
-      phone: this.props.patient.phone,
-      email: "",
-      parent: "",
-      radio: "",
-      insurance: "",
-      insuranceFrom: "",
-      insuranceUntill: "",
-      description: "",
-    };
+		this.state = {
+			id: this.props.patient.id,
+			family: this.props.patient.family,
+			name: this.props.patient.name,
+			surname: this.props.patient.surname,
+			med_card_id: this.props.patient.medCard||'',
+			city: "",
+			street: "",
+			house: "",
+			building: "",
+			flat: "",
+			comment: "",
+			birthday: this.props.patient.birthday,
+			gender: "",
+			phone: this.props.patient.phone,
+			email: "",
+			parent: "",
+			radio: "",
+			insurance: "",
+			insuranceFrom: "",
+			insuranceUntill: "",
+			description: "",
+		};
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);

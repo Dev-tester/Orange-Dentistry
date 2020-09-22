@@ -267,6 +267,18 @@ button.react-datepicker__navigation {
   font-size: 12px;
   line-height: 16px;
 }
+.react-datepicker__day .red{
+  border-bottom: 4px solid #E34C4C;
+  border-radius: 2px;
+}
+.react-datepicker__day .yellow{
+  border-bottom: 4px solid #F7B422;
+  border-radius: 2px;
+}
+.react-datepicker__day .green{
+  border-bottom: 4px solid #56BD5B;
+  border-radius: 2px;
+}
 /******************************************************* filters ******************************************************/
 .filters-box {
   border-radius: 10px;

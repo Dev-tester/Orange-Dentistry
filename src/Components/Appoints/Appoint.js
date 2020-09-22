@@ -39,14 +39,22 @@ class Appoint extends React.Component {
 		this.switchMedicalDirection = this.switchMedicalDirection.bind(this);
 		this.getCurrentShedule = this.getCurrentShedule.bind(this);
 		this.setEmptyIntervalsButtons = this.setEmptyIntervalsButtons.bind(this);
+		this.setCalendarLoading = this.setCalendarLoading.bind(this);
+		this.setDayLoading = this.setDayLoading.bind(this);
 	}
 
 	componentDidMount() {
 		let self = this;
-		$.get("shedule/directions", function (response) {
+		// получили первый день календаря
+		let startDate = $('.react-datepicker__month .react-datepicker__day')[0]||'';
+		if (startDate) startDate = startDate.ariaLabel
+									.replace(/^[^,]+,\s*/,'')
+									.replace(/(\d+)(?:th|st)/,"$1");		// сразу форматируем дату
+		$.get("shedule/directions",{startDate: startDate}, function (response){
 			let result = JSON.parse(response);
+			self.setCalendarLoading(result.loading);
 			self.setState({
-				directions: result
+				directions: result.directions
 			});
 			self.getCurrentShedule(self.state.currentDate, self.state.medDirection);
 		});
@@ -59,7 +67,45 @@ class Appoint extends React.Component {
 		this.getCurrentShedule(date, this.state.medDirection);
 	};
 
-	switchMedicalDirection(direction, evt) {
+	setCalendarLoading(loading){
+		console.log(loading);
+		let className;
+		for (let i in loading){
+			let dayLoading = loading[i].loading,
+				date = loading[i].date,
+				className = '';
+			// слабая загруженность
+			if (dayLoading <= 12) className = 'green';
+			// средняя загруженность
+			else if (dayLoading <= 22) className = 'yellow';
+			// сильная загруженность
+			else className = 'red';
+			// ищем день в календаре и ставим
+			this.setDayLoading(date, className)
+		}
+	}
+
+	setDayLoading(date, className){
+		date = date.split('-');
+		let month = date[1], day = date[2], currentMonth = 9,
+			monthDay, span,
+			calendar = $('.react-datepicker__month .react-datepicker__day');
+		if (month < currentMonth) console.log('TODO before');
+		else if (month > currentMonth) console.log('TODO after');
+		else{
+			for (let i in calendar){
+				monthDay = calendar[i];
+				if (monthDay.innerHTML == day){
+					monthDay.innerHTML = null;
+					span = $('<span />').addClass(className).html(day);
+					monthDay.appendChild(span[0]);
+					break;
+				}
+			}
+		}
+	}
+
+	switchMedicalDirection(direction,evt){
 		// class=active-link
 		this.setState({
 			medDirection: direction
@@ -90,13 +136,13 @@ class Appoint extends React.Component {
 	// устанавливаем кнопки "Запись на приём" там где нет приёмов
 	setEmptyIntervalsButtons(records) {
 		// перебираем всех пользователей
-		for (let userId in records) {
-			let userRecords = records[userId];
-			//console.log(userRecords);
+		for (let doctorId in records) {
+			let doctorRecords = records[doctorId];
+			//console.log(doctorRecords);
 			// перебираем все записи пользователя
-			for (let recordId in userRecords) {
-				let lastRecord = userRecords[recordId],
-					nextRecord = userRecords[parseInt(recordId) + 1],
+			for (let recordId in doctorRecords) {
+				let lastRecord = doctorRecords[recordId],
+					nextRecord = doctorRecords[parseInt(recordId) + 1],
 					time = lastRecord.appointedtime,
 					lastIdx = 0,
 					nextIdx = 0,
@@ -107,7 +153,7 @@ class Appoint extends React.Component {
 				if (recordId == '0' && lastIdx > 0) {
 					for (let idx = 0; idx < lastIdx; idx++) {
 						console.log(idx);
-						records[userId].splice(idx, 0, {
+						records[doctorId].splice(idx, 0, {
 							patient_id: null,
 							appointedtime: this.intervals[idx],
 						});
@@ -119,15 +165,15 @@ class Appoint extends React.Component {
 					console.log(time, lastIdx, nextIdx);
 					for (let idx = lastIdx + 1; idx < nextIdx; idx++) {
 						//console.log(idx);
-						//console.log(records[userId]);
-						records[userId].splice(idx, 0, {
+						//console.log(records[doctorId]);
+						records[doctorId].splice(idx, 0, {
 							patient_id: null,
 							appointedtime: this.intervals[idx],
 						});
 					}
 				}
 			}
-			//console.log(records[userId]);
+			//console.log(records[doctorId]);
 		}
 		return records;
 	}
@@ -183,10 +229,10 @@ class Appoint extends React.Component {
 								</div>
 							</div>
 							<div className="row">
-								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'I'} Appoint={this} />
+								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'I'} parent={this}/>
 							</div>
 							<div className="row">
-								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'II'} Appoint={this} />
+								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'II'} parent={this}/>
 							</div>
 						</div>
 						<div className="col-sm-2 col-md-2 col-lg-2" style={{ padding: 0 }}>

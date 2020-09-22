@@ -34,7 +34,7 @@ class MedCard extends \yii\db\ActiveRecord
 		return [
 			[['id', 'status_id','patient_id'], 'integer'],
 			[['description','comment'], 'string', 'max' => 2048],
-			[['valid_from','valid_to'], 'date'],
+			[['valid_from','valid_to'], 'date','format' => 'dd.MM.yyyy'],
 			[['patient_id'], 'required'],
 			[['id'], 'unique'],
 		];
