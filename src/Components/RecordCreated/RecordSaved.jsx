@@ -9,13 +9,15 @@ class RecordSaved extends React.Component {
       <div className="record-saved">
         <div className="container">
           <div className="row">
-            <div className="col-lg-4"></div>
-            <div className="col-lg-4"></div>
-            <div className="col-lg-2"></div>
-            <div className="col-lg-1">
-              {" "}
-              <Close closeClicked={this.props.closeSaveRecord} />{" "}
+            <div className="col-lg-12">
+              <div className="row">
+                <div className="col-lg-1 offset-lg-11">
+                  {" "}
+                  <Close closeClicked={this.props.closeSaveRecord} />{" "}
+                </div>
+              </div>
             </div>
+
             <div className="col-lg-12">
               <div className="row green-box">
                 <div className="col-lg-1 succs-img">
