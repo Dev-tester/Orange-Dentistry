@@ -118,7 +118,7 @@ class PatientPopboxInfo extends React.Component {
                 <div className="col-lg-12">
                   <div className="row">
                     {" "}
-                    <div className="col-lg-1 offset-lg-11">
+                    <div className="col-lg-1 offset-lg-11 ">
                       <Close closeClicked={this.props.closePatientInfo} />
                     </div>{" "}
                   </div>

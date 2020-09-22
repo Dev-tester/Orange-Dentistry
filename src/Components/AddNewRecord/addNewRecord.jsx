@@ -105,6 +105,7 @@ class AddNewRecord extends React.Component {
                         type="text"
                         placeholder="Александрова"
                         form="newPatient"
+                        required
                       />
                     </div>
                   </div>
@@ -243,19 +244,19 @@ class AddNewRecord extends React.Component {
                   </div>
                   <div className="row gender">
                     <div className="col-lg-4 input-name">Пол</div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 input-name-row">
                       <div className="row">
-                        <div className="col-lg-6">
+                        <div className="col-lg-4 man">
                           <input
                             value={this.state.gender}
                             onChange={(e) => this.handleChange(e)}
                             type="radio"
-                            name="gender"
+                            name="gender "
                             id=""
                           />
-                          <span>мужской</span>
+                          <span>Мужской</span>
                         </div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 woman">
                           <input
                             value={this.state.gender}
                             onChange={(e) => this.handleChange(e)}
@@ -263,7 +264,7 @@ class AddNewRecord extends React.Component {
                             name="gender"
                             id=""
                           />
-                          <span>женский</span>
+                          <span>Женский</span>
                         </div>
                       </div>
                     </div>

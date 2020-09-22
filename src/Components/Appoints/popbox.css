@@ -110,8 +110,6 @@
   margin: 32px 0 8px;
   font-weight: 500;
 }
-input[name="gender"] {
-  position: absolute;
-  left: 23px;
-  bottom: 6px;
+.close-btn svg {
+  margin-left: 39px;
 }
