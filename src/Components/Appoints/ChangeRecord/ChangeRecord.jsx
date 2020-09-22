@@ -14,7 +14,7 @@ class ChangeRecord extends React.Component {
                 <div className="col-lg-12 mb-2 pt-lg-2 text-left">
                   <p>
                     {" "}
-                    <strong>Чемерис Наталья</strong>{" "}
+                    <strong>{this.props.selectPatient.name}</strong>{" "}
                   </p>
                 </div>
                 <div className="col-lg-12 mb-lg-2">
@@ -40,7 +40,7 @@ class ChangeRecord extends React.Component {
                           <input
                             className="input-from"
                             type="text"
-                            placeholder="11:30"
+                            placeholder={this.props.selectPatient.time}
                           />
                         </div>
                       </div>
@@ -91,12 +91,13 @@ class ChangeRecord extends React.Component {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">
-                    <div className="col-lg-1 offset-lg-9">
+                    <div className="col-lg-1 offset-lg-11">
                       {" "}
                       <Close closeClicked={this.props.changeRecordClose} />
                     </div>
                   </div>
                 </div>
+
                 <div className="col-lg-12 cancel-btn">
                   <button className="">Отменить</button>
                 </div>

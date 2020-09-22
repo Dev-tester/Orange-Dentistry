@@ -1,13 +1,13 @@
 import ru from 'date-fns/locale/ru';
+import $ from "jquery";
 import React from 'react';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { BrowserRouter, NavLink, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './Appoint.css';
 import Filters from './Filters';
 import LiveFeed from './LiveFeed';
 import Shedule from './Shedule.jsx';
-import $ from "jquery";
 registerLocale('ru', ru);
 
 
@@ -20,7 +20,7 @@ class Appoint extends React.Component {
 			records: [],
 			allRecords: [],
 			currentDate: new Date(),
-			medDirection:1,// Терапевты по умолчанию
+			medDirection: 1,// Терапевты по умолчанию
 		}
 		this.intervals = [
 			"09:00",
@@ -56,7 +56,7 @@ class Appoint extends React.Component {
 			self.setState({
 				directions: result.directions
 			});
-			self.getCurrentShedule(self.state.currentDate,self.state.medDirection);
+			self.getCurrentShedule(self.state.currentDate, self.state.medDirection);
 		});
 	}
 
@@ -64,7 +64,7 @@ class Appoint extends React.Component {
 		this.setState({
 			currentDate: date
 		});
-		this.getCurrentShedule(date,this.state.medDirection);
+		this.getCurrentShedule(date, this.state.medDirection);
 	};
 
 	setCalendarLoading(loading){
@@ -110,15 +110,15 @@ class Appoint extends React.Component {
 		this.setState({
 			medDirection: direction
 		});
-		this.getCurrentShedule(this.state.currentDate,direction);
+		this.getCurrentShedule(this.state.currentDate, direction);
 	}
 
-	getCurrentShedule(currentDate, medDirection){
+	getCurrentShedule(currentDate, medDirection) {
 		let self = this;
 		return $.get("shedule/records",
 			{
-				date:currentDate.toLocaleDateString(),
-				direction:medDirection
+				date: currentDate.toLocaleDateString(),
+				direction: medDirection
 			},
 			function (response) {
 				let result = JSON.parse(response);
@@ -128,12 +128,13 @@ class Appoint extends React.Component {
 					records: records,
 					allRecords: records,
 				});
+				console.log(records);
 			}
 		);
 	}
 
 	// устанавливаем кнопки "Запись на приём" там где нет приёмов
-	setEmptyIntervalsButtons(records){
+	setEmptyIntervalsButtons(records) {
 		// перебираем всех пользователей
 		for (let doctorId in records) {
 			let doctorRecords = records[doctorId];
@@ -149,7 +150,7 @@ class Appoint extends React.Component {
 				// находим ближайшее время в шаблоне расписания для текущего и следующего приёма
 				while (time > this.intervals[lastIdx]) lastIdx++;
 				// если пустые интервалы сначала
-				if (recordId=='0' && lastIdx > 0){
+				if (recordId == '0' && lastIdx > 0) {
 					for (let idx = 0; idx < lastIdx; idx++) {
 						console.log(idx);
 						records[doctorId].splice(idx, 0, {
@@ -201,10 +202,10 @@ class Appoint extends React.Component {
 								/>
 							</div>
 							<div className="row third text-left" style={{ minWidth: '300px' }}>
-								<Filters currentDate={this.state.currentDate} medDirection={this.state.medDirection} Appoint={this}/>
+								<Filters currentDate={this.state.currentDate} medDirection={this.state.medDirection} Appoint={this} />
 							</div>
 						</div>
-						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth:'1216px' }}>
+						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth: '1216px' }}>
 							<div className="row" style={{ margin: '10px -30px' }}>
 								<div className="col-sm-4 col-md-4 col-lg-4 text-left">
 									<div className="page-title">Запись на приём</div>
@@ -222,7 +223,7 @@ class Appoint extends React.Component {
 								<div className="med-directions-menu ui-block col-lg-12">
 									<ul>
 										{directions.map((value, index) => {
-											return <li className="direct-item" key={index} onClick={this.switchMedicalDirection.bind(this, value.id)}><a className={value.id==this.state.medDirection ? 'active-link':''}>{value.title}</a></li>
+											return <li className="direct-item" key={index} onClick={this.switchMedicalDirection.bind(this, value.id)}><a className={value.id == this.state.medDirection ? 'active-link' : ''}>{value.title}</a></li>
 										})}
 									</ul>
 								</div>
@@ -234,7 +235,7 @@ class Appoint extends React.Component {
 								<Shedule currentDate={this.state.currentDate} medDirection={this.state.medDirection} stage={'II'} parent={this}/>
 							</div>
 						</div>
-						<div className="col-sm-2 col-md-2 col-lg-2" style={{padding:0}}>
+						<div className="col-sm-2 col-md-2 col-lg-2" style={{ padding: 0 }}>
 							<LiveFeed />
 						</div>
 					</div>

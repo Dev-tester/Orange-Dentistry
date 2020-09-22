@@ -15,6 +15,7 @@ class PatientPopboxInfo extends React.Component {
       changeRecordBtnClicked: false,
       cancelRecordBtnClicked: false,
     };
+    this.parent = this.props.parent;
     this.changeRecordOpen = this.changeRecordOpen.bind(this);
     this.changeRecordClose = this.changeRecordClose.bind(this);
     this.cancelRecordOpen = this.cancelRecordOpen.bind(this);
@@ -52,7 +53,7 @@ class PatientPopboxInfo extends React.Component {
                   {" "}
                   <p className="name">
                     {" "}
-                    <strong>{this.props.patientName}</strong>{" "}
+                    <strong>{this.props.selectPatient.name}</strong>{" "}
                   </p>{" "}
                   <p className="birth-date">12.03.1962</p>
                 </div>
@@ -61,7 +62,7 @@ class PatientPopboxInfo extends React.Component {
                     {" "}
                     <strong> Первичный</strong>
                   </p>{" "}
-                  <p className="visit-time">11:30-12:00 (00:30)</p>
+                  <p className="visit-time">{this.props.selectPatient.time}</p>
                 </div>
                 <div className="col-lg-12">
                   <div className="row status-buttons mt-lg-2">
@@ -118,10 +119,13 @@ class PatientPopboxInfo extends React.Component {
                 <div className="col-lg-12">
                   <div className="row">
                     {" "}
-                    <div className="col-lg-1 offset-lg-9">
+                    <div className="col-lg-1 offset-lg-11">
                       <Close closeClicked={this.props.closePatientInfo} />
-                    </div>{" "}
+                    </div>
                   </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="row"> </div>
                 </div>
                 <div className="col-lg-12 pt-lg-3">
                   {" "}
@@ -150,10 +154,16 @@ class PatientPopboxInfo extends React.Component {
               </div>
             </div>
             {this.state.changeRecordBtnClicked ? (
-              <ChangeRecord changeRecordClose={this.changeRecordClose} />
+              <ChangeRecord
+                selectPatient={this.props.selectPatient}
+                changeRecordClose={this.changeRecordClose}
+              />
             ) : null}
             {this.state.cancelRecordBtnClicked ? (
-              <CancelRecord cancelRecordClose={this.cancelRecordClose} />
+              <CancelRecord
+                selectPatient={this.props.selectPatient}
+                cancelRecordClose={this.cancelRecordClose}
+              />
             ) : null}
           </div>
         </div>

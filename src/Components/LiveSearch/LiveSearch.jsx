@@ -1,29 +1,27 @@
-import * as axios from "axios";
 import React from "react";
-import $ from "jquery";
 import "./LiveSearch.css";
 
 class LiveSearch extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			patients: this.props.patients,
-		}
-		this.selectPatient = this.selectPatient.bind(this);
-		this.parent = this.props.parent;
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      patients: this.props.patients,
+    };
+    this.selectPatient = this.selectPatient.bind(this);
+    this.parent = this.props.parent;
+  }
 
-	componentWillReceiveProps(nextProps, nextContext) {
-		this.setState(nextProps);
-	}
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.setState(nextProps);
+  }
 
-	selectPatient(props, evt){
-		this.parent.setState({
-			selectedPatient: props,
-			addNewPatientClicked: true,
-			searchActive:false,
-		});
-	}
+  selectPatient(props, evt) {
+    this.parent.setState({
+      selectedPatient: props,
+      addNewPatientClicked: true,
+      searchActive: false,
+    });
+  }
 
 	render() {
 		return (
