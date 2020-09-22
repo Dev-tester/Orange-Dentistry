@@ -46,6 +46,7 @@ class LiveSearch extends React.Component {
 					let med_card = el.med_card_id.toString();
 					// если номер < 8 знаков, дополняем сначала нулями
 					return <div className="row" key={index} onClick={this.selectPatient.bind(this, {
+																										id:			el.id,
 																										medCard:	med_card.length < 8 ? med_card.padStart(8, "0"):med_card,
 																										family: 	el.family,
 																										name:		el.name,

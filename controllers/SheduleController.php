@@ -76,8 +76,18 @@ class SheduleController extends \yii\web\Controller {
 
 	public function actionDirections(){
 		$connection = Yii::$app->getDb();
+		$result = ['directions' => [],'loading' => []];
 		$command = $connection->createCommand('SELECT * FROM "ref-med-directions"');
-		$result = $command->queryAll();
+		$result['directions'] = $command->queryAll();
+		// получаем загрузку месяца
+		$command = $connection->createCommand('SELECT date, count(id) AS loading 
+													FROM "shedule-reception" AS shedule
+													WHERE date > :startDate
+													GROUP BY date
+													ORDER BY date ASC')
+			->bindValue(':startDate',$_GET['startDate']);
+		$result['loading'] = $command->queryAll();
+
 		return json_encode($result);
 	}
 
@@ -116,22 +126,40 @@ class SheduleController extends \yii\web\Controller {
 	}
 
 	public function actionAddrecord(){
-		// TODO действующий пациент
-		// создаём/обновляем пациента
-		$Patient = new Patient();
 		$params = Yii::$app->request->post();
+		// создаём/обновляем пациента
+		// действующий пациент
+		if (!empty($params['id'])){
+			$Patient = Patient::findIdentity($params['id']);
+		}
+		// это новый пациент
+		else $Patient = new Patient();
+		//
 		if ($Patient->load($params,'') && $Patient->validate()) $Patient->save();
 		$errors = $Patient->getErrors();
 		if (count($errors)) return json_encode(["type" => "Ошибка создания пациента", 'errors' => $errors]);
+
 		// создаём/обновляем медицинскую карту
-		$MedCard = new MedCard();
-		$MedCard->patient_id = $Patient->getId();
+		// TODO адреса не пишутся, yii2 не пропускает? Модель
+		// действующий пациент
+		if (!empty($params['id'])) {
+			$MedCard = MedCard::findIdentity($Patient->med_card_id);
+		}
+		// это новый пациент
+		else {
+			$MedCard = new MedCard();
+			$MedCard->patient_id = $Patient->getId();
+		}
+		$MedCard->valid_from = $params['date'];         // обновляем, т.к. иначе не сохранится
 		if ($MedCard->load($params,'') && $MedCard->validate()) $MedCard->save();
 		$errors = $MedCard->getErrors();
 		if (count($errors)) return json_encode(["type" => "Ошибка создания медицинской карты Пациента", 'errors' => $errors]);
+
 		// ставим карточку пациенту
-		$Patient->med_card_id = $MedCard->getId();
-		$Patient->save();
+		if (!empty($params['id'])) {
+			$Patient->med_card_id = $MedCard->getId();
+			$Patient->save();
+		}
 		// создаём запись в Расписании
 		$Shedule = new SheduleReception();
 		$Shedule->appointedtime = $params['appointTime'];

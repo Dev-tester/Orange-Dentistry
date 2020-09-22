@@ -27,7 +27,8 @@ class Shedule extends React.Component {
 		this.showShedule = this.showShedule.bind(this);
 		this.showPatientInfo = this.showPatientInfo.bind(this);
 		this.closePatientInfo = this.closePatientInfo.bind(this);
-		this.parent = this.props.Appoint;
+		this.getNearestTime = this.getNearestTime.bind(this);
+		this.parent = this.props.parent;
 	}
 
 	componentDidMount() {
@@ -49,6 +50,7 @@ class Shedule extends React.Component {
 			return doctor.id == props.doctorId;
 		});
 		props.doctor = doctor[0].name;
+		props.time = this.getNearestTime(props.doctorId);
 		let interval = this.parent.intervals.indexOf(props.time),
 			nextTime;
 		if (interval == 10) nextTime = '14:30';
@@ -84,6 +86,25 @@ class Shedule extends React.Component {
 		this.setState(() => {
 			return { patientInfoBtnClicked: false };
 		});
+	}
+
+	getNearestTime(doctorId){
+		let records = this.parent.state.records,
+			doctorRecords = records[doctorId];
+		if (!doctorRecords || !doctorRecords.length) return '09:00';
+		let nextTime = '';
+		for (let idx in this.parent.intervals){
+			let time = this.parent.intervals[idx],
+				existing = doctorRecords.filter(function (record) {
+				return record.appointedtime == time;
+			});
+			if (!existing.length){
+				nextTime = time;
+				break;
+			}
+		}
+		console.log(nextTime);
+		return nextTime;
 	}
 
 	render() {
@@ -222,6 +243,7 @@ class Shedule extends React.Component {
           closeClicked={this.closePopbox}
           clicked={this.state.appointButtonClicked}
 		  appoint={this.state.addAppoint}
+		  AppointForm={this.parent}
         />
       </div> // прописать под <Popbox /> модалку для редактирования юзеров
     );

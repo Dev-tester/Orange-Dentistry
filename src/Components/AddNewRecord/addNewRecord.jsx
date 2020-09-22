@@ -8,6 +8,7 @@ class AddNewRecord extends React.Component {
 		super(props);
 
 		this.state = {
+			id: this.props.patient.id,
 			family: this.props.patient.family,
 			name: this.props.patient.name,
 			surname: this.props.patient.surname,
