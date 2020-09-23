@@ -105,7 +105,7 @@ class Appoint extends React.Component {
 		}
 	}
 
-	switchMedicalDirection(direction,evt){
+	switchMedicalDirection(direction, evt){
 		// class=active-link
 		this.setState({
 			medDirection: direction
@@ -113,7 +113,7 @@ class Appoint extends React.Component {
 		this.getCurrentShedule(this.state.currentDate, direction);
 	}
 
-	getCurrentShedule(currentDate, medDirection) {
+	getCurrentShedule(currentDate, medDirection){
 		let self = this;
 		return $.get("shedule/records",
 			{
@@ -128,17 +128,40 @@ class Appoint extends React.Component {
 					records: records,
 					allRecords: records,
 				});
-				console.log(records);
 			}
 		);
 	}
 
 	// устанавливаем кнопки "Запись на приём" там где нет приёмов
-	setEmptyIntervalsButtons(records) {
+	setEmptyIntervalsButtons(records){
 		// перебираем всех пользователей
 		for (let doctorId in records) {
-			let doctorRecords = records[doctorId];
+			let doctorRecords = records[doctorId], firstIdx, lastIdx,
+				maxIdx = this.intervals.length;
 			//console.log(doctorRecords);
+			if (!doctorRecords.length){	// пустые
+				firstIdx = maxIdx;
+				lastIdx = maxIdx;
+			}
+			else{
+				let len = doctorRecords.length;
+				firstIdx = this.intervals.indexOf(doctorRecords[0].appointedtime);
+				lastIdx = this.intervals.indexOf(doctorRecords[len-1].appointedtime);
+			}
+			// проставляем интервалы до первой записи
+			for (let idx = 0; idx < firstIdx; idx++) {
+				records[doctorId].splice(idx, 0, {
+					patient_id: null,
+					appointedtime: this.intervals[idx],
+				});
+			}
+			// проставляем интервалы после последней записи
+			for (let idx = lastIdx+1; idx < maxIdx; idx++) {
+				records[doctorId].splice(idx, 0, {
+					patient_id: null,
+					appointedtime: this.intervals[idx],
+				});
+			}
 			// перебираем все записи пользователя
 			for (let recordId in doctorRecords) {
 				let lastRecord = doctorRecords[recordId],
@@ -150,7 +173,7 @@ class Appoint extends React.Component {
 				// находим ближайшее время в шаблоне расписания для текущего и следующего приёма
 				while (time > this.intervals[lastIdx]) lastIdx++;
 				// если пустые интервалы сначала
-				if (recordId == '0' && lastIdx > 0) {
+				if (recordId=='0' && lastIdx > 0){
 					for (let idx = 0; idx < lastIdx; idx++) {
 						console.log(idx);
 						records[doctorId].splice(idx, 0, {
@@ -202,7 +225,7 @@ class Appoint extends React.Component {
 								/>
 							</div>
 							<div className="row third text-left" style={{ minWidth: '300px' }}>
-								<Filters currentDate={this.state.currentDate} medDirection={this.state.medDirection} Appoint={this} />
+								<Filters currentDate={this.state.currentDate} medDirection={this.state.medDirection} parent={this}/>
 							</div>
 						</div>
 						<div className="col-sm-8 col-md-8 col-lg-8" style={{ maxWidth: '1216px' }}>
@@ -223,7 +246,7 @@ class Appoint extends React.Component {
 								<div className="med-directions-menu ui-block col-lg-12">
 									<ul>
 										{directions.map((value, index) => {
-											return <li className="direct-item" key={index} onClick={this.switchMedicalDirection.bind(this, value.id)}><a className={value.id == this.state.medDirection ? 'active-link' : ''}>{value.title}</a></li>
+											return <li className="direct-item" key={index} onClick={this.switchMedicalDirection.bind(this, value.id)}><a className={value.id==this.state.medDirection ? 'active-link':''}>{value.title}</a></li>
 										})}
 									</ul>
 								</div>

@@ -52,11 +52,13 @@ class SheduleController extends \yii\web\Controller {
 		                        ->bindValue(':direction_id',$_GET['direction']);
 	    $doctors = $command->queryAll();
 	    foreach ($doctors as $doctor){
-		    $result['doctors'][] = [
-			    'id' => $doctor['id'],
+		    $doctorid = $doctor['id'];
+	    	$result['doctors'][] = [
+			    'id' => $doctorid,
 		    	'name' => $doctor['name'],
 			    'branch' => $doctor['branch']
 		    ];
+		    $result['shedule'][$doctorid] = [];
 	    }
 	    $command = $connection->createCommand('SELECT shedule.* 
 													FROM "shedule-reception" AS shedule

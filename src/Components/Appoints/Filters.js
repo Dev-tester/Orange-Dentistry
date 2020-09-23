@@ -38,7 +38,7 @@ class Filters extends React.Component {
 		this.setFilters = this.setFilters.bind(this);
 		this.clear = this.clear.bind(this);
 		this.apply = this.apply.bind(this);
-		this.parent = this.props.Appoint;
+		this.parent = this.props.parent;
 	}
 
 	componentDidMount() {
@@ -49,7 +49,7 @@ class Filters extends React.Component {
 		this.setFilters(nextProps.currentDate, nextProps.medDirection);
 	}
 
-	setFilters(currentDate, medDirection) {
+	setFilters(currentDate, medDirection){
 		let self = this;
 		$.get("shedule/filters",
 			{
@@ -68,11 +68,11 @@ class Filters extends React.Component {
 		);
 	}
 
-	branchChange(branches) {
+	branchChange(branches){
 		return;
 	};
 
-	medDirectionChange(evt) {
+	medDirectionChange(evt){
 		let directionId = evt.target.value;
 		// TODO надо ли currentDate в state?
 		this.setFilters(this.props.currentDate, directionId);
@@ -83,7 +83,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	doctorChange(evt) {
+	doctorChange(evt){
 		let filters = this.state.filters;
 		filters.doctor = evt.target.value;
 		this.setState({
@@ -91,7 +91,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	timeFromChange(evt) {
+	timeFromChange(evt){
 		let filters = this.state.filters;
 		filters.timeFrom = evt.target.value;
 		this.setState({
@@ -99,7 +99,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	timeToChange(evt) {
+	timeToChange(evt){
 		let filters = this.state.filters;
 		filters.timeTo = evt.target.value;
 		this.setState({
@@ -107,7 +107,7 @@ class Filters extends React.Component {
 		});
 	};
 
-	IntervalChange(evt) {
+	IntervalChange(evt){
 		let filters = this.state.filters;
 		filters.Interval = evt.target.value;
 		this.setState({
@@ -115,23 +115,23 @@ class Filters extends React.Component {
 		});
 	};
 
-	clear() {
-		$('#branches option').each(function () {
+	clear(){
+		$('#branches option').each(function(){
 			this.selected = false;
 		});
-		$('#directions option').each(function () {
+		$('#directions option').each(function(){
 			this.selected = false;
 		});
-		$('#doctors option').each(function () {
+		$('#doctors option').each(function(){
 			this.selected = false;
 		});
-		$('#timefrom option').each(function () {
+		$('#timefrom option').each(function(){
 			this.selected = false;
 		});
-		$('#timeto option').each(function () {
+		$('#timeto option').each(function(){
 			this.selected = false;
 		});
-		$('#interval option').each(function () {
+		$('#interval option').each(function(){
 			this.selected = false;
 		});
 		this.setState({
@@ -149,22 +149,28 @@ class Filters extends React.Component {
 	}
 
 	// TODO сделать множественный выбор SELECT2
-	apply() {
+	apply(){
 		let records = this.parent.state.allRecords,
 			filters = this.state.filters;
-		if (this.state.filters.doctor) {
+		// если был, то переход на вкладку
+		if (this.state.filters.direction){
+			this.parent.setState({
+				medDirection: this.state.filters.direction
+			});
+		}
+		if (this.state.filters.doctor){
 			let records_ = {};
 			records_[filters.doctor] = records[filters.doctor];
 			records = records_;
 		}
-		if (filters.timeFrom) {
-			for (let userId in records) {
+		if (filters.timeFrom){
+			for (let userId in records){
 				records[userId] = records[userId].filter(function (record) {
 					return record.appointedtime >= filters.timeFrom;
 				});
 			}
 		}
-		if (filters.timeTo) {
+		if (filters.timeTo){
 			for (let userId in records) {
 				records[userId] = records[userId].filter(function (record) {
 					return record.appointedtime < filters.timeTo;
