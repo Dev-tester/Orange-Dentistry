@@ -134,6 +134,12 @@ class Appoint extends React.Component {
 
 	// устанавливаем кнопки "Запись на приём" там где нет приёмов
 	setEmptyIntervalsButtons(records){
+		function getMinY(data){
+			return data.reduce((min, p) => p.appointedtime < min ? p.appointedtime : min, data[0].appointedtime);
+		}
+		function getMaxY(data){
+			return data.reduce((max, p) => p.appointedtime > max ? p.appointedtime : max, data[0].appointedtime);
+		}
 		// перебираем всех пользователей
 		for (let doctorId in records) {
 			let doctorRecords = records[doctorId], firstIdx, lastIdx,
@@ -145,8 +151,8 @@ class Appoint extends React.Component {
 			}
 			else{
 				let len = doctorRecords.length;
-				firstIdx = this.intervals.indexOf(doctorRecords[0].appointedtime);
-				lastIdx = this.intervals.indexOf(doctorRecords[len-1].appointedtime);
+				firstIdx = this.intervals.indexOf(getMinY(doctorRecords));
+				lastIdx = this.intervals.indexOf(getMaxY(doctorRecords));
 			}
 			// проставляем интервалы до первой записи
 			for (let idx = 0; idx < firstIdx; idx++) {

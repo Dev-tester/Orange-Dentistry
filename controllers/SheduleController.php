@@ -64,7 +64,7 @@ class SheduleController extends \yii\web\Controller {
 													FROM "shedule-reception" AS shedule
 															INNER JOIN doctors ON doctors.id = shedule.doctor_id
 													WHERE date = :date AND doctors.direction_id = :direction_id
-													ORDER BY shedule.id ASC')
+													ORDER BY appointedtime ASC')
 								->bindValue(':date',$_GET['date'])
 								->bindValue(':direction_id',$_GET['direction']);
 	    $shedule = $command->queryAll();
