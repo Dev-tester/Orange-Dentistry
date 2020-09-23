@@ -21,6 +21,13 @@
 }
 .patient-changeRecord-popbox input {
   height: 40px;
+  border-radius: 4px;
+  border: 1px solid #dfe6ee;
+}
+.patient-changeRecord-popbox textarea {
+  border: 1px solid #dfe6ee;
+  outline: none;
+  border-radius: 4px;
 }
 .patient-changeRecord-popbox .input-from,
 .patient-changeRecord-popbox .input-untill {

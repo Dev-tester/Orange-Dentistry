@@ -19,7 +19,7 @@ class ChangeRecord extends React.Component {
                 </div>
                 <div className="col-lg-12 mb-lg-2">
                   <div className="row">
-                    <div className="col-lg-2 text-left">
+                    <div className="col-lg-2 text-left pt-lg-2">
                       <p>Дата:</p>
                     </div>
                     <div className="col-lg-10 input-date-block">
@@ -35,8 +35,10 @@ class ChangeRecord extends React.Component {
                   <div className="row">
                     <div className="col-lg-7">
                       <div className="row">
-                        <div className="col-lg-6 text-left">Прием с:</div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-5 text-left pt-lg-2">
+                          Прием с:
+                        </div>
+                        <div className="col-lg-6 ml-lg-1">
                           <input
                             className="input-from"
                             type="text"
@@ -47,8 +49,10 @@ class ChangeRecord extends React.Component {
                     </div>
                     <div className="col-lg-5">
                       <div className="row">
-                        <div className="col-lg-5 text-left">до:</div>
-                        <div className="col-lg-7">
+                        <div className="col-lg-3 offset-lg-2 text-left pt-lg-2">
+                          до:
+                        </div>
+                        <div className="col-lg-6">
                           <input
                             className="input-untill"
                             type="text"
@@ -61,7 +65,7 @@ class ChangeRecord extends React.Component {
                 </div>
                 <div className="col-lg-12 mt-lg-2">
                   <div className="row">
-                    <div className="col-lg-2 text-left">
+                    <div className="col-lg-2 text-left pt-lg-2">
                       {" "}
                       <p>Врач:</p>
                     </div>
@@ -74,7 +78,7 @@ class ChangeRecord extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-4 pt-lg-1">
                   <p>Комментарий:</p>
                 </div>
                 <div className="col-lg-12 text-left">
@@ -91,7 +95,7 @@ class ChangeRecord extends React.Component {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">
-                    <div className="col-lg-1 offset-lg-11">
+                    <div className="col-lg-1 offset-lg-10">
                       {" "}
                       <Close closeClicked={this.props.changeRecordClose} />
                     </div>
