@@ -111,7 +111,8 @@ class SheduleController extends \yii\web\Controller {
 
 	public function actionPatients(){
 		$connection = Yii::$app->getDb();
-		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio,
+		$command = $connection->createCommand('SELECT 	patients.id,
+															patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio,
 															patients."family",
 															patients."name",
 															patients."surname",
