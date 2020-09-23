@@ -119,7 +119,7 @@ class Popbox extends React.Component {
             <div className="container">
               <div className="colg-lg-12">
                 <div className="row">
-                  <div className="col-lg-1 offset-lg-11">
+                  <div className="col-lg-1 offset-lg-11 close-btn">
                     <Close closeClicked={this.closeClicked} />
                   </div>
                 </div>

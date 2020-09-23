@@ -9,9 +9,9 @@ class ChangeRecord extends React.Component {
       <div className="patient-changeRecord-popbox">
         <div className="container">
           <div className="row">
-            <div className="col-lg-7 left-part">
+            <div className="col-lg-8 changeRecord-left-part">
               <div className="row">
-                <div className="col-lg-12 mb-2 pt-lg-2 text-left">
+                <div className="col-lg-12 mb-2 pt-lg-1 text-left">
                   <p>
                     {" "}
                     <strong>{this.props.selectPatient.name}</strong>{" "}
@@ -22,7 +22,7 @@ class ChangeRecord extends React.Component {
                     <div className="col-lg-2 text-left">
                       <p>Дата:</p>
                     </div>
-                    <div className="col-lg-10">
+                    <div className="col-lg-10 input-date-block">
                       <input
                         className="input-date"
                         type="text"
@@ -65,7 +65,7 @@ class ChangeRecord extends React.Component {
                       {" "}
                       <p>Врач:</p>
                     </div>
-                    <div className="col-lg-10 ">
+                    <div className="col-lg-10 input-doc-block">
                       <input
                         className="input-doctor"
                         type="text"
@@ -87,7 +87,7 @@ class ChangeRecord extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-5  right-part">
+            <div className="col-lg-4  right-part">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">

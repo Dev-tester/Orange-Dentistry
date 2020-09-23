@@ -46,7 +46,7 @@
 .birth-date {
   text-align: left;
 }
-.left-part:nth-child(1) {
+.patient-info-popbox .left-part:nth-child(1) {
   padding: 0 43px !important;
 }
 .inProgress-btn button {
@@ -59,11 +59,11 @@
   text-align: left;
   line-height: normal;
 }
-.right-part hr {
+.patient-info-popbox .right-part hr {
   width: 83%;
   border-color: #dfe6ee;
 }
-.right-part p {
+.patient-info-popbox .right-part p {
   color: #3b80d6;
   cursor: pointer;
 }
