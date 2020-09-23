@@ -111,15 +111,15 @@ class SheduleController extends \yii\web\Controller {
 
 	public function actionPatients(){
 		$connection = Yii::$app->getDb();
-		$command = $connection->createCommand('SELECT 	patients.id,
-															patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio,
+		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name"||\' \'||patients."surname" as fio,
 															patients."family",
 															patients."name",
 															patients."surname",
 															patients.med_card_id,
 															TO_CHAR(patients.birthday, \'dd.mm.YYYY\') AS birthday,
 															patients.phone,
-															med.*
+															med.*,
+															patients.id		-- если ставить вначале, то med.* его перезатирает
 													FROM 	patients 
 															INNER JOIN medical_cards AS med ON med.id=patients.med_card_id
 													WHERE CAST (document_vectors as VARCHAR) ILIKE :query')
