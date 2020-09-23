@@ -47,7 +47,7 @@ class PatientPopboxInfo extends React.Component {
       <div className="patient-info-popbox">
         <div className="container">
           <div className="row">
-            <div className="col-lg-7 left-part">
+            <div className="col-lg-8 left-part">
               <div className="row">
                 <div className="col-lg-6 mt-lg-2">
                   {" "}
@@ -92,34 +92,32 @@ class PatientPopboxInfo extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-6 phone mt-lg-2 mb-lg-2">
                   {" "}
                   <p>+7(123)456-78-90</p>{" "}
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-6 phone mt-lg-2 mb-lg-2">
                   <p>+7(123)456-78-90</p>
                 </div>
-                <div className="col-lg-12">
-                  <div className="row comment mt-lg-2 pb-lg-2">
-                    <div className="col-lg-12">
-                      <p>Комментарий к приему:</p>
-                    </div>
-                    <div className="col-lg-12">
-                      <p>
-                        Максимальная длина комментария не должна превышать 75
-                        символов исключая пробелы
-                      </p>
-                    </div>
+                <div className="col-lg-12 comment-block">
+                  <div className="col-lg-12">
+                    <p>Комментарий к приему:</p>
+                  </div>
+                  <div className="col-lg-12 comment">
+                    <p>
+                      Максимальная длина комментария не должна превышать 75
+                      символов исключая пробелы
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-5  right-part">
+            <div className="col-lg-4  right-part">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">
                     {" "}
-                    <div className="col-lg-1 offset-lg-11">
+                    <div className="col-lg-1 offset-lg-11 ">
                       <Close closeClicked={this.props.closePatientInfo} />
                     </div>
                   </div>

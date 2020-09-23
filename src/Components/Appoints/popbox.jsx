@@ -92,14 +92,14 @@ class Popbox extends React.Component {
     return false;
   }
 
-	saveRecordClose() {
-		this.setState({
-			recordSaved: false
-		});
-		// обновляем расписание
-		let form = this.props.AppointForm
-		form.getCurrentShedule(form.state.currentDate, form.state.medDirection)
-	}
+  saveRecordClose() {
+    this.setState({
+      recordSaved: false,
+    });
+    // обновляем расписание
+    let form = this.props.AppointForm;
+    form.getCurrentShedule(form.state.currentDate, form.state.medDirection);
+  }
 
   componentDidMount() {}
 
@@ -122,7 +122,7 @@ class Popbox extends React.Component {
             <div className="container">
               <div className="colg-lg-12">
                 <div className="row">
-                  <div className="col-lg-1 offset-lg-11">
+                  <div className="col-lg-1 offset-lg-11 close-btn">
                     <Close closeClicked={this.closeClicked} />
                   </div>
                 </div>
