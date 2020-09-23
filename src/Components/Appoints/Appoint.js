@@ -35,7 +35,8 @@ class Appoint extends React.Component {
 			"13:30",
 			"14:00",
 		];
-		this.calendarChange = this.calendarChange.bind(this);
+		this.intervalsSecondShift =
+			this.calendarChange = this.calendarChange.bind(this);
 		this.switchMedicalDirection = this.switchMedicalDirection.bind(this);
 		this.getCurrentShedule = this.getCurrentShedule.bind(this);
 		this.setEmptyIntervalsButtons = this.setEmptyIntervalsButtons.bind(this);

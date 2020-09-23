@@ -46,6 +46,7 @@ class Shedule extends React.Component {
   addAppoint(props, evt) {
     evt.preventDefault();
     let doctor = this.parent.state.doctors.filter(function (doctor) {
+      debugger;
       return doctor.id == props.doctorId;
     });
     props.doctor = doctor[0].name;
@@ -138,72 +139,90 @@ class Shedule extends React.Component {
                     className="col-sm-3 col-md-3 col-lg-3 patient-squad"
                     key={doctorIndex}
                   >
-                    {records[doctor.id]
-                      ? records[doctor.id].map((record, recordIndex) => {
-                          return !record.patient_id ? (
+                    {
+                      records[doctor.id]
+                        ? records[doctor.id].map((record, recordIndex) => {
+                            return !record.patient_id ? (
+                              <div
+                                className="patient-shedule-wrap blanked"
+                                key={recordIndex}
+                              >
+                                <div className="patient-time">
+                                  {record.appointedtime}
+                                </div>
+                                <button
+                                  className="patient-empty-block"
+                                  onClick={this.addAppoint.bind(this, {
+                                    doctorId: doctor.id,
+                                    time: record.appointedtime,
+                                  })}
+                                ></button>
+                              </div>
+                            ) : (
+                              <div
+                                className="patient-shedule-wrap"
+                                key={recordIndex}
+                              >
+                                <div className="patient-time">
+                                  {record.appointedtime}
+                                </div>
+                                <div
+                                  onClick={() =>
+                                    this.selectPatient({
+                                      name: record.patient,
+                                      time: record.appointedtime,
+                                    })
+                                  }
+                                  className={
+                                    "patient-shedule-block " + record.status
+                                  }
+                                >
+                                  <div className="patient-name">
+                                    {record.patient}
+                                  </div>
+                                  <ul className="patient-actions">
+                                    {record.actions[0]
+                                      ? record.actions.map(
+                                          (action, actionIndex) => {
+                                            return (
+                                              <li
+                                                className={action}
+                                                key={actionIndex}
+                                              ></li>
+                                            );
+                                          }
+                                        )
+                                      : ""}
+                                  </ul>
+                                </div>
+                                {this.state.patientInfoBtnClicked ? (
+                                  <PatientPopboxInfo
+                                    parent={this}
+                                    selectPatient={this.state.selectedPatient}
+                                    closePatientInfo={this.closePatientInfo}
+                                  />
+                                ) : null}
+                              </div>
+                            );
+                          })
+                        : "" /*this.parent.intervals.map((interval, index) => {
+                          return (
                             <div
                               className="patient-shedule-wrap blanked"
-                              key={recordIndex}
+                              key={index}
                             >
-                              <div className="patient-time">
-                                {record.appointedtime}
-                              </div>
+                              <div className="patient-time">{interval}</div>
                               <button
                                 className="patient-empty-block"
-                                onClick={this.addAppoint.bind(this, {
-                                  doctorId: doctor.id,
-                                  time: record.appointedtime,
-                                })}
+                                // onClick={this.addAppoint.bind(this, {
+                                //   doctorId: doctor.id,
+                                //   time: record.appointedtime,
+                                // })}
                               ></button>
                             </div>
-                          ) : (
-                            <div
-                              className="patient-shedule-wrap"
-                              key={recordIndex}
-                            >
-                              <div className="patient-time">
-                                {record.appointedtime}
-                              </div>
-                              <div
-                                onClick={() =>
-                                  this.selectPatient({
-                                    name: record.patient,
-                                    time: record.appointedtime,
-                                  })
-                                }
-                                className={
-                                  "patient-shedule-block " + record.status
-                                }
-                              >
-                                <div className="patient-name">
-                                  {record.patient}
-                                </div>
-                                <ul className="patient-actions">
-                                  {record.actions[0]
-                                    ? record.actions.map(
-                                        (action, actionIndex) => {
-                                          return (
-                                            <li
-                                              className={action}
-                                              key={actionIndex}
-                                            ></li>
-                                          );
-                                        }
-                                      )
-                                    : ""}
-                                </ul>
-                              </div>
-                              {this.state.patientInfoBtnClicked ? (
-                                <PatientPopboxInfo
-                                  parent={this}
-                                  selectPatient={this.state.selectedPatient}
-                                  closePatientInfo={this.closePatientInfo}
-                                />
-                              ) : null}
-                            </div>
                           );
-                        })
-                      : ""}
+                        })*/
+                    }
                     <button
                       onClick={this.addAppoint.bind(this, {
                         doctorId: doctor.id,
