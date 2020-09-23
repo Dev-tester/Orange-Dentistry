@@ -7,10 +7,10 @@ class CancelRecord extends React.Component {
     return (
       <div className="patient-cancelRecord-popbox">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-7 left-part">
+          <div className="row cancel-row">
+            <div className="col-lg-8 left-part">
               <div className="row">
-                <div className="col-lg-12 mb-2 pt-lg-5 text-left">
+                <div className="col-lg-12 mb-2 pt-lg-2 text-left">
                   <div className="row">
                     <div className="col-lg-6">
                       <p>
@@ -18,7 +18,7 @@ class CancelRecord extends React.Component {
                         <strong>{this.props.selectPatient.name}</strong>{" "}
                       </p>
                     </div>
-                    <div className="col-lg-6 text-rifght">
+                    <div className="col-lg-6 text-right">
                       <p>{this.props.selectPatient.time}</p>
                     </div>
                   </div>
@@ -30,7 +30,7 @@ class CancelRecord extends React.Component {
                       {" "}
                       <p>Причина:</p>
                     </div>
-                    <div className="col-lg-10 ">
+                    <div className="col-lg-9 offset-lg-1 text-right">
                       <input
                         className="input-doctor"
                         type="text"
@@ -39,7 +39,7 @@ class CancelRecord extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-4 text-left">
                   <p>Комментарий:</p>
                 </div>
                 <div className="col-lg-12 text-left">
@@ -52,11 +52,11 @@ class CancelRecord extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-5  right-part">
+            <div className="col-lg-4  right-part">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row">
-                    <div className="col-lg-1 offset-lg-11">
+                    <div className="col-lg-1 offset-lg-11 close-btn-x">
                       {" "}
                       <Close closeClicked={this.props.cancelRecordClose} />
                     </div>

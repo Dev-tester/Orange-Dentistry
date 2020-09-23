@@ -47,7 +47,7 @@
 .birth-date {
   text-align: left;
 }
-.patient-info-popbox .left-part:nth-child(1) {
+.left-part:nth-child(1) {
   padding: 0 49px !important;
 }
 .inProgress-btn button {
@@ -159,4 +159,9 @@
 .col-xl-auto {
   padding-left: 0px !important;
   padding-right: 0px !important;
+}
+
+.close-btn-x svg {
+  position: relative;
+  right: 7.75px;
 }

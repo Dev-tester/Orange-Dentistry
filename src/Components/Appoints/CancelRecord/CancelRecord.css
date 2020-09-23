@@ -16,10 +16,16 @@
   box-shadow: grey 0px 2px 16px -2px;
   text-align: center;
   border-radius: 5px;
-  font-size: 13px;
+  font-size: 12px;
 }
 .patient-cancelRecord-popbox input {
   height: 40px;
+}
+.patient-cancelRecord-popbox input,
+.patient-cancelRecord-popbox textarea {
+  border: 1px solid #dfe6ee;
+  outline: none;
+  border-radius: 4px;
 }
 .input-from,
 .input-untill {
@@ -27,7 +33,7 @@
 }
 .input-date,
 .input-doctor {
-  width: 86.5%;
+  width: 100%;
 }
 .input-comment {
   resize: none;
@@ -62,77 +68,15 @@
 .patient-cancelRecord-popbox .right-part .save-btn button {
   background: #3b80d6;
 }
-
-.patient-cancelRecord-popbox .col,
-.patient-cancelRecord-popbox .col-1,
-.patient-cancelRecord-popbox .col-10,
-.patient-cancelRecord-popbox .col-11,
-.patient-cancelRecord-popbox .col-12,
-.patient-cancelRecord-popbox .col-2,
-.patient-cancelRecord-popbox .col-3,
-.patient-cancelRecord-popbox .col-4,
-.patient-cancelRecord-popbox .col-5,
-.patient-cancelRecord-popbox .col-6,
-.patient-cancelRecord-popbox .col-7,
-.patient-cancelRecord-popbox .col-8,
-.patient-cancelRecord-popbox .col-9,
-.patient-cancelRecord-popbox .col-auto,
-.patient-cancelRecord-popbox .col-lg,
-.patient-cancelRecord-popbox .col-lg-1,
-.patient-cancelRecord-popbox .col-lg-10,
-.patient-cancelRecord-popbox .col-lg-11,
-.patient-cancelRecord-popbox .col-lg-12,
-.patient-cancelRecord-popbox .col-lg-2,
-.patient-cancelRecord-popbox .col-lg-3,
-.patient-cancelRecord-popbox .col-lg-4,
-.patient-cancelRecord-popbox .col-lg-5,
-.patient-cancelRecord-popbox .col-lg-6,
-.patient-cancelRecord-popbox .col-lg-7,
-.patient-cancelRecord-popbox .col-lg-8,
-.patient-cancelRecord-popbox .col-lg-9,
-.patient-cancelRecord-popbox .col-lg-auto,
-.patient-cancelRecord-popbox .col-md,
-.patient-cancelRecord-popbox .col-md-1,
-.patient-cancelRecord-popbox .col-md-10,
-.patient-cancelRecord-popbox .col-md-11,
-.patient-cancelRecord-popbox .col-md-12,
-.patient-cancelRecord-popbox .col-md-2,
-.patient-cancelRecord-popbox .col-md-3,
-.patient-cancelRecord-popbox .col-md-4,
-.patient-cancelRecord-popbox .col-md-5,
-.patient-cancelRecord-popbox .col-md-6,
-.patient-cancelRecord-popbox .col-md-7,
-.patient-cancelRecord-popbox .col-md-8,
-.patient-cancelRecord-popbox .col-md-9,
-.patient-cancelRecord-popbox .col-md-auto,
-.patient-cancelRecord-popbox .col-sm,
-.patient-cancelRecord-popbox .col-sm-1,
-.patient-cancelRecord-popbox .col-sm-10,
-.patient-cancelRecord-popbox .col-sm-11,
-.patient-cancelRecord-popbox .col-sm-12,
-.patient-cancelRecord-popbox .col-sm-2,
-.patient-cancelRecord-popbox .col-sm-3,
-.patient-cancelRecord-popbox .col-sm-4,
-.patient-cancelRecord-popbox .col-sm-5,
-.patient-cancelRecord-popbox .col-sm-6,
-.patient-cancelRecord-popbox .col-sm-7,
-.patient-cancelRecord-popbox .col-sm-8,
-.patient-cancelRecord-popbox .col-sm-9,
-.patient-cancelRecord-popbox .col-sm-auto,
-.patient-cancelRecord-popbox .col-xl,
-.patient-cancelRecord-popbox .col-xl-1,
-.patient-cancelRecord-popbox .col-xl-10,
-.patient-cancelRecord-popbox .col-xl-11,
-.patient-cancelRecord-popbox .col-xl-12,
-.patient-cancelRecord-popbox .col-xl-2,
-.patient-cancelRecord-popbox .col-xl-3,
-.patient-cancelRecord-popbox .col-xl-4,
-.patient-cancelRecord-popbox .col-xl-5,
-.patient-cancelRecord-popbox .col-xl-6,
-.patient-cancelRecord-popbox .col-xl-7,
-.patient-cancelRecord-popbox .col-xl-8,
-.patient-cancelRecord-popbox .col-xl-9,
-.patient-cancelRecord-popbox .col-xl-auto {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+.patient-cancelRecord-popbox .right-part .row {
+  margin-left: 0;
+}
+.patient-cancelRecord-popbox .left-part:nth-child(1) {
+  padding: 0 26px !important;
+}
+.patient-cancelRecord-popbox .text-left {
+  line-height: 38px;
+}
+.cancel-row {
+  margin-left: 0;
 }
