@@ -35,10 +35,11 @@ class SheduleReception extends \yii\db\ActiveRecord
 			[['appointedtime','patient_id','doctor_id','patient'], 'required'],
 			[['id','patient_id','doctor_id'], 'integer'],
 			[['appointedtime'], 'string', 'max' => 32],
-			[['patient'], 'string', 'max' => 255],
+			[['patient','cancel_reason','cancel_reason_detail','comment'], 'string', 'max' => 255],
 			[['status'], 'string', 'max' => 16],
 			[['actions'], 'string', 'max' => 2048],
 			[['date'], 'date','format' => 'dd.MM.yyyy'],
+			[['canceled'],'boolean'],
 			[['id'], 'unique'],
 		];
 	}
@@ -57,6 +58,10 @@ class SheduleReception extends \yii\db\ActiveRecord
 			'status' => 'Shedule Status',
 			'actions' => 'Visit Actions',
 			'date' => 'Date of Appointment',
+			'canceled' => 'Appointment Canceled',
+			'cancel_reason' => 'Reason for cancellation',
+			'cancel_reason_detail' => 'Reason for cancellation Details',
+			'comment' => 'Comment',
 		];
 	}
 

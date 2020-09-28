@@ -1,5 +1,4 @@
 import React from "react";
-import "./Finish.css";
 class Finish extends React.Component {
   state = {};
   render() {

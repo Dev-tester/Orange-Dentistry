@@ -127,6 +127,7 @@ ul.patient-actions li {
   width: 224px;
   display: flex;
   padding: 0 0 16px 40px;
+  cursor: pointer;
 }
 .patient-shedule-block {
   border-left: 10px solid transparent;
@@ -156,6 +157,9 @@ ul.patient-actions li {
   font-size: 16px;
   line-height: 24px;
   margin-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .patient-time {
   font-style: normal;
@@ -165,15 +169,18 @@ ul.patient-actions li {
   align-items: center;
   text-align: right;
   color: #313541;
+  cursor: default;
+}
+.patient-shedule-block.canceled .patient-name {
+  text-decoration: line-through;
+  text-decoration-color: #7F8A96;
 }
 /********************************************** Date Picker ****************************************************/
 .react-datepicker {
   border: 0;
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding-right: 7px;
-  padding-left: 7px;
-  padding-bottom: 20px;
+  padding: 0 4px 30px 4px;
 }
 .react-datepicker__header {
   border: 0;
@@ -181,21 +188,30 @@ ul.patient-actions li {
 }
 .react-datepicker__current-month {
   border-bottom: 1px solid #eee;
-  padding-top: 8px;
-  padding-bottom: 14px;
+  padding-top: 11px;
+  padding-bottom: 17px;
+  font-size: 15px;
 }
 button.react-datepicker__navigation {
-  top: 20px;
+  border: 0;
+  top: 24px;
+  width: 10px;
+  height: 16px;
+}
+.react-datepicker__navigation--previous {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='16' viewBox='0 0 10 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.600788 8.43901L8.8296 15.8272C9.10201 16.0634 9.53612 16.0566 9.79921 15.812C10.0559 15.5734 10.0559 15.1952 9.79921 14.9566L2.05521 8.00373L9.79921 1.05084C10.0669 0.810435 10.0669 0.42068 9.79921 0.180276C9.53141 -0.0600929 9.09735 -0.0600929 8.8296 0.180276L0.600788 7.56845C0.333071 7.80889 0.333071 8.1986 0.600788 8.43901Z' fill='%23868789'/%3E%3C/svg%3E");
+  left: 19px;
 }
 .react-datepicker__navigation--next {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='16' viewBox='0 0 10 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.39921 7.56099L1.1704 0.172821C0.897986 -0.0633983 0.463885 -0.0566162 0.200788 0.187973C-0.0558799 0.426573 -0.0558799 0.80482 0.200788 1.04338L7.94479 7.99627L0.200788 14.9492C-0.0669294 15.1896 -0.0669294 15.5793 0.200788 15.8197C0.468586 16.0601 0.902647 16.0601 1.1704 15.8197L9.39921 8.43155C9.66693 8.19111 9.66693 7.8014 9.39921 7.56099Z' fill='%23868789'/%3E%3C/svg%3E%0A");
   right: auto;
-  left: 40px;
+  left: 45px;
 }
 .react-datepicker__week {
   display: flex;
 }
 .react-datepicker__month {
-  margin: 0;
+  margin: 1px 0 0;
 }
 .react-datepicker__day-name {
   font-style: normal;
@@ -205,20 +221,20 @@ button.react-datepicker__navigation {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  color: #b0bac5;
-  width: 38px;
+  color: #d0dae5;
+  width: 39px;
   margin: 0;
 }
 .react-datepicker__day-names {
   display: flex;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 14px;
 }
 .react-datepicker__day {
   border: 0;
-  margin: 3px 0;
-  width: 38px;
-  height: 36px;
+  margin: 0;
+  width: 39px;
+  height: 40px;
   color: #868789;
   font-style: normal;
   font-weight: normal;
@@ -396,10 +412,10 @@ button.react-datepicker__navigation {
   margin-left: 15px;
 }
 .livefeed-box .buttons button.call {
-  background: url("media/appoint/call.png");
+  background: url("media/call.png");
 }
 .livefeed-box .buttons button.calendar {
-  background: url("media/appoint/canceled_apps.png");
+  background: url("media/canceled_apps.png");
   background-position: -6px -6px;
   width: 60px;
   height: 60px;

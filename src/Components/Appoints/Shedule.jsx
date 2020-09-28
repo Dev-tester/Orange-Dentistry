@@ -2,8 +2,10 @@ import { format } from "date-fns";
 import ru from "date-fns/locale/ru";
 import React from "react";
 import "./Appoint.css";
-import Vector from "./media/appoint/Vector";
+import Vector from "./media/Vector";
 import PatientPopboxInfo from "./PatientPopboxInfo/PatientPopboxInfo";
+import ChangeRecord from "./PatientPopboxInfo/ChangeRecord/ChangeRecord";
+import CancelRecord from "./PatientPopboxInfo/CancelRecord/CancelRecord";
 import Popbox from "./popbox";
 
 class Shedule extends React.Component {
@@ -14,6 +16,8 @@ class Shedule extends React.Component {
 			appointButtonClicked: false,
 			hideBtnClicked: false,
 			patientInfoBtnClicked: false,
+			changeRecordBtnClicked: false,
+			cancelRecordBtnClicked: false,
 			currentDate: this.props.currentDate,
 			medDirection: this.props.medDirection,
 			selectedPatient: {},
@@ -25,11 +29,11 @@ class Shedule extends React.Component {
 		this.closePopbox = this.closePopbox.bind(this);
 		this.hideShedule = this.hideShedule.bind(this);
 		this.showShedule = this.showShedule.bind(this);
-		this.showPatientInfo = this.showPatientInfo.bind(this);
 		this.closePatientInfo = this.closePatientInfo.bind(this);
 		this.getNearestTime = this.getNearestTime.bind(this);
-		this.parent = this.props.parent;
 		this.selectPatient = this.selectPatient.bind(this);
+		this.setPatientProps = this.setPatientProps.bind(this);
+		this.parent = this.props.parent;
 	}
 
 	componentDidMount() {}
@@ -44,20 +48,9 @@ class Shedule extends React.Component {
 
 	clickEvent() {}
 
-	addAppoint(props,evt) {
+	addAppoint(props, stage, evt) {
 		evt.preventDefault();
-		let doctor = this.parent.state.doctors.filter(function (doctor){
-			return doctor.id == props.doctorId;
-		});
-		props.doctor = doctor[0].name;
-		// если время не обозначено (нижняя кнопка), выбираем ближайшее
-		if (!props.time) props.time = this.getNearestTime(props.doctorId);
-		let interval = this.parent.intervals.indexOf(props.time),
-			nextTime;
-		if (interval == 10) nextTime = '14:30';
-		else nextTime = this.parent.intervals[interval+1];
-		props.nextTime = nextTime;
-		props.date = this.parent.state.currentDate.toLocaleDateString();
+		props = this.setPatientProps(props, stage);
 		this.setState({
 			addAppoint: props,
 			appointButtonClicked: true
@@ -68,40 +61,42 @@ class Shedule extends React.Component {
 			return { appointButtonClicked: false };
 		});
 	}
-	hideShedule() {
-		this.setState((prevState) => {
-			return { hideBtnClicked: true };
-		});
-	}
+
 	showShedule() {
 		this.setState(() => {
 			return { hideBtnClicked: false };
 		});
 	}
-	showPatientInfo() {
-		this.setState(() => {
-			return { patientInfoBtnClicked: true };
+
+	hideShedule() {
+		this.setState((prevState) => {
+			return { hideBtnClicked: true };
 		});
 	}
-	closePatientInfo() {
-		this.setState(() => {
-			return { patientInfoBtnClicked: false };
-		});
-	}
-	selectPatient(props, evt) {
+
+	selectPatient(props, stage, evt) {
+		evt.preventDefault();
+		props = this.setPatientProps(props, stage);
 		this.setState({
 			selectedPatient: props,
 			patientInfoBtnClicked: true,
 		});
 	}
 
-	getNearestTime(doctorId){
-		let records = this.parent.state.records,
+	closePatientInfo() {
+		this.setState(() => {
+			return { patientInfoBtnClicked: false };
+		});
+	}
+
+	// выдаёт ближайшее свободное время в сетке
+	getNearestTime(doctorId, stage){
+		let records = this.parent.state.records[stage],
 			doctorRecords = records[doctorId];
-		if (!doctorRecords || !doctorRecords.length) return '09:00';
+		if (!doctorRecords || !doctorRecords.length) return stage =='I' ? '09:00':'14:30';
 		let nextTime = '';
-		for (let idx in this.parent.intervals){
-			let time = this.parent.intervals[idx],
+		for (let idx in this.parent.intervals[stage]){
+			let time = this.parent.intervals[stage][idx],
 				existing = doctorRecords.filter(function (record) {
 				return record.appointedtime == time;
 			});
@@ -114,16 +109,42 @@ class Shedule extends React.Component {
 		return nextTime;
 	}
 
-	render() {
-		let date = new Date();
-		let today = date.getDate();
-		let thisMonth = date.getMonth();
-		//console.log(today);
-		//console.log(thisMonth);
+	setPatientProps(props, stage){
+		let doctor = this.parent.state.doctors.filter(function (doctor){
+			return doctor.id == props.doctor_id;
+		});
+		props.doctor = doctor[0].name;
+		// если время не обозначено (нижняя кнопка), выбираем ближайшее
+		if (!props.time) props.time = this.getNearestTime(props.doctor_id, stage);
+		let intervals = this.parent.intervals[stage],
+			interval = intervals.indexOf(props.time),
+			nextTime, customIntervals = this.parent.state.customIntervals;
+		// если были добавлены новые интевалы учитываем
+		if (customIntervals[props.doctor_id]){
+			for (let newInterval of customIntervals[props.doctor_id]){
+				for (let idx in intervals){
+					if (intervals[idx] > newInterval){
+						intervals.splice(idx, 0, newInterval);
+						break;
+					}
+				}
+			}
+		}
+		if (interval == intervals.length) nextTime = stage=='I' ? '14:30':'20:00';
+		else nextTime = intervals[interval+1];
+		props.nextTime = nextTime;
+		props.date = this.parent.state.currentDate.toLocaleDateString();
+		return props;
+	}
 
-		let doctors = this.parent.state.doctors,
-			records = this.parent.state.records;
-		console.log(records);
+	render() {
+		let date = new Date(),
+			today = date.getDate(),
+			thisMonth = date.getMonth(),
+			doctors = this.parent.state.doctors,
+			stage = this.props.stage,
+			records = this.parent.state.records[stage],
+			customIntervals = this.parent.state.customIntervals;
 		return (
 			<div className="main-schedule ui-block col-lg-12">
 				{this.state.hideBtnClicked ? null : (
@@ -155,77 +176,63 @@ class Shedule extends React.Component {
 						</div>
 						<div className="patients-shedule row">
 							{doctors.map((doctor, doctorIndex) => {
+								// если были добавлены пользовательские интевалы, вставляем их в записи текущего врача
+								if (customIntervals[doctor.id]){
+									let record;
+									for (let newInterval of customIntervals[doctor.id]){
+										// для каждого нового интервала создаём пустую запись и вставляем в расписание
+										for (let idx in records[doctor.id]){
+											record = records[doctor.id][idx];
+											if (record.appointedtime == newInterval) break;                             // защита если уже есть
+											if (record.appointedtime > newInterval){
+												records[doctor.id].splice(idx, 0, {
+													patient_id: null,
+													appointedtime: newInterval,
+												});
+												break;
+											}
+										}
+									}
+								}
 								return (
 									<div
 										className="col-sm-3 col-md-3 col-lg-3 patient-squad"
 										key={doctorIndex}
 									>
-										{records[doctor.id]
-											? records[doctor.id].map((record, recordIndex) => {
-													return !record.patient_id ? (
-														<div
-															className="patient-shedule-wrap blanked"
-															key={recordIndex}
-														>
-															<div className="patient-time">
-																{record.appointedtime}
-															</div>
-															<button
-																className="patient-empty-block"
-																onClick={this.addAppoint.bind(this, {
-																	doctorId: doctor.id,
-																	time: record.appointedtime,
-																})}
-															></button>
-														</div>
-													) : (
-														<div
-															className="patient-shedule-wrap"
-															key={recordIndex}
-														>
-															<div className="patient-time">
-																{record.appointedtime}
-															</div>
-															<div
-																onClick={() =>
-																	this.selectPatient({
-																		name: record.patient,
-																		time: record.appointedtime,
-																	})
-																}
-																className={
-																	"patient-shedule-block " + record.status
-																}
-															>
-																<div className="patient-name">
-																	{record.patient}
-																</div>
-																<ul className="patient-actions">
-																	{record.actions[0]
-																		? record.actions.map(
-																				(action, actionIndex) => {
-																					return (
-																						<li
-																							className={action}
-																							key={actionIndex}
-																						></li>
-																					);
-																				}
-																			)
-																		: ""}
-																</ul>
-															</div>
-															{this.state.patientInfoBtnClicked ? (
-																<PatientPopboxInfo
-																	parent={this}
-																	selectPatient={this.state.selectedPatient}
-																	closePatientInfo={this.closePatientInfo}
-																/>
-															) : null}
-														</div>
-													);
-												})
-											: ""}
+									{records[doctor.id].map((record, recordIndex) => {
+											record.doctor_id = doctor.id;
+											record.time = record.appointedtime;
+											return !record.patient_id ? (
+												<div className="patient-shedule-wrap blanked" key={recordIndex}>
+													<div className="patient-time">{record.appointedtime}</div>
+													<button
+														className="patient-empty-block"
+														onClick={this.addAppoint.bind(this, record, this.props.stage)}
+													></button>
+												</div>
+											) : (
+												<div className="patient-shedule-wrap" key={recordIndex}>
+													<div className="patient-time">{record.appointedtime}</div>
+													<div className={"patient-shedule-block " + (record.canceled ? 'canceled':record.status||'')}
+														onClick={this.selectPatient.bind(this, record, this.props.stage)}>
+														<div className="patient-name">{record.patient}</div>
+														<ul className="patient-actions">
+															{record.actions[0]
+																? record.actions.map(
+																		(action, actionIndex) => {
+																			return (
+																				<li className={action} key={actionIndex}></li>
+																			);
+																		}
+																	)
+																:
+																""
+															}
+														</ul>
+													</div>
+												</div>);
+											})
+										}
 										<button
 											onClick={this.addAppoint.bind(this, {
 												doctorId: doctor.id,
@@ -258,13 +265,33 @@ class Shedule extends React.Component {
 						</div>
 					</div>
 				)}
-
 				<Popbox
 					closeClicked={this.closePopbox}
 					clicked={this.state.appointButtonClicked}
 					appoint={this.state.addAppoint}
 					AppointForm={this.parent}
 				/>
+				{this.state.patientInfoBtnClicked ? (
+					<PatientPopboxInfo
+						closePatientInfo={this.closePatientInfo}
+						patient={this.state.selectedPatient}
+						parent={this}
+					/>
+				) : null}
+				{this.state.changeRecordBtnClicked ? (
+					<ChangeRecord
+						patient={this.state.selectedPatient}
+						doctors={this.parent.state.doctors}
+						records={this.parent.state.records[this.props.stage]}
+						parent={this}
+					/>
+				) : null}
+				{this.state.cancelRecordBtnClicked ? (
+					<CancelRecord
+						patient={this.state.selectedPatient}
+						parent={this}
+					/>
+				) : null}
 			</div> // прописать под <Popbox /> модалку для редактирования юзеров
 		);
 	}

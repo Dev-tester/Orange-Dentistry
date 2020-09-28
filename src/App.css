@@ -36,6 +36,6 @@
     transform: rotate(360deg);
   }
 }
-.App .row {
+#root-appoint .row {
   margin-right: unset !important;
 }

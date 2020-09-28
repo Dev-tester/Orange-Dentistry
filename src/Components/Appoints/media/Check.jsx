@@ -1,5 +1,4 @@
 import React from "react";
-import "./Check.css";
 class Check extends React.Component {
   state = {};
   render() {

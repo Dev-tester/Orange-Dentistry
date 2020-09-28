@@ -35,7 +35,10 @@ class SheduleController extends \yii\web\Controller {
 	 * @inheritdoc
 	 */
 	public function beforeAction($action){
-		if ($action->id == 'addrecord') {
+		if (    $action->id == 'addrecord'
+			||  $action->id == 'updaterecord'
+			||  $action->id == 'cancelrecord'
+		) {
 			$this->enableCsrfValidation = false;
 		}
 		return parent::beforeAction($action);
@@ -43,7 +46,7 @@ class SheduleController extends \yii\web\Controller {
 
 	public function actionRecords(){
 	    $connection = Yii::$app->getDb();
-	    $result = ['doctors' => [],'shedule' => []];
+	    $result = ['doctors' => [],'shedule' => ['I'=>[],'II'=>[]]];
 	    $command = $connection->createCommand('SELECT 	doctors.id,"family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name,
 															branches.address as branch 
 													FROM 	doctors
@@ -58,12 +61,20 @@ class SheduleController extends \yii\web\Controller {
 		    	'name' => $doctor['name'],
 			    'branch' => $doctor['branch']
 		    ];
-		    $result['shedule'][$doctorid] = [];
+		    $result['shedule']['I'][$doctorid] = [];
+		    $result['shedule']['II'][$doctorid] = [];
 	    }
-	    $command = $connection->createCommand('SELECT shedule.* 
+	    // первая смена
+	    $command = $connection->createCommand('SELECT 	shedule.*,
+															patients.family,
+															patients.name,
+															patients.surname,
+															TO_CHAR(patients.birthday, \'dd.mm.YYYY\') AS birthday,
+															patients.is_primary
 													FROM "shedule-reception" AS shedule
 															INNER JOIN doctors ON doctors.id = shedule.doctor_id
-													WHERE date = :date AND doctors.direction_id = :direction_id
+															INNER JOIN patients ON patients.id = shedule.patient_id
+													WHERE date = :date AND doctors.direction_id = :direction_id AND appointedtime <= \'14:00\' 
 													ORDER BY appointedtime ASC')
 								->bindValue(':date',$_GET['date'])
 								->bindValue(':direction_id',$_GET['direction']);
@@ -71,8 +82,28 @@ class SheduleController extends \yii\web\Controller {
 	    foreach ($shedule as $row){
 		    $doctorid = $row['doctor_id'];
 		    $row['actions'] = explode(",",preg_replace("/[\{\}]/","",$row['actions']));
-		    $result['shedule'][$doctorid][] = $row;
+		    $result['shedule']['I'][$doctorid][] = $row;
 	    }
+		// вторая смена
+		$command = $connection->createCommand('SELECT 	shedule.*,
+															patients.family,
+															patients.name,
+															patients.surname, 
+															TO_CHAR(patients.birthday, \'dd.mm.YYYY\') AS birthday,
+															patients.is_primary															
+													FROM "shedule-reception" AS shedule
+															INNER JOIN doctors ON doctors.id = shedule.doctor_id
+															INNER JOIN patients ON patients.id = shedule.patient_id
+													WHERE date = :date AND doctors.direction_id = :direction_id AND appointedtime > \'14:00\' 
+													ORDER BY appointedtime ASC')
+			->bindValue(':date',$_GET['date'])
+			->bindValue(':direction_id',$_GET['direction']);
+		$shedule = $command->queryAll();
+		foreach ($shedule as $row){
+			$doctorid = $row['doctor_id'];
+			$row['actions'] = explode(",",preg_replace("/[\{\}]/","",$row['actions']));
+			$result['shedule']['II'][$doctorid][] = $row;
+		}
     	return json_encode($result);
     }
 
@@ -84,10 +115,11 @@ class SheduleController extends \yii\web\Controller {
 		// получаем загрузку месяца
 		$command = $connection->createCommand('SELECT date, count(id) AS loading 
 													FROM "shedule-reception" AS shedule
-													WHERE date > :startDate
+													WHERE date >= :startDate AND date <= :endDate
 													GROUP BY date
 													ORDER BY date ASC')
-			->bindValue(':startDate',$_GET['startDate']);
+			->bindValue(':startDate',$_GET['startDate'])
+			->bindValue(':endDate',$_GET['endDate']);
 		$result['loading'] = $command->queryAll();
 
 		return json_encode($result);
@@ -98,12 +130,10 @@ class SheduleController extends \yii\web\Controller {
 		$result = ['directions' => [],'doctors' => []];
 		$command = $connection->createCommand('SELECT * FROM "ref-med-directions"');
 		$result['directions'] = $command->queryAll();
-		$command = $connection->createCommand('SELECT shedule.doctor_id AS id, "family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name
-													FROM "shedule-reception" AS shedule
-															INNER JOIN doctors ON doctors.id = shedule.doctor_id
-													WHERE date = :date AND doctors.direction_id = :direction_id
-													GROUP BY doctor_id,family,name,surname')
-			->bindValue(':date',$_GET['date'])
+		$command = $connection->createCommand('SELECT 	doctors.id, "family"||\' \'||LEFT("name",1)||\'. \'||COALESCE(LEFT("surname",1),\'\')||\'.\' as name
+													FROM 	doctors
+															INNER JOIN "ref-med-directions" directions ON directions.id = doctors.direction_id
+													WHERE doctors.direction_id = :direction_id')
 			->bindValue(':direction_id',$_GET['direction']);
 		$result['doctors'] = $command->queryAll();
 		return json_encode($result);
@@ -128,15 +158,27 @@ class SheduleController extends \yii\web\Controller {
 		return json_encode($result);
 	}
 
+	// получаем живую ленту
+	public function actionLivefeed(){
+
+	}
+
 	public function actionAddrecord(){
 		$params = Yii::$app->request->post();
 		// создаём/обновляем пациента
 		// действующий пациент
 		if (!empty($params['id'])){
 			$Patient = Patient::findIdentity($params['id']);
+			if (empty($Patient)) return json_encode(["type" => "Ошибка", 'errors' => "Пациент не найден"]);
+			$Patient->is_primary = false;
 		}
 		// это новый пациент
-		else $Patient = new Patient();
+		else{
+			if ($id = Patient::findByParams($params)){
+				return json_encode(["type" => "Ошибка создания пациента", 'errors' => "Пациент с данной фамилией и номером телефона\nили датой рождения уже существует. Проверьте через Поиск"]);
+			}
+			$Patient = new Patient();
+		}
 		//
 		if ($Patient->load($params,'') && $Patient->validate()) $Patient->save();
 		$errors = $Patient->getErrors();
@@ -170,7 +212,39 @@ class SheduleController extends \yii\web\Controller {
 		$Shedule->doctor_id = $params['doctor'];
 		$Shedule->patient = $params['family'].' '.mb_substr($params['name'], 0, 1).'.'.mb_substr($params['surname'], 0, 1).'.';
 		$Shedule->date = $params['date'];
+		if (!empty($params['comment'])) $Shedule->comment = $params['comment'];
 		$Shedule->save();
+		return json_encode(["type" => "ok","id" => $Patient->id]);
+	}
+
+	public function actionUpdaterecord(){
+		$params = Yii::$app->request->post();
+		$Shedule = SheduleReception::findIdentity($params['id']);
+		if (empty($Shedule)) return json_encode(["type" => "Ошибка", 'errors' => "Запись не найдена"]);
+
+		$Shedule->appointedtime = $params['appointTime'];
+		$Shedule->patient_id = $params['patient_id'];
+		$Shedule->doctor_id = $params['doctor_id'];
+		$Shedule->date = $params['date'];
+		if ($Shedule->validate()) $Shedule->save();
+		$errors = $Shedule->getErrors();
+		if (count($errors)) return json_encode(["type" => "Ошибка обновления Расписания", 'errors' => $errors]);
+		return json_encode(["type" => "ok"]);
+	}
+	
+	public function actionCancelrecord(){
+		$params = Yii::$app->request->post();
+		$Shedule = SheduleReception::findIdentity($params['id']);
+		if (empty($Shedule)) return json_encode(["type" => "Ошибка", 'errors' => "Запись не найдена"]);
+
+		$Shedule->canceled = true;
+		$Shedule->cancel_reason = $params['reason'];
+		$Shedule->cancel_reason_detail = $params['reasonDetails'];
+		$Shedule->comment = $params['comment'];
+		$Shedule->date = $params['date'];
+		if ($Shedule->validate()) $Shedule->save();
+		$errors = $Shedule->getErrors();
+		if (count($errors)) return json_encode(["type" => "Ошибка обновления Расписания", 'errors' => $errors]);
 		return json_encode(["type" => "ok"]);
 	}
 }
