@@ -39,6 +39,7 @@ class SheduleReception extends \yii\db\ActiveRecord
 			[['status'], 'string', 'max' => 16],
 			[['actions'], 'string', 'max' => 2048],
 			[['date'], 'date','format' => 'dd.MM.yyyy'],
+			[['updated_at'], 'datetime','format' => 'dd.MM.yyyy H:m:s'],
 			[['canceled'],'boolean'],
 			[['id'], 'unique'],
 		];
@@ -58,6 +59,7 @@ class SheduleReception extends \yii\db\ActiveRecord
 			'status' => 'Shedule Status',
 			'actions' => 'Visit Actions',
 			'date' => 'Date of Appointment',
+			'updated_at' => 'Updated At',
 			'canceled' => 'Appointment Canceled',
 			'cancel_reason' => 'Reason for cancellation',
 			'cancel_reason_detail' => 'Reason for cancellation Details',

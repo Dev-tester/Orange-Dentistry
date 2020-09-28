@@ -21,6 +21,7 @@ class Appoint extends React.Component {
 			currentDate: new Date(),
 			medDirection: 1,// Терапевты по умолчанию
 			customIntervals: {},    // вновь созданные интевалы по врачам через (поделить интервал)
+			livefeedUpdate: false
 		}
 		this.intervals = {
 			I:[
@@ -157,6 +158,7 @@ class Appoint extends React.Component {
 					records: {I:recordsFirst, II:recordsSecond},
 					allRecords: {I:recordsFirst, II:recordsSecond},
 				});
+				self.LiveFeed.getLiveFeed();
 			}
 		);
 	}
@@ -297,7 +299,7 @@ class Appoint extends React.Component {
 						</div>
 					</div>
 					<div className="col-sm-2 col-md-2 col-lg-2" style={{ padding: 0 }}>
-						<LiveFeed />
+						<LiveFeed update={this.state.livefeedUpdate} parent={this}/>
 					</div>
 				</div>
 			</BrowserRouter>

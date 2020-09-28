@@ -160,7 +160,19 @@ class SheduleController extends \yii\web\Controller {
 
 	// получаем живую ленту
 	public function actionLivefeed(){
-
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand('SELECT 	patients."family"||\' \'||patients."name" as name,
+															patients.phone,
+															TO_CHAR(shedule.date, \'dd.mm.YYYY\') AS date,
+															shedule.appointedtime AS time,
+															doctors."family"||\' \'||LEFT(doctors."name",1)||\'. \'||COALESCE(LEFT(doctors."surname",1),\'\')||\'.\' as doctorName
+													FROM "shedule-reception" AS shedule
+															INNER JOIN patients ON patients.id = shedule.patient_id
+															INNER JOIN doctors ON doctors.id = shedule.doctor_id
+													ORDER BY shedule.canceled, shedule.updated_at DESC
+													LIMIT 10');
+		$result = $command->queryAll();
+		return json_encode($result);
 	}
 
 	public function actionAddrecord(){
@@ -226,6 +238,7 @@ class SheduleController extends \yii\web\Controller {
 		$Shedule->patient_id = $params['patient_id'];
 		$Shedule->doctor_id = $params['doctor_id'];
 		$Shedule->date = $params['date'];
+		$Shedule->updated_at = date('d.m.Y H:i:s',time());
 		if ($Shedule->validate()) $Shedule->save();
 		$errors = $Shedule->getErrors();
 		if (count($errors)) return json_encode(["type" => "Ошибка обновления Расписания", 'errors' => $errors]);
@@ -242,6 +255,7 @@ class SheduleController extends \yii\web\Controller {
 		$Shedule->cancel_reason_detail = $params['reasonDetails'];
 		$Shedule->comment = $params['comment'];
 		$Shedule->date = $params['date'];
+		$Shedule->updated_at = date('d.m.Y H:i:s',time());
 		if ($Shedule->validate()) $Shedule->save();
 		$errors = $Shedule->getErrors();
 		if (count($errors)) return json_encode(["type" => "Ошибка обновления Расписания", 'errors' => $errors]);

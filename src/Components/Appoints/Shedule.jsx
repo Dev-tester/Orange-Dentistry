@@ -199,7 +199,7 @@ class Shedule extends React.Component {
 										className="col-sm-3 col-md-3 col-lg-3 patient-squad"
 										key={doctorIndex}
 									>
-									{records[doctor.id].map((record, recordIndex) => {
+									{records[doctor.id] ? records[doctor.id].map((record, recordIndex) => {
 											record.doctor_id = doctor.id;
 											record.time = record.appointedtime;
 											return !record.patient_id ? (
@@ -232,7 +232,7 @@ class Shedule extends React.Component {
 													</div>
 												</div>);
 											})
-										}
+										:null}
 										<button
 											onClick={this.addAppoint.bind(this, {
 												doctorId: doctor.id,

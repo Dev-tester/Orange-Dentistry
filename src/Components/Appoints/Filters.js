@@ -150,42 +150,75 @@ class Filters extends React.Component {
 
 	// TODO сделать множественный выбор SELECT2
 	apply(){
-		let records = this.parent.state.allRecords,
+		let self = this, Appoint = this.parent,
 			filters = this.state.filters;
 		// если был, то переход на вкладку
 		if (this.state.filters.direction){
-			this.parent.setState({
-				medDirection: this.state.filters.direction
+			Appoint.setState({
+				medDirection: filters.direction
 			});
 		}
-		if (this.state.filters.doctor){
-			let records_ = {};
-			records_[filters.doctor] = records[filters.doctor];
-			records = records_;
-		}
-		if (filters.timeFrom){
-			for (let userId in records){
-				records[userId] = records[userId].filter(function (record) {
-					return record.appointedtime >= filters.timeFrom;
+		return $.get("shedule/records",
+			{
+				date: Appoint.state.currentDate.toLocaleDateString(),
+				direction: filters.direction
+			},
+			function (response) {
+				let result = JSON.parse(response), records = Appoint.state.allRecords.I,
+					recordsFirst = Appoint.setEmptyIntervalsButtons(result.shedule.I,'I'),
+					recordsSecond = Appoint.setEmptyIntervalsButtons(result.shedule.II,'II'),
+					_recordsFirst = recordsFirst, _recordsSecond = recordsSecond;
+				if (filters.doctor){
+					// I смена
+					let records_ = {};
+					records_[filters.doctor] = recordsFirst[filters.doctor];
+					recordsFirst = records_;
+					// II смена
+					records_ = {};
+					records_[filters.doctor] = recordsSecond[filters.doctor];
+					recordsSecond = records_;
+				}
+				if (filters.timeFrom){
+					// I смена
+					for (let userId in recordsFirst){
+						recordsFirst[userId] = recordsFirst[userId].filter(function (record) {
+							return record.appointedtime >= filters.timeFrom;
+						});
+					}
+					// II смена
+					for (let userId in recordsSecond){
+						recordsSecond[userId] = recordsSecond[userId].filter(function (record) {
+							return record.appointedtime >= filters.timeFrom;
+						});
+					}
+				}
+				if (filters.timeTo){
+					// I смена
+					for (let userId in recordsFirst) {
+						recordsFirst[userId] = recordsFirst[userId].filter(function (record) {
+							return record.appointedtime < filters.timeTo;
+						});
+					}
+					// II смена
+					for (let userId in recordsSecond) {
+						recordsSecond[userId] = recordsSecond[userId].filter(function (record) {
+							return record.appointedtime < filters.timeTo;
+						});
+					}
+				}
+				// TODO узнать логику фильтрации по интервалам
+				/*if (filters.Interval){
+					recordsSecond = recordsSecond.filter(function(record){
+						return record.doctor_id == filters.Interval;
+					});
+				}*/
+				Appoint.setState({
+					doctors: result.doctors,
+					records: {I:recordsFirst, II:recordsSecond},
+					allRecords: {I:_recordsFirst, II:_recordsSecond},
 				});
 			}
-		}
-		if (filters.timeTo){
-			for (let userId in records) {
-				records[userId] = records[userId].filter(function (record) {
-					return record.appointedtime < filters.timeTo;
-				});
-			}
-		}
-		// TODO узнать логику фильтрации по интервалам
-		/*if (filters.Interval){
-			records = records.filter(function(record){
-				return record.doctor_id == filters.Interval;
-			});
-		}*/
-		this.parent.setState({
-			records: records
-		});
+		);
 	}
 
 	render() {

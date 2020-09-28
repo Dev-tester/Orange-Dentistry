@@ -377,15 +377,18 @@ button.react-datepicker__navigation {
 }
 .event-wrap {
   background: #f4f7fa;
-  border: 1px solid #dfe6ee;
+  border-bottom: 1px solid #dfe6ee;
   box-sizing: border-box;
-  border-radius: 4px 4px 0px 0px;
   display: flex;
   align-items: center;
   height: 72px;
+  padding-right: 4px;
 }
 .event-wrap.odd {
   background: #fff;
+}
+.livefeed-box .row{
+  margin: 0;
 }
 .event-wrap .col-sm-6.col-md-6.col-lg-6 {
   padding: 0;
@@ -394,12 +397,23 @@ button.react-datepicker__navigation {
   flex-direction: column;
 }
 #events-box {
+  border: 1px solid #dfe6ee;
+  border-radius: 4px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 16px;
   color: #313541;
   text-align: left;
+}
+.livefeed-box .event-wrap div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.livefeed-box .row .col-lg-12,.livefeed-box .row .col-lg-6{
+  margin: 0;
+  padding: 0;
 }
 .livefeed-box .buttons {
   display: flex;
@@ -422,6 +436,15 @@ button.react-datepicker__navigation {
   margin-top: -6px;
   margin-left: 10px;
 }
+.livefeed-box .event-wrap div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.livefeed-box .event-wrap div span{
+  margin-left: 5px;
+}
+/**********************************************************************************************************************/
 .patient-appoint {
   border: 0;
   border-radius: 30px;
