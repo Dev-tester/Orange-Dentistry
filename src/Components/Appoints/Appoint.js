@@ -58,10 +58,11 @@ class Appoint extends React.Component {
 		this.setCalendarLoading = this.setCalendarLoading.bind(this);
 		this.setDayLoading = this.setDayLoading.bind(this);
 		this.monthChange = this.monthChange.bind(this);
+		this.updateCustomIntervals = this.updateCustomIntervals.bind(this);
 	}
 
 	componentDidMount() {
-		this.monthChange();
+		this.monthChange(this.state.currentDate);
 	}
 
 	calendarChange(date) {
@@ -71,8 +72,11 @@ class Appoint extends React.Component {
 		this.getCurrentShedule(date, this.state.medDirection);
 	};
 
-	monthChange(){
+	monthChange(date){
 		let self = this;
+		this.setState({
+			currentDate: date
+		});
 		// получили первый день календаря
 		let startDate = $('.react-datepicker__month .react-datepicker__day')[0]||'';
 		let endDate = $('.react-datepicker__month .react-datepicker__day').last()[0]||'';
@@ -110,21 +114,32 @@ class Appoint extends React.Component {
 		}
 	}
 
+	// функция подневно проставляет загруженность для одного дня
 	setDayLoading(date, className){
 		date = date.split('-');
 		// убираем год из заголовка
 		let headerMonth = $('.react-datepicker__current-month').html().replace(/\s*\d+/,'');
 		$('.react-datepicker__current-month').html(headerMonth.charAt(0).toUpperCase()+headerMonth.slice(1));
 		// проставляем цвета дней
-		let month = date[1], day = date[2], currentMonth = 9,
+		let month = date[1], day = date[2], currentMonth = this.state.currentDate.getMonth()+1,
 			monthDay, span,
 			calendar = $('.react-datepicker__month .react-datepicker__day');
-		if (month < currentMonth) console.log('TODO before');
-		else if (month > currentMonth) console.log('TODO after');
+		// если это день из предыдущего месяца
+		if (month < currentMonth || month > currentMonth){
+			for (let i in calendar){
+				monthDay = calendar[i];
+				if (parseInt(monthDay.innerHTML) == parseInt(day) && $(monthDay).hasClass('react-datepicker__day--outside-month')){
+					monthDay.innerHTML = null;
+					span = $('<span />').addClass(className+" opaque").html(day);
+					monthDay.appendChild(span[0]);
+					break;
+				}
+			}
+		}
 		else{
 			for (let i in calendar){
 				monthDay = calendar[i];
-				if (monthDay.innerHTML == day){
+				if (parseInt(monthDay.innerHTML) == parseInt(day) && !$(monthDay).hasClass('react-datepicker__day--outside-month')){
 					monthDay.innerHTML = null;
 					span = $('<span />').addClass(className).html(day);
 					monthDay.appendChild(span[0]);
@@ -171,32 +186,36 @@ class Appoint extends React.Component {
 		function getMaxY(data){
 			return data.reduce((max, p) => p.appointedtime > max ? p.appointedtime : max, data[0].appointedtime);
 		}
-		// перебираем всех пользователей
+		// перебираем всех докторов
 		for (let doctorId in records) {
 			let doctorRecords = records[doctorId], firstIdx, lastIdx,
-				maxIdx = this.intervals[stage].length;
+				maxIdx = this.intervals[stage].length, intervals;
 			//console.log(doctorRecords);
 			if (!doctorRecords.length){	// пустые
 				firstIdx = maxIdx;
 				lastIdx = maxIdx;
+				intervals = this.intervals[stage];
 			}
 			else{
 				let len = doctorRecords.length;
-				firstIdx = this.intervals[stage].indexOf(getMinY(doctorRecords));
-				lastIdx = this.intervals[stage].indexOf(getMaxY(doctorRecords));
+				// добавляем промежуточные интервалы из записей
+				intervals = this.updateCustomIntervals(doctorRecords, doctorId, stage);
+				firstIdx = intervals.indexOf(getMinY(doctorRecords));
+				lastIdx = intervals.indexOf(getMaxY(doctorRecords));
+				maxIdx = intervals.length;
 			}
 			// проставляем интервалы до первой записи
 			for (let idx = 0; idx < firstIdx; idx++) {
 				records[doctorId].splice(idx, 0, {
 					patient_id: null,
-					appointedtime: this.intervals[stage][idx],
+					appointedtime: intervals[idx],
 				});
 			}
 			// проставляем интервалы после последней записи
 			for (let idx = lastIdx+1; idx < maxIdx; idx++) {
 				records[doctorId].splice(idx, 0, {
 					patient_id: null,
-					appointedtime: this.intervals[stage][idx],
+					appointedtime: intervals[idx],
 				});
 			}
 			// перебираем все записи пользователя
@@ -208,18 +227,18 @@ class Appoint extends React.Component {
 					nextIdx = 0,
 					nextTime = nextRecord ? nextRecord.appointedtime : 0;
 				// находим ближайшее время в шаблоне расписания для текущего и следующего приёма
-				while (time > this.intervals[stage][lastIdx]) lastIdx++;
+				while (time > intervals[lastIdx]) lastIdx++;
 				// если пустые интервалы сначала
 				if (recordId=='0' && lastIdx > 0){
 					for (let idx = 0; idx < lastIdx; idx++) {
 						console.log(idx);
 						records[doctorId].splice(idx, 0, {
 							patient_id: null,
-							appointedtime: this.intervals[stage][idx],
+							appointedtime: intervals[idx],
 						});
 					}
 				}
-				while (nextTime > this.intervals[stage][nextIdx]) nextIdx++;
+				while (nextTime > intervals[nextIdx]) nextIdx++;
 				// если пропуск вставляем
 				if (nextIdx > lastIdx + 1) {
 					console.log(time, lastIdx, nextIdx);
@@ -228,7 +247,7 @@ class Appoint extends React.Component {
 						//console.log(records[doctorId]);
 						records[doctorId].splice(idx, 0, {
 							patient_id: null,
-							appointedtime: this.intervals[stage][idx],
+							appointedtime: intervals[idx],
 						});
 					}
 				}
@@ -236,6 +255,32 @@ class Appoint extends React.Component {
 			//console.log(records[doctorId]);
 		}
 		return records;
+	}
+
+	updateCustomIntervals(doctorRecords, doctor, stage){
+		let record, idx, customIntervals = this.state.customIntervals, intervals = [...this.intervals[stage]];          // [... делает копию массива а не ссылку на массив
+		for (let recordId in doctorRecords) {
+			record = doctorRecords[recordId];
+			if (intervals.indexOf(record.appointedtime) == -1){
+				idx = 0;
+				while (intervals[idx] < record.appointedtime) idx++;
+				if (customIntervals[doctor]){
+					if (customIntervals[doctor].indexOf(record.appointedtime) != -1) continue;
+					customIntervals[doctor].push(record.appointedtime);
+				}
+				else customIntervals[doctor] = [record.appointedtime];
+			}
+		}
+		if (!customIntervals[doctor]) return intervals;
+		this.setState({
+			customIntervals: customIntervals
+		});
+		for (let interval of customIntervals[doctor]){
+			idx = 0;
+			while (intervals[idx] < interval) idx++;
+			intervals.splice(idx, 0, interval);
+		}
+		return intervals;
 	}
 
 	render() {

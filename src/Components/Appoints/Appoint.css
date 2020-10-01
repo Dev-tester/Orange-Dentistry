@@ -295,6 +295,15 @@ button.react-datepicker__navigation {
   border-bottom: 4px solid #56BD5B;
   border-radius: 2px;
 }
+.react-datepicker__day .red.opaque{
+  border-color: rgba(227,76,76,0.3);
+}
+.react-datepicker__day .yellow.opaque{
+  border-color: rgba(247,180,34,0.3);
+}
+.react-datepicker__day .green.opaque{
+  border-color: rgba(86,189,91,0.3);
+}
 /******************************************************* filters ******************************************************/
 .filters-box {
   border-radius: 10px;

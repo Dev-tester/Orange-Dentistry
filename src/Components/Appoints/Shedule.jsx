@@ -98,9 +98,9 @@ class Shedule extends React.Component {
 		for (let idx in this.parent.intervals[stage]){
 			let time = this.parent.intervals[stage][idx],
 				existing = doctorRecords.filter(function (record) {
-				return record.appointedtime == time;
+				return record.appointedtime == time && !record.patient_id;
 			});
-			if (!existing.length){
+			if (existing.length){
 				nextTime = time;
 				break;
 			}
@@ -116,7 +116,7 @@ class Shedule extends React.Component {
 		props.doctor = doctor[0].name;
 		// если время не обозначено (нижняя кнопка), выбираем ближайшее
 		if (!props.time) props.time = this.getNearestTime(props.doctor_id, stage);
-		let intervals = this.parent.intervals[stage],
+		let intervals = [...this.parent.intervals[stage]],                                                              // делаем копию, чтоб не сломать this.parent.intervals[stage]
 			interval = intervals.indexOf(props.time),
 			nextTime, customIntervals = this.parent.state.customIntervals;
 		// если были добавлены новые интевалы учитываем
@@ -235,9 +235,9 @@ class Shedule extends React.Component {
 										:null}
 										<button
 											onClick={this.addAppoint.bind(this, {
-												doctorId: doctor.id,
+												doctor_id: doctor.id,
 												time: null,
-											})}
+											}, this.props.stage)}
 											className={"patient-appoint"}
 										>
 											Записать

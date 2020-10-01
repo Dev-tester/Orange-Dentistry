@@ -53,7 +53,7 @@ class PatientPopboxInfo extends React.Component {
 		// находим новый конец интевала
 		let newInterval = new Date('01.01.2000 '+time).getTime() + 900000,
 			date = new Date(newInterval);
-		newInterval = date.getHours()+':'+date.getMinutes();
+		newInterval = (date.getHours()<10 ? '0'+date.getHours():date.getHours())+':'+date.getMinutes();
 		// устанавливаем новую сетку распиания
 		let Appoint = this.parent.props.parent, stage = this.parent.props.stage,
 			idx = Appoint.intervals[stage].indexOf(time),
