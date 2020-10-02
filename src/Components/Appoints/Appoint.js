@@ -351,7 +351,7 @@ class Appoint extends React.Component {
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-6 col-lg-6">
-								<div className="page-search ui-block">Поиск</div>
+								<input type="text" className="page-search ui-block" placeholder="Поиск"/>
 							</div>
 						</div>
 						<div className="row" style={{ marginTop: '45px' }}>
