@@ -21,7 +21,12 @@ class Appoint extends React.Component {
 			currentDate: new Date(),
 			medDirection: 1,// Терапевты по умолчанию
 			customIntervals: {},    // вновь созданные интевалы по врачам через (поделить интервал)
-			livefeedUpdate: false
+			livefeedUpdate: false,
+			calendarLoading:{
+				daysGreen:[new Date()],
+				daysYellow:[new Date()],
+				daysRed:[new Date()],
+			},
 		}
 		this.intervals = {
 			I:[
@@ -69,7 +74,7 @@ class Appoint extends React.Component {
 		this.setState({
 			currentDate: date
 		});
-		this.getCurrentShedule(date, this.state.medDirection);
+		setTimeout(()=>this.monthChange(date),1);
 	};
 
 	monthChange(date){
@@ -98,20 +103,36 @@ class Appoint extends React.Component {
 
 	setCalendarLoading(loading){
 		console.log(loading);
-		let className;
+		let className, daysGreen = [], daysYellow = [], daysRed = [];
 		for (let i in loading){
 			let dayLoading = loading[i].loading,
-				date = loading[i].date,
+				date = new Date(loading[i].date),
 				className = '';
 			// слабая загруженность
-			if (dayLoading <= 24) className = 'green';
+			if (dayLoading <= 24){
+				className = 'green';
+				daysGreen.push(date);
+			}
 			// средняя загруженность
-			else if (dayLoading <= 44) className = 'yellow';
+			else if (dayLoading <= 44){
+				className = 'yellow';
+				daysYellow.push(date);
+			}
 			// сильная загруженность
-			else className = 'red';
+			else{
+				className = 'red';
+				daysRed.push(date);
+			}
 			// ищем день в календаре и ставим
-			this.setDayLoading(date, className)
+			this.setDayLoading(loading[i].date, className)
 		}
+		this.setState({
+			calendarLoading:{
+				daysGreen:daysGreen,
+				daysYellow:daysYellow,
+				daysRed:daysRed,
+			},
+		});
 	}
 
 	// функция подневно проставляет загруженность для одного дня
@@ -289,7 +310,12 @@ class Appoint extends React.Component {
 			names = this.state.names,
 			timeFrom = this.state.timeFrom,
 			timeTo = this.state.timeTo,
-			Interval = this.state.Interval;
+			Interval = this.state.Interval,
+			highlightDays= [
+				{green: this.state.calendarLoading.daysGreen},
+				{yellow: this.state.calendarLoading.daysYellow},
+				{red: this.state.calendarLoading.daysRed}
+			];
 		return (
 			<BrowserRouter>
 				<div className="row" style={{marginLeft:0}}>
@@ -302,6 +328,7 @@ class Appoint extends React.Component {
 								selected={this.state.currentDate}
 								onChange={this.calendarChange}
 								onMonthChange={this.monthChange}
+								highlightDates={highlightDays}
 								/*renderDayContents={(day, date) => {
 									return <span>{day}</span>;
 								}}*/

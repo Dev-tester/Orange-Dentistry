@@ -86,20 +86,22 @@ class ChangeRecord extends React.Component {
 	}
 
 	setFreeIntervals(doctor){
-		let Appoint = this.parent.props.parent, stage = this.parent.props.stage,
+		let Appoint = this.parent.props.parent,	records, intervals = [];
+		for (let stage of ['I','II']) {
 			records = Appoint.state.records[stage];
-		if (!records || !doctor) return alert('Ошибка получения записей');
-		let doctorRecords = records[doctor];
-		// оставляем только незанятые интервалы
-		let intervals = this.intervals.filter(function (interval){
-			for (let record of doctorRecords){
-				if (record.appointedtime == interval && !record.patient_id){
-					return true;
-					break;
+			if (!records || !doctor) return alert('Ошибка получения записей');
+			let doctorRecords = records[doctor];
+			// оставляем только незанятые интервалы
+			intervals = intervals.concat(this.intervals.filter(function (interval) {
+				for (let record of doctorRecords) {
+					if (record.appointedtime == interval && !record.patient_id) {
+						return true;
+						break;
+					}
 				}
-			}
-			return false;
-		});
+				return false;
+			}));
+		}
 		// возвращаем время с и до текущего пациента в незанятые интервалы
 		for (let idx in intervals){
 			if (intervals[idx] < this.state.timeBefore) continue;

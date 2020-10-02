@@ -304,6 +304,18 @@ button.react-datepicker__navigation {
 .react-datepicker__day .green.opaque{
   border-color: rgba(86,189,91,0.3);
 }
+.react-datepicker__day.react-datepicker__day--selected.green {
+  background: #56BD5B;
+}
+.react-datepicker__day.react-datepicker__day--selected.yellow {
+  background: #F7B422;
+}
+.react-datepicker__day.react-datepicker__day--keyboard-selected.green{
+  background: rgba(86,189,91,0.5);
+}
+.react-datepicker__day.react-datepicker__day--keyboard-selected.yellow{
+  background: rgba(247,180,34,0.5);
+}
 /******************************************************* filters ******************************************************/
 .filters-box {
   border-radius: 10px;

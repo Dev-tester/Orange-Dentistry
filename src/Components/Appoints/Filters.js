@@ -27,7 +27,9 @@ class Filters extends React.Component {
 				timeFrom: '',
 				timeTo: '',
 				Interval: '',
-			}
+			},
+			currentDate: '',
+			medDirection: ''
 		}
 		this.branchChange = this.branchChange.bind(this);
 		this.medDirectionChange = this.medDirectionChange.bind(this);
@@ -46,6 +48,7 @@ class Filters extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (this.state.currentDate == nextProps.currentDate	&& this.state.medDirection == nextProps.medDirection) return console.log('Filters not changed, return');
 		this.setFilters(nextProps.currentDate, nextProps.medDirection);
 	}
 
@@ -63,9 +66,15 @@ class Filters extends React.Component {
 				self.setState({
 					doctors: result.doctors,
 					directions: result.directions,
+					currentDate: currentDate,
+					medDirection: medDirection
 				});
 			}
 		);
+		this.setState({
+			currentDate: currentDate,
+			medDirection: medDirection
+		});
 	}
 
 	branchChange(branches){
